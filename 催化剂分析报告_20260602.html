@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消息面催化报告 — 2026年6月2日（周二）</title>
+<style>
+  :root {
+    --bg: #0f1117; --card: #181a22; --border: #262836;
+    --text: #c9cdd4; --text2: #8b8f9a;
+    --red: #e0556a; --green: #4caf88; --gold: #d4a853; --accent: #5b8def;
+    --t0: #e0556a; --t1: #d4a853; --t2: #5b8def; --tag-bg: #1e2030;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background:var(--bg); color:var(--text); line-height:1.7; padding:24px; }
+  .container { max-width:1200px; margin:0 auto; }
+  .header { text-align:center; padding:48px 0 36px; border-bottom:1px solid var(--border); margin-bottom:32px; }
+  .header h1 { font-size:28px; color:#fff; letter-spacing:2px; margin-bottom:12px; }
+  .header .meta { display:flex; justify-content:center; gap:32px; flex-wrap:wrap; font-size:14px; color:var(--text2); }
+  .header .meta span { background:var(--tag-bg); padding:4px 14px; border-radius:4px; }
+  .header .rating { font-size:22px; color:var(--gold); margin-top:12px; letter-spacing:4px; }
+  .header .core { margin-top:14px; font-size:15px; color:var(--text); max-width:850px; margin-left:auto; margin-right:auto; background:var(--card); padding:14px 20px; border-radius:8px; border-left:3px solid var(--accent); text-align:left; }
+  .section { margin-bottom:40px; }
+  .section-title { font-size:18px; font-weight:bold; color:#fff; padding:10px 0; border-bottom:2px solid var(--border); margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+  .section-title .dot { width:10px; height:10px; border-radius:50%; }
+  .section-title .dot.domestic { background:var(--red); }
+  .section-title .dot.overseas { background:var(--green); }
+  .event { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:20px 24px; margin-bottom:14px; }
+  .event:hover { border-color:#3a3d50; }
+  .event .ev-header { display:flex; align-items:center; gap:12px; margin-bottom:14px; flex-wrap:wrap; }
+  .event .ev-num { font-size:13px; color:var(--text2); min-width:70px; }
+  .event .ev-level { font-size:12px; font-weight:bold; padding:3px 10px; border-radius:4px; color:#fff; white-space:nowrap; }
+  .event .ev-level.t0 { background:var(--t0); }
+  .event .ev-level.t1 { background:var(--t1); }
+  .event .ev-level.t2 { background:var(--t2); }
+  .event .ev-title { font-size:16px; font-weight:bold; color:#fff; flex:1; min-width:250px; }
+  .event .ev-source { font-size:12px; color:var(--text2); white-space:nowrap; }
+  .event .fields { display:grid; grid-template-columns: 1fr 1fr; gap:6px 32px; font-size:14px; }
+  .event .fields .f { display:flex; gap:6px; }
+  .event .fields .f .lbl { color:var(--text2); white-space:nowrap; }
+  .event .fields .f .val { color:var(--text); }
+  .event .fields .f.full { grid-column:1/-1; }
+  .event .stars { color:var(--gold); letter-spacing:2px; }
+  .new-badge { font-size:10px; background:var(--red); color:#fff; padding:1px 6px; border-radius:3px; margin-left:4px; }
+  .stock-table { width:100%; border-collapse:collapse; font-size:14px; margin-bottom:20px; }
+  .stock-table th { background:var(--tag-bg); color:var(--text2); font-weight:normal; padding:10px 12px; text-align:center; border-bottom:1px solid var(--border); }
+  .stock-table td { padding:10px 12px; text-align:center; border-bottom:1px solid var(--border); }
+  .stock-table tr:hover td { background:rgba(255,255,255,0.02); }
+  .stock-table .name { text-align:left; font-weight:bold; color:#fff; }
+  .stock-table .code { font-size:12px; color:var(--text2); }
+  .score-hi { color:var(--green); font-weight:bold; }
+  .score-mid { color:var(--gold); font-weight:bold; }
+  .suggest-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:20px; margin-bottom:20px; }
+  .suggest-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:20px 24px; }
+  .suggest-card .rank { font-size:32px; font-weight:bold; color:var(--accent); opacity:0.3; }
+  .suggest-card h3 { font-size:17px; color:#fff; margin-bottom:6px; }
+  .suggest-card .pick { font-size:15px; font-weight:bold; color:var(--green); margin-bottom:12px; }
+  .suggest-card .info { font-size:13px; color:var(--text); margin-bottom:8px; }
+  .suggest-card .info .lbl { color:var(--text2); }
+  .suggest-card .risk { font-size:13px; color:var(--red); margin-top:8px; padding-top:8px; border-top:1px solid var(--border); }
+  .tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:6px; }
+  .tag { font-size:11px; padding:2px 8px; border-radius:3px; background:var(--tag-bg); color:var(--text2); }
+  .macro-bar { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px; }
+  .macro-item { flex:1; min-width:130px; background:var(--card); border:1px solid var(--border); border-radius:8px; padding:14px; text-align:center; }
+  .macro-item .val { font-size:20px; font-weight:bold; color:#fff; }
+  .macro-item .val.up { color:var(--green); } .macro-item .val.down { color:var(--red); } .macro-item .val.warn { color:var(--gold); }
+  .macro-item .lbl { font-size:11px; color:var(--text2); margin-top:4px; }
+  .warn-grid { display:grid; grid-template-columns: 1fr 1fr; gap:12px; font-size:13px; }
+  .highlight-box { background:var(--card); border:1px solid var(--accent); border-radius:8px; padding:16px 20px; margin-bottom:16px; }
+  @media (max-width:768px) { .warn-grid { grid-template-columns:1fr; } .event .fields { grid-template-columns:1fr; } .suggest-grid { grid-template-columns:1fr; } .event .ev-header { flex-direction:column; align-items:flex-start; } }
+  .disclaimer { font-size:12px; color:var(--text2); text-align:center; padding:32px 0; border-top:1px solid var(--border); margin-top:40px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>《消息面催化报告》</h1>
+  <div class="meta">
+    <span>2026年6月2日（周二）</span>
+    <span>覆盖：6/1周一开盘 → 6/2周二盘前</span>
+    <span>美股6/1：NVDA +6.3% | SOX +3.2% | Nasdaq 27262 +1.1%</span>
+  </div>
+  <div class="rating">★★★★★（极高）</div>
+  <div class="core">
+    <strong>核心逻辑：</strong>五重催化共振——①COMPUTEX首日黄仁勋"核弹级"发布：RTX Spark进军PC CPU（NVDA+6%，ARM+16%，Intel-5%），Vera Rubin全面量产，股息提升2400%+$800亿回购；②六部门联合印发中长期资金入市方案，打通险资/社保/年金入市堵点，A股迎万亿级增量资金预期；③三部门首发《智能体规范应用与创新发展实施意见》——AI Agent首获国家级政策框架；④美伊周末冲突急剧升级（美军空袭+伊朗反击+威胁关闭Bab al-Mandeb），Brent暴涨5%至$95-97；⑤美国商务部5/31紧急收紧对华AI芯片出口管制（封堵第三国转运漏洞）。A股6/1"指数跌个股涨"——沪指-0.27%但3700+股上涨，科创50两日暴跌10%+（半导体获利回吐），煤炭+5.5%领涨。今日关注：科技股超跌反弹+COMPUTEX次日催化+券商（成交3.22万亿+融资2.9万亿创新高）。
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="dot domestic"></span>大盘速览（6/1收盘 + 6/2盘前）</div>
+  <div class="macro-bar">
+    <div class="macro-item"><div class="val down">4057.74</div><div class="lbl">上证指数 -0.27%</div></div>
+    <div class="macro-item"><div class="val down">15340</div><div class="lbl">深证成指 -1.51%</div></div>
+    <div class="macro-item"><div class="val down">1664</div><div class="lbl">科创50 -5.00%（两日-10%+）</div></div>
+    <div class="macro-item"><div class="val warn">2.88万亿</div><div class="lbl">沪深成交额（缩量4400亿）</div></div>
+    <div class="macro-item"><div class="val up">3700+</div><div class="lbl">上涨家数 / 166涨停</div></div>
+    <div class="macro-item"><div class="val up">3.22万亿</div><div class="lbl">日均成交额（周均）</div></div>
+    <div class="macro-item"><div class="val up">2.9万亿</div><div class="lbl">融资余额（历史新高）</div></div>
+    <div class="macro-item"><div class="val up">$95-97</div><div class="lbl">Brent原油（单日+5-8%）</div></div>
+  </div>
+  <div style="font-size:13px;color:var(--text2);background:var(--card);padding:12px 16px;border-radius:6px;">
+    <strong>盘面特征：</strong>极致分化——权重股拖累指数（半导体/CPO/PCB高位暴跌，科创50两日累跌超10%，中芯国际/华虹跌超5%），但全市场3700+个股上涨、166只涨停。煤炭（大有能源/郑州煤电涨停+5.53%）、AI应用/AI PC概念逆势飙升，资金"高低切"明显。成交额2.88万亿虽环比缩量4400亿但仍处极高水平。融资余额突破2.9万亿创历史新高。券商板块受益交投活跃+中长期资金入市政策。6/2盘前：美股科技大涨（NVDA+6.3%带动SOX+3.2%），A股科技股预计超跌反弹。华泰证券排序：证券>银行>保险。
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="dot domestic"></span>国内消息面（权重60%）</div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件1</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">六部门联合印发《推动中长期资金入市工作的实施方案》——打通万亿级增量资金堵点</span>
+      <span class="ev-source">中央金融办/证监会/央行等六部门 6/1<span class="new-badge">TODAY</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01（经中央金融委员会审议同意，六部门联合发布）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★★</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">中央金融办、证监会、财政部、人社部、央行、金融监管总局六部门联合印发。核心举措：①险资A股投资比例提升+三年以上长周期考核（当年度ROE权重≤30%，3-5年指标≥60%）；②社保基金股票类资产比例稳步提升+五年以上考核；③企/职业年金三年以上考核+扩大覆盖；④公募权益基金规模与占比提升+基金经理利益绑定；⑤上市公司回购+多次分红+定增引入长线资金。同步利好：证监会副主席刘浩凌披露外资持有A股流通市值已超4万亿元。央行5月MLF净投放1000亿元（结束连续13个月加量后4月净回笼）。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">券商（交投活跃+业务增量）、保险（投资弹性释放）、银行（获注资+逆周期调节）、高股息蓝筹（增量资金首选）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">中长期（政策框架级别，影响持续至2026年底）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中信证券(600030)、东方财富(300059)、华泰证券(601688)、招商银行(600036)、中国平安(601318)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">"实施方案"到真金白银入市存在季度级时滞（险资/社保调仓以季度为单位）；政策发布首日券商已有所表现，短期利好易被price-in；当前A股成交额已近3万亿——增量资金边际效应需审慎评估。利好出尽风险：历史上类似政策发布后第2-3天往往是情绪高点。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件2</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">三部门联合印发《智能体规范应用与创新发展实施意见》——AI Agent首获国家级政策框架</span>
+      <span class="ev-source">国家网信办/发改委/工信部 5/8发布 6/1发酵<span class="new-badge">HOT</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-05-08发布，6/1起密集发酵（配合BAT字节Q1财报AI商业化数据）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★★</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">国家层面首次针对AI智能体给出系统性政策框架——覆盖19个典型场景（科学研究/产业发展/提振消费/民生福祉/社会治理五大方向）。核心信号："发展软件开发智能体，提升需求分析/架构设计/代码生成/测试全流程能力"。市场规模2026年449亿元→2029年突破3320亿元。互联网大厂同步验证：百度Q1 AI收入136亿元占核心收入52%首超广告；阿里云AI连续11季度三位数增长；腾讯下半年AI资本开支"明显放量"；字节豆包3.45亿月活上线付费会员。MaaS收入增长被视为衡量AI商业化关键指标。腾讯/阿里/字节6月云生态大会密集召开聚焦Agent落地。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">AI应用/智能体、软件开发、云计算、国产算力芯片</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">3-5天（政策发酵期+6月云生态大会密集催化）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">寒武纪(688256)、海光信息(688041)、软通动力(301236)、中科创达(300496)、拓维信息(002261)、金山办公(688111)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">政策框架到商业落地存在时间差；AI应用板块前期已有较大涨幅（寒武纪等估值极高），短期脉冲后持续性取决于实际订单；东吴证券6月"成长→价值"风格切换预警——若6/10 CPI超预期，高估值AI应用标的首当其冲。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件3</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">华为韬定律持续发酵：麒麟9050Pro流片成功（等效3nm），已量产381款芯片</span>
+      <span class="ev-source">华为 IEEE ISCAS 5/25发布，5/25-6/1持续发酵<span class="new-badge">发酵中</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-05-25发布（IEEE ISCAS），持续发酵7天至6/1</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★★</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">何庭波IEEE ISCAS发布τ导向定律+LogicFolding架构，以"时间缩微"替代"几何缩微"。麒麟2026（9050Pro）流片成功：晶体管密度238 MTr/mm²(+53.5%)，主频3.1GHz(+12.7%)，P核能效+41%，CPU/GPU+40%，等效3nm（7nm DUV多重曝光+逻辑折叠）。徐直军："美国制裁使中国半导体产业链真正成长起来，势头好得很。"已量产381款芯片，韬定律面向全行业开放。nova系列6月发布，Mate 90系列9-10月首发。伯恩斯坦评价为"中国半导体的另一个DeepSeek时刻"。华为已恢复正常产品节奏。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">半导体设备/材料、先进封装（混合键合/TSV/CMP）、华为链、EDA工具（华大九天）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">已发酵7天，本周进入持续性验证阶段（关注nova 6月发布）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中芯国际(688981)、北方华创(002371)、中微公司(688012)、长电科技(600584)、华大九天(301269)、寒武纪(688256)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">半导体板块6/1出现大幅获利回吐（科创50两日-10%+，中芯/华虹跌超5%）；已发酵7天接近"利好出尽"窗口；"等效3nm"本质是架构创新非物理制程突破（"是医术非仙丹"）；Mate 90发布在9-10月——其间4个月催化真空期。按框架8.2：板块核心标的走弱=板块见顶预警。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件4</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">科技部部长阴和俊《求是》署名文章+总书记未来产业文章同日刊发——五大前沿方向明确</span>
+      <span class="ev-source">求是杂志 / 科技部 6/1<span class="new-badge">TODAY</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★★</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">科技部部长阴和俊在《求是》发表署名文章《以高水平科技自立自强引领未来产业发展》，五大方向：①基础研究加大投入；②前沿技术统筹攻关（量子科技/生物科技/脑机接口）；③培育科技领军企业+梯度培育体系；④科技金融——鼓励长期资本"投早、投小、投长期、投硬科技"；⑤未来产业：量子/生物制造/氢能核聚变/具身智能/6G。同步：习近平总书记重要文章《前瞻布局和发展未来产业》同日刊发。具身智能首份行业标准YD/T6770-2026于6/1正式实施（仿真/真实环境基准测试框架）。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">机器人/具身智能、量子科技、6G/卫星互联网、创新药/生物制造</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">2-3天（政策主题脉冲）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">绿的谐波(688017)、汇川技术(300124)、埃斯顿(002747)、拓斯达(300607)、国盾量子(688027)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">《求是》文章偏中长期方向指引，无新增资金规模细节；氢能核聚变/量子科技距商业化遥远（框架5.1明确规避此类）；主题脉冲型——1-2日后热度通常显著下降。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件5</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">八部门联合整治非法跨境证券期货活动——两年内全面取缔+外资持股A股突破4万亿</span>
+      <span class="ev-source">证监会/央行等八部门（经国务院同意） 6/1<span class="new-badge">TODAY</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01（经国务院同意，八部门联合印发）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">《综合整治非法跨境证券期货基金经营活动实施方案》目标：两年内全面取缔境外机构非法跨境经营活动，实现"坚决取缔非法、稳妥清理存量"。整治对象：境外机构非法跨境展业/境内关联主体/非法中介/违规互联网平台及自媒体。同步：证监会副主席刘浩凌在全球投资者大会（5/28深圳）披露——各类境外投资者持有A股流通市值超4万亿元，外资已成重要参与者。年内已有22家公司退市或锁定退市（财务类13家/重大违法4家/交易类3家/主动2家）。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">内资券商（减少非法跨境竞争）、合规港股券商、A股核心资产（外资持续流入）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">中长期（两年执行期）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中信证券(600030)、东方财富(300059)、华泰证券(601688)、中信建投(601066)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">整治短期内可能引发部分跨境资金流出（清退存量）；利好内资券商但传导链条长——非立竿见影。退市加速利好市场长期健康但短期对ST板块形成压制。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件6</span><span class="ev-level t1">T1</span>
+      <span class="ev-title">BAT字节AI商业化集体加速：百度AI收入占比突破52%+字节资本开支或达$700亿</span>
+      <span class="ev-source">各公司Q1财报/彭博/湘财证券 5月底-6/1<span class="new-badge">NEW</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026年5月底Q1财报季+6/1密集报道</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val"><strong>百度</strong>：Q1 AI收入136亿元首超广告（占核心收入52%），文心5.1仅用业界6%预训练成本达领先水平，智能云+79%，自研GPU云+184%。<strong>阿里</strong>：AI产品收入连续11季度三位数增长，占外部云收入首超30%，未来五年算力投入"远超3800亿元"，千问App整合淘宝（AI试穿/比价/领券），MaaS ARR有望6月突破100亿元→全年300亿+。<strong>腾讯</strong>：Q1资本开支319亿元+研发225亿元，混元/元宝下半年明显放量，数据库Agent全面升级。<strong>字节跳动</strong>：2026年资本开支或达$700亿（约4700亿人民币，+3倍），豆包3.45亿月活+付费会员体系，Seedance 2.0视频模型全球第一（Elo 1269），自研CPU降推理成本。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">AI服务器/光模块、国产算力芯片、云计算/AI应用、港股互联网</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">中长期（AI资本开支超级周期，关注6月云生态大会）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中际旭创(300308)、工业富联(601138)、寒武纪(688256)、海光信息(688041)、腾讯(00700)、阿里(09988)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">字节$700亿系上限定调（彭博报道），存在下修可能；国内AI资本开支虽大但ROI尚未充分验证（"算账时代"才刚刚开始）；海外云厂商若因宏观因素缩减capex，国内映射将受双重打击。互联网巨头AI投入对短期利润率有压制。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件7</span><span class="ev-level t1">T1</span>
+      <span class="ev-title">COMPUTEX催化：NVIDIA+TSMC将AI引入晶圆厂——半导体制造效率革命</span>
+      <span class="ev-source">NVIDIA/TSMC GTC Taipei 6/1<span class="new-badge">TODAY</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01（黄仁勋+魏哲家GTC Taipei联合发布）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">台积电全面部署NVIDIA AI技术：cuLitho计算光刻20-50%成本/周期优化；cuEST化学仿真50倍提速；cuML先进制程控制降低波动；Metropolis纳米级缺陷检测；Omniverse FabTwin晶圆厂数字孪生。叠加美国商务部5/31紧急收紧对华AI芯片出口管制——封堵第三国（马来西亚等）转运漏洞，要求中资背景企业获许可证方可出口Blackwell/Rubin/MI350X。估计过去一年数十万颗先进芯片被转运至中国。双重意义：AI赋能芯片制造提效+对华技术封锁加码→国产替代紧迫性再升级。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">半导体设备（国产替代加速）、先进封装、EDA工具、光刻胶/材料</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">3-5天（出口管制升级催化+COMPUTEX周）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">北方华创(002371)、中微公司(688012)、华大九天(301269)、中芯国际(688981)、长电科技(600584)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">出口管制升级短期利空A股半导体（海外收入敞口企业），但中长期利好国产替代——方向确定但节奏不确定；半导体设备板块6/1已随科创50暴跌，短期情绪偏弱。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件8</span><span class="ev-level t1">T1</span>
+      <span class="ev-title">头部券商6月策略共识：AI核心主线不变，但东吴证券警示"成长→价值"风格切换窗口</span>
+      <span class="ev-source">华泰/中信/东吴证券 6/1-2晨会</span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01至02</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val"><strong>华泰证券</strong>：强结构行情进入歇脚期，三条线索——AI算力链（海外可逢低加仓）、供需双改善补涨（锂电池/电网/光伏/消费电子/小金属）、高股息防御（铁路公路/煤炭）。金融行业排序：证券>银行>保险（日均成交3.22万亿+融资2.9万亿创新高）。建筑建材深挖AI新材料+存量翻新建材+玻璃基板。<strong>中信证券</strong>：AI+能化杠铃策略（=2023-24"AI+红利"），重心从"谁在建造AI"转向"谁能适应AI"。<strong>东吴证券（关键警示）</strong>：2026年6月可能为"成长→价值"风格转换窗口——若AI爆款应用上半年仍未出现+美元走强，AI主线或迎中期调整。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">券商（短期确定性最高）、AI算力链（中期主线但需警惕风格切换）、煤炭/红利（防御对冲）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">6月整月（中期策略窗口）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中信证券(600030)、东方财富(300059)、工业富联(601138)、中际旭创(300308)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">东吴"风格切换"预警与科创50暴跌10%+形成共振——6/10 CPI+6/17 FOMC是关键验证节点；中信"AI+能化"杠铃策略暗示AI端需配合能化端对冲——单边押注AI的风险在增大。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件9</span><span class="ev-level t2">T2</span>
+      <span class="ev-title">A股并购重组密集+摘帽潮：4家公司6/3复牌，东阳光签120亿算力大单</span>
+      <span class="ev-source">各公司公告 6/1-2<span class="new-badge">NEW</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01至02</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★☆☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">重组：万隆光电23.25亿收购中控信息（3年累计对赌≥2.8亿）；概伦电子收购锐成芯微+纳能微（调整业绩承诺≥1.2亿）；声迅股份2.51亿切入特种光电。摘帽：荣丰控股/交投生态/朗源股份/中地控股4家6/2停牌、6/3复牌。业绩暴增：*ST宇顺Q1营收+480%/净利+4202%（IDC并表）；国联民生全年+406%。大单：东阳光签署100-120亿算力服务采购合同；智微智能定增28.7亿建智算中心。比亚迪5月销量38.35万辆，上汽新能源18.25万辆+46.49%。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">并购重组概念（个股驱动）、算力租赁、摘帽概念</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">个股独立行情（1-3天）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">概伦电子(688206)、东阳光(600673)、国联民生</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">重组概念多为一次性事件，不构成现象级催化；摘帽行情通常复牌首日冲高后回落（历史概率>60%）；框架4.2：个股层面的并购重组不具备规模性和传播性，不符合现象级事件标准。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件10</span><span class="ev-level t2">T2</span>
+      <span class="ev-title">5月宏观数据前瞻：外需强内需弱格局延续，人民币升至3年新高6.8167</span>
+      <span class="ev-source">海关总署/央行/浙商证券 4月实际+5月预测</span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">4月实际数据已公布，5月预测数据（6月中旬公布官方）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★☆☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">4月末M2余额353.04万亿(+8.6%)，M1余额114.58万亿(+5.0%)。前4月社融增量15.45万亿（同比少增8930亿），进出口总值16.23万亿(+14.9%)。5月预测：出口+10.6%/+9.5%，新增社融约1.18万亿，M2回落至8.5%。核心矛盾：生产强消费弱、外需强内需弱、M2与GDP缺口扩大（流动性陷阱迹象）——宽货币向宽信用传导不畅。人民币升至6.8167（三年新高）——利好外资流入+进口成本降，但利空出口企业毛利率。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">出口产业链（AI/新能源/半导体）、人民币升值受益（航空/造纸）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">中期宏观背景（6月中旬官方数据公布前为预期博弈窗口）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中际旭创(300308)、宁德时代(300750)、阳光电源(300274)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">内需疲软可能拖累整体复苏节奏（社融连续少增）；5月官方数据到6月中旬才公布——期间存在预期差风险；人民币升值对出口型企业Q2毛利率形成压力（AI光模块海外收入占比较高）。</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="dot overseas"></span>海外消息面（权重40%）</div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件11</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">COMPUTEX"核弹"：RTX Spark进军PC CPU+ Vera Rubin量产！NVDA+6% 市值$5.2T</span>
+      <span class="ev-source">NVIDIA COMPUTEX/GTC Taipei 6/1<span class="new-badge">TODAY</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01（黄仁勋2小时主题演讲，台北流行音乐中心）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★★</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">三大发布：①<strong>RTX Spark Superchip（N1X）</strong>——首款Windows PC SoC，台积电3nm，20核ARM CPU（联发科合作）+6144 CUDA核心 Blackwell GPU+128GB统一内存+1 PetaFLOP AI算力，今秋上市（30+笔电/10+台式机），合作方戴尔/惠普/联想/华硕/微软。黄仁勋："PC产业40年来首次完整重新设计。"Intel -5%, AMD -4%, 高通 -8%, ARM +16%, 戴尔+9.5%, 惠普+8%。②<strong>Vera Rubin全面量产</strong>——88核Olympus CPU(1.2TB/s)+Rubin GPU，3.5倍训练/5倍推理性能，首批客户OpenAI/Anthropic/xAI/Oracle/CoreWeave，规模和供应链是Blackwell两倍。③<strong>股息$0.01→$0.25(+2400%)+$800亿回购</strong>（6/4除息）。NVDA收$224.33(+6.3%)，市值$5.2T。金句："算力即收入，算力即利润""你买得越多，赚得越多"。下半年还有"未透露的惊喜新品"。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">AI PC产业链、AI光模块/服务器、Arm生态（ARM+16%）、先进封装、PCB/载板</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">3-5天（COMPUTEX整周催化）+ 后续产品落地（秋季）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中际旭创(300308)、工业富联(601138)、沪电股份(002463)、新易盛(300502)、天孚通信(300394)、联想集团(00992)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">RTX Spark今秋才上市——短期无实质业绩贡献；COMPUTEX Day 1已过，后续催化边际递减；A股AI硬件6/1集体暴跌（科创50-5%）——海外映射效应可能被获利回吐压制；"buy the rumor, sell the news"——发布会当天可能就是阶段高点。警惕6/3 Broadcom财报成为AI硬件下一个验证节点。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件12</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">美光COMPUTEX展示全栈AI存储：HBM4量产+1γ DDR5 9200MT/s，市值破$1T</span>
+      <span class="ev-source">Micron COMPUTEX 6/1-4<span class="new-badge">进行中</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01至04（COMPUTEX产品展示+6/24 FY3Q财报）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★★</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">美光COMPUTEX全栈展示：<strong>HBM4 36GB 12Hi</strong>——Q2量产，2026全年售罄（定价+量锁死），2.6倍LLM推理吞吐量提升；<strong>1γ 256GB DDR5 RDIMM</strong>——9200MT/s(+40%性能/-40%功耗)，sampling阶段；<strong>256GB SOCAMM2</strong>——世界最高容量低功耗模块，独家供应，1/3功耗/体积；<strong>GDDR7</strong>——1.5TB/s(+60% vs GDDR6)；<strong>LPDDR6 16Gb</strong>——+50%性能。FY2Q26: $23.86B收入(+196% YoY)，EPS $12.20(+682%)，毛利率75%。FY3Q指引：~$33.5B/毛利率81%。HBM TAM→$100B by 2028(40% CAGR)。MU市值破$1T（+700%一年），三星/SK海力士同步万亿俱乐部。CEO称仅能满50-67%客户DRAM需求——结构性短缺至少持续至2028年。$1000亿纽约厂区破土动工。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">存储芯片模组、HBM产业链、存储封测、先进封装（TSV/混合键合）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">中长期（存储超级周期持续至2027+，6/24财报为下一验证节点）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">江波龙(301308)、佰维存储(688525)、德明利(301309)、兆易创新(603986)、长电科技(600584)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">DRAM价格同比+172%已极端——历史上存储股价见顶领先价格3-6个月；HBM"全年售罄"=利好但也意味着年内增量空间收窄；三巨头集体$1T市值——充分price-in；6/24美光FY3Q财报是关键时刻——任何不及预期都将导致剧烈回调。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件13</span><span class="ev-level t0">T0</span>
+      <span class="ev-title">美伊冲突急剧升级！美军空袭+伊朗反击+威胁关闭Bab al-Mandeb → Brent暴涨5-8%</span>
+      <span class="ev-source">多方 6/1-2<span class="new-badge">ESCALATING</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01至02（周末事态急剧升级）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★★</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">美伊周末急剧升级：①美军空袭伊朗雷达+无人机设施（伊朗击落美无人机）；②伊朗IRGC反击——向美军科威特基地发射2枚弹道导弹（被CENTCOM拦截）；③伊朗宣布暂停与美国间接谈判（抗议以色列在黎巴嫩/加沙持续行动）；④伊朗IRGC威胁激活<strong>Bab al-Mandeb海峡</strong>（年通行量约600万桶/日）作为额外压力点。Brent暴涨5-8%至$95-97，WTI至$89-94。此前5月因停火预期油价暴跌17-20%（2020年来最大月跌幅），周末升级证明停火极其脆弱。分析师：协议达成→$70-75；全面破裂→$130-140+（Rystad警告$180极端情景）。中东原油出口已从1830万桶/日降至880万桶/日。乌克兰同步加大攻击俄炼油厂，莫斯科禁止Jet燃料出口至11月。全球库存以创纪录速度消耗。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">石油开采/油服、黄金（避险）、军工/国防、航运（绕行好望角成本传导）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">高度不确定（取决于地缘进展，6/10 CPI为关键宏观验证）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中国石油(601857)、中国海油(600938)、山东黄金(600547)、中金黄金(600489)、中国船舶(600150)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">地缘事件不确定性极高——上周五还因谈判预期暴跌，周末就逆转暴涨；一次意外停火协议即可瞬间逆转所有涨幅（振幅极大、方向不可预测）；按框架8.2：地缘事件属"无法控制节奏"类型，不适合短期格局重仓；6/10 CPI若被油价推高→6/17 FOMC可能转鹰→全球风险资产普跌。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件14</span><span class="ev-level t1">T1</span>
+      <span class="ev-title">Broadcom 6/3财报前瞻：AI营收指引$10.7B(+140%)，Backlog $73B创纪录</span>
+      <span class="ev-source">Broadcom Q2 FY2026 6/3盘后<span class="new-badge">6/3</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-03（本周三盘后）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">Broadcom Q2 FY2026预期AI半导体营收$10.7B(+140% YoY)，总营收~$22B，半导体backlog $73B+（接近总积压一半）。定制ASIC占AI芯片设计市场60-70%份额，客户覆盖Google(TPU v7/5年合同至2031)、Meta、OpenAI($10B新签2026贡献)、苹果(Baltra)、Anthropic($21B)。CEO Hock Tan目标2027年AI营收超$1,000亿。AVGO $446.77(5/29+4.73%)，市值~$2.1T，P/E ~81x。加入Applied Materials EPIC先进封装平台+VMware Cloud Foundation 9.1支持AI工作负载+AI赋能宽带芯片。关键变量：TSMC 2nm产能能否按期扩至月产10万片。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">AI芯片（ASIC定制映射）、先进封装（长电/通富微电承接全球AI芯片封测外溢）</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">6/3财报前预期博弈，6/4盘后根据结果确定方向</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">长电科技(600584)、通富微电(002156)、寒武纪(688256)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">81x P/E极高——任何miss都导致剧烈回调（大空头Leopold Aschenbrenner已披露PUT头寸）；A股ASIC映射标的与Broadcom业务差异大——真正受益的是先进封装而非芯片设计；6/3财报+6/10 CPI+6/17 FOMC三连验证——第一个miss就可能引发连锁反应。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件15</span><span class="ev-level t1">T1</span>
+      <span class="ev-title">OpenAI+NVIDIA+宇树三方围剿Tesla Optimus！TSLA -4%，机器人竞争格局骤变</span>
+      <span class="ev-source">OpenAI/NVIDIA/Tesla 6/1<span class="new-badge">NEW</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026-06-01</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val"><strong>OpenAI</strong>：Sam Altman宣布成立机器人部门——"打造帮助人类在物理世界工作的机器人"，聚焦基础设施熟练劳动→扩展至个人机器人。<strong>NVIDIA+宇树科技</strong>：宇树H2人形机器人集成Jetson Thor+Isaac GR00T平台，NVIDIA发布开源参考设计。<strong>Tesla</strong>：TSLA -4%至$420-435，已将Model S/X产线全面停产转Optimus组装（$250亿+年度capex），Gen 3要7-8月才发布、2027年Q3才交付。Cantor Fitzgerald维持$510目标价。竞争格局从"一家独大"变为"三足鼎立"——但人形机器人商业化至少还需2-3年。SpaceX IPO（SPCX）6月中旬上市，$1.75T-2T估值/$70B募资，TSLA持有$20亿SpaceX股权。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">机器人（A股映射，NVIDIA+宇树链>TSLA链）+ 具身智能标准1日实施</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">2-3天（竞争事件脉冲）+ 具身智能标准实施为长期利好</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">绿的谐波(688017)、汇川技术(300124)、拓斯达(300607)、三花智控(002050)、拓普集团(601689)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">竞争加剧对Tesla利空但对A股机器人偏中性——更多参与者=更大市场但竞争更激烈；人形机器人商业化至少还需2-3年（框架5.1：0→1阶段，属"博弈预期"非兑现业绩）；宇树H2用NVIDIA平台意味着国产机器人也可能被国际竞争替代。中信证券看好特斯拉机器人——但短期面临多方竞争压力。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件16</span><span class="ev-level t1">T1</span>
+      <span class="ev-title">Apple供应链"RAMageddon"——存储成本将占iPhone BOM 45%，Cook承认定价"到极限"</span>
+      <span class="ev-source">Apple Q2 FY2026 5月-6月持续<span class="new-badge">ONGOING</span></span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026年5-6月（Q2 FY2026财报后持续发酵）</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★★☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">Apple Q2 FY2026营收$111.2B(+17% YoY)超预期，但两大供应链风险：①<strong>Mac SoC严重短缺</strong>——TSMC先进制程产能被AI芯片抢占，Mac mini/Studio/MacBook Neo供不应求，Cook称"需数月"达供需平衡；②<strong>"RAMageddon"</strong>——8GB LPDDR5X单价飙至~$180（存储成本或占iPhone BOM 45%），此前低价囤货库存6月起耗尽→Q3毛利率指引47.5-48.5%(环比下降)。Cook首次承认iPhone定价"几乎已到极限"。中国大陆Q2收入+28%。9/1 Tim Cook→John Ternus CEO交接。全球智能手机2026年预计出货下降13.9%（Counterpoint），Q1批发价+14%。WWDC 6/8-12为下一关键事件。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">存储芯片（涨价红利）、苹果链（立讯/歌尔/蓝思——中国大陆+28%）、AI PC链</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">持续至Q3 FY2026（存储涨价周期内+WWDC 6/8-12）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">立讯精密(002475)、歌尔股份(002241)、蓝思科技(300433)、江波龙(301308)、兆易创新(603986)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">存储涨价利好存储厂但利空苹果链（成本上升+Mac供应受限=出货量下修风险）；Cook卸任前最后一季——管理层过渡不确定性；全球智能手机市场创纪录萎缩（-13.9%）——需求端并不乐观。</span></div>
+    </div>
+  </div>
+
+  <div class="event">
+    <div class="ev-header">
+      <span class="ev-num">催化事件17</span><span class="ev-level t2">T2</span>
+      <span class="ev-title">美股6月"催化剂核爆月"：CPI(6/10)+FOMC(6/17)+SpaceX IPO(6/12)贯穿全月</span>
+      <span class="ev-source">多方 6/1-2</span>
+    </div>
+    <div class="fields">
+      <div class="f"><span class="lbl">时间：</span><span class="val">2026年6月全月</span></div>
+      <div class="f"><span class="lbl">影响程度：</span><span class="val stars">★★★☆☆</span></div>
+      <div class="f full"><span class="lbl">核心：</span><span class="val">S&P 500约7580，Nasdaq 27262，连涨9周（2020年5月以来最佳）。密集催化剂：6/3 Broadcom财报+ISM服务业PMI；6/5非农就业（预期65-100K）；6/8-12 Apple WWDC；6/10 CPI（"第一个地雷"——油价传导首次全面反映）；6/12 SpaceX IPO($1.75-2T估值/$70B募资，史上最大)；6/16-17 FOMC（新主席Kevin Warsh首秀+新点阵图——市场定价年底加息25bp）；6/18四巫日+6/19 Juneteenth休市；6/24美光财报。SpotGamma警告6/10-18窗口"可能是这轮涨势迄今最大考验"。Intel Crescent Island AI推理芯片年底限量出货（低成本路线）。SOX指数YTD +64%（8倍于S&P 500），半导体占S&P 500总市值18%。</span></div>
+      <div class="f"><span class="lbl">受益板块：</span><span class="val">A股AI映射（受美股情绪传导）、黄金（避险对冲）、VIX相关</span></div>
+      <div class="f"><span class="lbl">持续时间：</span><span class="val">全月（密集催化剂窗口，6/10-18为峰值风险区间）</span></div>
+      <div class="f"><span class="lbl">受益龙头：</span><span class="val">中际旭创(300308)、寒武纪(688256)、山东黄金(600547)</span></div>
+      <div class="f full"><span class="lbl">风险提示：</span><span class="val" style="color:var(--red)">CPI超预期+Warsh转鹰+SpaceX IPO虹吸$210B+资金=三重打击；SOX YTD +64%——半导体估值极高位，任何催化miss都可触发剧烈回调；6/18四巫日+假期压缩交易周=高波动叠加低流动性。</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="dot domestic"></span>短期精选标的（6维打分模型，流动性系数×1.2）</div>
+  <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">
+    <strong>方法论：</strong>基于选股方法论框架第六节——行业景气度(25%)+业务纯度(25%)+历史估值位置(20%)+龙头企业(10%)+辨识度(10%)+风险值(10%)，叠加大盘流动性系数（A股成交额2.88万亿>1.5万亿→×1.2）。<strong>前提：行业必须先有现象级事件拐点。</strong>聚焦COMPUTEX AI链+存储+券商三大催化主线，偏短期格局（一波流/30%仓位目标）。已筛掉不适合短期格局的方向（见表格后说明）。
+  </div>
+
+  <table class="stock-table">
+    <thead>
+      <tr><th>排名</th><th>股票</th><th>核心催化</th><th>景气度<br>(25%)</th><th>纯度<br>(25%)</th><th>估值位置<br>(20%)</th><th>龙头<br>(10%)</th><th>辨识度<br>(10%)</th><th>风险值<br>(10%)</th><th>总分<br>(×1.2)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="score-hi">1</td><td class="name">中际旭创<span class="code">300308</span></td><td>NVIDIA COMPUTEX+Vera Rubin量产+AI算力链</td><td>100</td><td>95</td><td>80</td><td>100</td><td>95</td><td>-5</td><td class="score-hi">102.0</td></tr>
+      <tr><td class="score-hi">2</td><td class="name">工业富联<span class="code">601138</span></td><td>NVIDIA AI服务器核心代工+RTX Spark PC+DSX平台</td><td>100</td><td>85</td><td>85</td><td>95</td><td>90</td><td>-5</td><td class="score-hi">96.6</td></tr>
+      <tr><td class="score-hi">3</td><td class="name">北方华创<span class="code">002371</span></td><td>华为韬定律+出口管制升级(国产替代)+六部门入市</td><td>95</td><td>90</td><td>75</td><td>95</td><td>95</td><td>-10</td><td class="score-hi">93.0</td></tr>
+      <tr><td class="score-hi">4</td><td class="name">中信证券<span class="code">600030</span></td><td>日均成交3.22万亿+融资2.9万亿+中长期资金入市</td><td>90</td><td>85</td><td>80</td><td>100</td><td>100</td><td>-5</td><td class="score-hi">90.6</td></tr>
+      <tr><td class="score-mid">5</td><td class="name">佰维存储<span class="code">688525</span></td><td>美光HBM4+1γ DDR5+DRAM价格+172%+出口+174%</td><td>100</td><td>85</td><td>70</td><td>85</td><td>85</td><td>-15</td><td class="score-mid">90.0</td></tr>
+      <tr><td class="score-mid">6</td><td class="name">江波龙<span class="code">301308</span></td><td>存储涨价周期+AI存储(美光/三星/海力士供应链)</td><td>100</td><td>90</td><td>65</td><td>85</td><td>80</td><td>-15</td><td class="score-mid">87.6</td></tr>
+      <tr><td class="score-mid">7</td><td class="name">寒武纪<span class="code">688256</span></td><td>AI算力芯片+智能体政策+国产替代+美国出口管制</td><td>95</td><td>80</td><td>70</td><td>90</td><td>100</td><td>-15</td><td class="score-mid">86.4</td></tr>
+      <tr><td class="score-mid">8</td><td class="name">绿的谐波<span class="code">688017</span></td><td>具身智能标准实施+OpenAI/宇树机器人催化+《求是》</td><td>90</td><td>85</td><td>75</td><td>85</td><td>80</td><td>-10</td><td class="score-mid">84.6</td></tr>
+      <tr><td>9</td><td class="name">中国海油<span class="code">600938</span></td><td>美伊冲突升级+Brent $95-97+霍尔木兹危机+库存新低</td><td>85</td><td>90</td><td>70</td><td>90</td><td>85</td><td>-20</td><td class="score-mid">84.0</td></tr>
+      <tr><td>10</td><td class="name">长电科技<span class="code">600584</span></td><td>先进封装(AVGO/NVDA/MU全需求)+Chiplet+3D堆叠</td><td>90</td><td>80</td><td>75</td><td>90</td><td>85</td><td>-10</td><td class="score-mid">82.2</td></tr>
+    </tbody>
+  </table>
+  <div style="font-size:12px;color:var(--text2);margin-top:4px;">*总分=(景气度×0.25+纯度×0.25+估值位置×0.20+龙头×0.10+辨识度×0.10+风险值×0.10)×1.2。风险值为扣分项。仅供方法论验证，不构成投资建议。</div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="dot domestic"></span>短期精选组合（一波流·30%仓位目标）</div>
+  <div class="suggest-grid">
+
+    <div class="suggest-card">
+      <div class="rank">#1</div>
+      <h3>COMPUTEX AI算力链（核心主线）</h3>
+      <div class="pick">中际旭创(300308) + 工业富联(601138)</div>
+      <div class="info"><span class="lbl">催化：</span>NVIDIA RTX Spark+Vera Rubin量产+DSX平台。NVDA+6.3%, SOX+3.2%, ARM+16%。COMPUTEX整周催化窗口（6/1-4）。</div>
+      <div class="info"><span class="lbl">框架匹配：</span>短期格局/海外业绩映射型。框架5.2——"卖铲子的"：AI产业链最上游光模块/服务器，全球龙头地位不可替代。NVDA资本开支持续扩大+Vera Rubin规模2倍于Blackwell→量价齐升。</div>
+      <div class="info"><span class="lbl">止盈信号：</span>①COMPUTEX 6/4闭幕后次日若冲高回落→减仓50%；②单日换手超15%→清仓；③中际旭创跌破5日线→止盈。</div>
+      <div class="tags"><span class="tag">T0催化</span><span class="tag">全球龙头</span><span class="tag">高纯度</span><span class="tag">COMPUTEX周</span><span class="tag">得分102</span></div>
+      <div class="risk">风险：A股AI硬件6/1已集体暴跌(科创50-5%)，反弹力度存疑；"buy the rumor, sell the news"；COMPUTEX闭幕后催化真空。中际旭创周末辟谣事件反映市场情绪脆弱。</div>
+    </div>
+
+    <div class="suggest-card">
+      <div class="rank">#2</div>
+      <h3>券商板块（流动性+政策双击）</h3>
+      <div class="pick">中信证券(600030) + 东方财富(300059)</div>
+      <div class="info"><span class="lbl">催化：</span>六部门中长期资金入市+A股日均成交3.22万亿+融资余额2.9万亿历史新高+八部门整治非法跨境证券。华泰证券排序：证券>银行>保险。</div>
+      <div class="info"><span class="lbl">框架匹配：</span>短期格局（流动性溢价驱动型）。框架3.1：流动性溢价=最好赚钱效应。成交额>1.5万亿=充沛BUFF。A股成交额连续站上2.5万亿+，券商是最直接受益方。</div>
+      <div class="info"><span class="lbl">止盈信号：</span>①A股成交额回落至2万亿以下→减仓50%；②六部门政策第3天后若量能不济→止盈；③板块龙头开始滞涨→清仓。</div>
+      <div class="tags"><span class="tag">T0政策</span><span class="tag">流动性溢价</span><span class="tag">3.22万亿</span><span class="tag">得分90.6</span></div>
+      <div class="risk">风险：券商板块短期涨幅已大；中长期资金入市有时滞（季度级调仓）；若成交额回落至2万亿以下→逻辑弱化；"政策出尽"风险。</div>
+    </div>
+
+    <div class="suggest-card">
+      <div class="rank">#3</div>
+      <h3>存储芯片超级周期</h3>
+      <div class="pick">佰维存储(688525) + 江波龙(301308)</div>
+      <div class="info"><span class="lbl">催化：</span>美光COMPUTEX展示HBM4+1γ DDR5 9200MT/s，FY2Q26收入$23.86B(+196%)，HBM全年售罄，DRAM价格+172% YoY，Q1出口+174%。存储三巨头集体$1T市值。</div>
+      <div class="info"><span class="lbl">框架匹配：</span>短期格局。存储涨价周期中段——每涨10%价格，模组厂毛利率提升2-3pct。框架5.2："卖铲子"——HBM/DDR5是AI最上游的硬件约束。6/24美光财报为下一验证节点。</div>
+      <div class="info"><span class="lbl">止盈信号：</span>①DRAM现货价格连续3日滞涨→减仓；②美光6/24财报若Q3指引低于预期→清仓；③存储龙头单日换手20%+→止盈。</div>
+      <div class="tags"><span class="tag">T0催化</span><span class="tag">涨价周期</span><span class="tag">HBM4</span><span class="tag">6/24验证</span><span class="tag">得分90</span></div>
+      <div class="risk">风险：DRAM价格+172%是极端值——历史上存储股价见顶领先价格3-6个月；HBM"全年售罄"=年内增量空间收窄；CXMT科创板IPO增加国产供给担忧。</div>
+    </div>
+
+    <div class="suggest-card">
+      <div class="rank">#4</div>
+      <h3>半导体设备（国产替代加速）</h3>
+      <div class="pick">北方华创(002371) + 中微公司(688012)</div>
+      <div class="info"><span class="lbl">催化：</span>华为韬定律+美国对华AI芯片管制再收紧(5/31封堵第三国转运)+NVIDIA/TSMC将AI引入晶圆厂→半导体制造效率革命+国产替代紧迫性升级。</div>
+      <div class="info"><span class="lbl">框架匹配：</span>短期格局（但已发酵7天，需精挑入场点）。框架4.2：华为事件四要素全满分，但进入持续性验证阶段。半导体设备是"卖铲子的铲子"——无论麒麟/寒武纪/长鑫都需要北方华创/中微的设备。</div>
+      <div class="info"><span class="lbl">止盈信号：</span>①科创50连续3日不创新高→减仓；②北方华创跌破10日线→止盈；③美国出口管制若出现豁免/松动→立即清仓。</div>
+      <div class="tags"><span class="tag">T0催化</span><span class="tag">发酵7天</span><span class="tag">国产替代</span><span class="tag">得分93</span></div>
+      <div class="risk">风险：半导体板块6/1集体暴跌(科创50-10%+)——可能已进入利好出尽阶段；韬定律发酵7天接近情绪拐点；Mate 90在9-10月→4个月催化真空。</div>
+    </div>
+
+    <div class="suggest-card">
+      <div class="rank">#5</div>
+      <h3>油服/黄金（地缘对冲·轻仓）</h3>
+      <div class="pick">中国海油(600938) + 山东黄金(600547)</div>
+      <div class="info"><span class="lbl">催化：</span>美伊冲突升级→Brent $95-97(+5-8%)，伊朗威胁关闭Bab al-Mandeb，中东出口减半(1830→880万桶/日)。全球库存创纪录消耗。Rystad警告$180极端情景。</div>
+      <div class="info"><span class="lbl">框架匹配：</span>短期格局（地缘事件型·对冲仓位）。框架4.2四要素：真实性✓ 传播性✓ 规模性✓ 时效性递减。框架8.2：地缘事件属"无法控制节奏"类型——<strong>仅适合轻仓对冲，不适合主力仓位</strong>。</div>
+      <div class="info"><span class="lbl">止盈信号：</span>①美伊达成任何形式停火协议→立即清仓（油价可能单日-15%+）；②Brent跌破$85→止损；③6/10 CPI公布前减仓50%。</div>
+      <div class="tags"><span class="tag">T0地缘</span><span class="tag">极高风险</span><span class="tag">对冲型</span><span class="tag">Brent $95</span><span class="tag">得分84</span></div>
+      <div class="risk">风险：一次意外停火协议即可瞬间逆转（上周五刚因谈判预期暴跌17-20%）；框架8.2宏观维度：地缘事件不适合短期格局——无法控制节奏；仅建议5-10%仓位对冲。</div>
+    </div>
+
+    <div class="suggest-card">
+      <div class="rank">#6</div>
+      <h3>AI应用/智能体（政策+商业化）</h3>
+      <div class="pick">寒武纪(688256) + 软通动力(301236)</div>
+      <div class="info"><span class="lbl">催化：</span>三部门智能体政策+百度AI收入超广告+字节豆包3.45亿月活+BAT字节资本开支提速。6月密集云生态大会。MaaS收入增长验证AI商业化。</div>
+      <div class="info"><span class="lbl">框架匹配：</span>短期格局（政策+商业化双驱动）。框架4.1：AI正从0→1突破期跨入1→10产业化阶段。智能体首获国家级政策→19个场景落地→软件/云计算直接受益。</div>
+      <div class="info"><span class="lbl">止盈信号：</span>①云生态大会(6月中旬)发布后若冲高回落→止盈；②寒武纪单日换手25%+→清仓；③东吴风格切换信号确认(6/10 CPI后)→减仓。</div>
+      <div class="tags"><span class="tag">T0政策</span><span class="tag">商业化</span><span class="tag">Agent元年</span><span class="tag">风格切换</span><span class="tag">得分86</span></div>
+      <div class="risk">风险：寒武纪估值极高(P/E 200+)；东吴证券6月风格切换预警——AI应用作为高估值成长标的将首当其冲；政策框架到订单落地存在时间差。</div>
+    </div>
+
+  </div>
+
+  <div style="font-size:13px;color:var(--text2);background:var(--card);padding:16px;border-radius:8px;border:1px solid var(--border);margin-top:8px;">
+    <strong>不适合短期格局的方向（已筛掉）：</strong><br>
+    <strong>量子科技/氢能核聚变</strong>——框架5.1明确规避：技术远未突破，商业化遥遥无期，不符合短期格局要求。<br>
+    <strong>新能源车整车（比亚迪/小米YU7）</strong>——大湾区车展催化偏一次性事件（展后关注度回落），且比亚迪5月销量38.35万辆已在预期内（无超预期惊喜），短期格局性价比不高。<br>
+    <strong>卫星互联网/商业航天</strong>——虽获中信证券推荐，但SpaceX IPO(6/12)前A股映射关系弱（国内商业航天标的与SpaceX无直接业务关联），估值位置普遍偏高。<br>
+    <strong>生物制造/创新药</strong>——《求是》提及但无新增资金规模，板块本身处于回调通道（药明康德等），不符合"行业先有现象级拐点"的前提。
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title"><span class="dot domestic"></span>综合风险预警（框架8.2信号 + 6月特殊风险）</div>
+  <div class="warn-grid">
+
+    <div class="highlight-box"><strong style="color:var(--red)">1. 6/10 CPI——"第一个地雷"（宏观清仓预警）</strong><br>美伊冲突推升油价$95-97，5月CPI将首次全面反映能源成本传导。若CPI超预期反弹→市场将重新定价Fed加息概率→AI高估值标的将首当其冲。按框架8.2宏观维度：若官方连续发布风险提示+增量资金见顶→清仓式离场。</div>
+
+    <div class="highlight-box"><strong style="color:var(--red)">2. 6/17 FOMC——新主席Warsh首秀</strong><br>Kevin Warsh首次FOMC会议+新点阵图。市场当前定价年底加息25bp。若点阵图显示更鹰→全球风险资产估值承压。按框架8.2：流动性收紧=负面BUFF，需降低仓位+回调容忍度。</div>
+
+    <div class="highlight-box"><strong style="color:var(--red)">3. SpaceX IPO虹吸效应（6/12）</strong><br>史上最大IPO($1.75-2T估值/$70B募资)+OpenAI/Anthropic上市预期→6月股权融资或突破$210B。纳指3倍自由流通权重规则→被动基金被迫卖出其他科技股购买SpaceX→A股AI映射可能间接受压。</div>
+
+    <div class="highlight-box"><strong style="color:var(--red)">4. AI硬件"利好出尽"风险（板块见顶预警）</strong><br>科创50两日暴跌10%+，半导体/CPO/PCB集体获利回吐。COMPUTEX催化发布日可能就是阶段高点。按框架8.2板块维度：板块核心标的走弱（龙头滞涨/震荡）=板块见顶信号。融资余额2.9万亿创新高=杠杆资金过度拥挤。</div>
+
+    <div class="highlight-box"><strong style="color:var(--gold)">5. 东吴证券"风格切换"预警 + 估值极端化</strong><br>东吴明确判断2026年6月可能为"成长→价值"切换窗口——若AI爆款应用上半年仍未出现+美元走强→AI主线或迎中期调整。SOX YTD +64%(8倍于S&P 500)，半导体占S&P总市值18%→估值处于历史极高端。</div>
+
+    <div class="highlight-box"><strong style="color:var(--gold)">6. 地缘政治"反复拉锯"——无法控制节奏</strong><br>美伊上周五因谈判预期油价暴跌17-20%，周末因升级暴涨5-8%——振幅极大、方向不可预测。按框架8.2：地缘事件属"无法控制节奏"类型，<strong>不适合短期格局重仓</strong>。一次意外停火协议即可瞬间逆转所有涨幅。</div>
+
+    <div class="highlight-box"><strong style="color:var(--gold)">7. 存储价格极端化——历史上见顶领先股价3-6个月</strong><br>DRAM价格+172% YoY已是极端值，三巨头集体$1T市值=充分price-in。历史上存储价格见顶往往领先股价3-6个月。"HBM全年售罄"=利好但也意味着年内增量空间收窄。6/24美光财报指引是关键时刻。</div>
+
+    <div class="highlight-box"><strong style="color:var(--gold)">8. "指数跌、个股涨"格局不可持续 + 缩量隐忧</strong><br>A股6/1极致分化——权重暴跌(科创50-5%)但3700+个股上涨。历史上此类分化通常不可持续：要么权重企稳带动指数回升，要么普涨转普跌。成交额环比缩量4400亿需警惕。人民币升值(6.8167三年新高)利空出口企业Q2毛利率。</div>
+
+  </div>
+</div>
+
+<div class="disclaimer">
+  风险提示：本报告仅为投研方法论验证，所有内容不构成投资建议。股市有风险，投资需谨慎。<br>
+  &copy; 2026 消息面催化报告 · 基于"超景气价值投机"框架自动生成
+</div>
+
+</div>
+</body>
+</html>
