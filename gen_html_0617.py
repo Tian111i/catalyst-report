@@ -1,4 +1,66 @@
-<!DOCTYPE html>
+# -*- coding: utf-8 -*-
+"""生成消息面催化报告HTML - 2026-06-17 工信部AI政策+华为韬定律+美伊和平+NVIDIA"""
+import json, os
+
+BASE = r'E:\投研尝试'
+os.chdir(BASE)
+
+with open('report_data.json', 'r', encoding='utf-8') as f:
+    data = json.load(f)
+
+quotes = data['quotes']
+
+CODE_NAMES = {
+    '300308':'中际旭创','601138':'工业富联','002371':'北方华创','688981':'中芯国际',
+    '688012':'中微公司','600584':'长电科技','002594':'比亚迪','300750':'宁德时代',
+    '601857':'中国石油','600938':'中国海油','601899':'紫金矿业','600547':'山东黄金',
+    '600988':'赤峰黄金','600030':'中信证券','300059':'东方财富','300496':'中科创达',
+    '301236':'软通动力','688256':'寒武纪','688041':'海光信息','002463':'沪电股份',
+    '300502':'新易盛','300394':'天孚通信','603986':'兆易创新','688525':'佰维存储',
+    '603259':'药明康德','002475':'立讯精密','002241':'歌尔股份','000636':'风华高科',
+    '300408':'三环集团','300285':'国瓷材料','603678':'火炬电子','688126':'沪硅产业',
+    '300274':'阳光电源','605117':'德业股份','002920':'德赛西威','688017':'绿的谐波',
+    '300124':'汇川技术','002747':'埃斯顿','300607':'拓斯达','600118':'中国卫星',
+    '600879':'航天电子','688347':'华虹公司','002916':'深南电路','688041':'海光信息',
+    '300433':'蓝思科技','000725':'京东方A','002049':'紫光国微','603160':'汇顶科技',
+    '688008':'澜起科技','688099':'晶晨股份','002230':'科大讯飞','300033':'同花顺',
+}
+
+def q(code):
+    v = quotes.get(code, {})
+    v['_name'] = CODE_NAMES.get(code, v.get('name', code))
+    return v
+
+def stock_card(code):
+    v = q(code)
+    name = v['_name']
+    mcap = v.get('mcap_yi', 0)
+    pe = v.get('pe_ttm', 0)
+    pb = v.get('pb', 0)
+    chg = v.get('change_pct', 0)
+    chg_str = f'<span style="color:{"#d32f2f" if chg>0 else "#2e7d32"}">{chg:+.2f}%</span>'
+    if mcap >= 1000: tag = '🏛️ 千亿大盘'
+    elif mcap >= 200: tag = '📈 中盘成长'
+    elif mcap >= 50: tag = '🔥 小市值'
+    else: tag = '💎 微盘'
+    return f'''<div class="stock-card">
+  <div class="stock-header">
+    <span class="stock-name">{name}</span>
+    <span class="stock-code">{code}</span>
+    <span class="stock-tag">{tag}</span>
+  </div>
+  <div class="stock-details">
+    <span>市值：{mcap:.0f}亿</span>
+    <span>PE(TTM)：{pe:.1f}</span>
+    <span>PB：{pb:.1f}</span>
+    <span>最新涨跌：{chg_str}</span>
+  </div>
+</div>'''
+
+def stocks_html(codes):
+    return '\n    '.join(stock_card(c) for c in codes)
+
+html = r'''<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -108,97 +170,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>AI应用/AI Agent、算力基础设施、6G/通信、工业互联网、AI终端</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中科创达</span>
-    <span class="stock-code">300496</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：229亿</span>
-    <span>PE(TTM)：62.2</span>
-    <span>PB：2.8</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">软通动力</span>
-    <span class="stock-code">301236</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：316亿</span>
-    <span>PE(TTM)：771.7</span>
-    <span>PB：3.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">寒武纪</span>
-    <span class="stock-code">688256</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：8212亿</span>
-    <span>PE(TTM)：302.2</span>
-    <span>PB：67.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">海光信息</span>
-    <span class="stock-code">688041</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：6841亿</span>
-    <span>PE(TTM)：250.9</span>
-    <span>PB：29.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中信证券</span>
-    <span class="stock-code">600030</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：3318亿</span>
-    <span>PE(TTM)：12.0</span>
-    <span>PB：1.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">同花顺</span>
-    <span class="stock-code">300033</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：958亿</span>
-    <span>PE(TTM)：49.2</span>
-    <span>PB：23.5</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">科大讯飞</span>
-    <span class="stock-code">002230</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：904亿</span>
-    <span>PE(TTM)：114.9</span>
-    <span>PB：4.3</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['300496', '301236', '688256', '688041', '600030', '300033', '002230']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】AI应用——拓尔思(300229 市值约95亿——AI语义/政务AI)、海天瑞声(688787 市值约40亿——AI数据标注)；6G/通信——信科移动(688387 市值约210亿)、震有科技(688418 市值约45亿——卫星通信)；工业互联网——中控技术(688777 市值约380亿偏大)、东土科技(300353 市值约65亿——工业以太网)；AI终端——中科创达(300496 已列，智能终端OS)、恒玄科技(688608 市值约185亿——AIoT SoC)</div>
   </div>
@@ -217,84 +189,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>半导体设备/EDA、算力芯片国产替代、封测、华为产业链</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">北方华创</span>
-    <span class="stock-code">002371</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：4868亿</span>
-    <span>PE(TTM)：87.4</span>
-    <span>PB：12.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中芯国际</span>
-    <span class="stock-code">688981</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2602亿</span>
-    <span>PE(TTM)：206.7</span>
-    <span>PB：7.0</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中微公司</span>
-    <span class="stock-code">688012</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2989亿</span>
-    <span>PE(TTM)：109.5</span>
-    <span>PB：12.3</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">长电科技</span>
-    <span class="stock-code">600584</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：1377亿</span>
-    <span>PE(TTM)：83.3</span>
-    <span>PB：4.8</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">海光信息</span>
-    <span class="stock-code">688041</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：6841亿</span>
-    <span>PE(TTM)：250.9</span>
-    <span>PB：29.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">软通动力</span>
-    <span class="stock-code">301236</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：316亿</span>
-    <span>PE(TTM)：771.7</span>
-    <span>PB：3.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['002371', '688981', '688012', '600584', '688041', '301236']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】EDA/IP——芯原股份(688521 市值约210亿——半导体IP授权)、华大九天(301269 市值约320亿——EDA龙头偏大但核心受益)；封测设备——华峰测控(688200 市值约220亿)、金海通(603061 市值约85亿——分选机)；华为概念——拓维信息(002261 市值约115亿——升腾生态伙伴)、神州数码(000034 市值约190亿——华为算力整机伙伴)</div>
   </div>
@@ -313,45 +208,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>券商（头部集中）、金融科技</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中信证券</span>
-    <span class="stock-code">600030</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：3318亿</span>
-    <span>PE(TTM)：12.0</span>
-    <span>PB：1.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">东方财富</span>
-    <span class="stock-code">300059</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2553亿</span>
-    <span>PE(TTM)：23.1</span>
-    <span>PB：3.2</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">同花顺</span>
-    <span class="stock-code">300033</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：958亿</span>
-    <span>PE(TTM)：49.2</span>
-    <span>PB：23.5</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['600030', '300059', '300033']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】券商IT——金证股份(600446 市值约185亿——证券交易系统)、顶点软件(603383 市值约95亿——券商核心交易系统)；重组整合中的券商——当前市值较低的中小券商存在被整合预期（华林证券 002945 市值约320亿偏大、太平洋证券 601099 市值约210亿）</div>
   </div>
@@ -370,45 +227,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>AI应用/AI Agent、教育信息化、AI数据/语料</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中科创达</span>
-    <span class="stock-code">300496</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：229亿</span>
-    <span>PE(TTM)：62.2</span>
-    <span>PB：2.8</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">软通动力</span>
-    <span class="stock-code">301236</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：316亿</span>
-    <span>PE(TTM)：771.7</span>
-    <span>PB：3.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">科大讯飞</span>
-    <span class="stock-code">002230</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：904亿</span>
-    <span>PE(TTM)：114.9</span>
-    <span>PB：4.3</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['300496', '301236', '002230']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】AI Agent基础设施——汉得信息(300170 市值约75亿——企业级AI Agent)、新致软件(688590 市值约50亿——金融AI Agent)；教育AI——佳发教育(300559 市值约45亿偏小)、视源股份(002841 市值约350亿偏大)；AI语料/数据——中国科传(601858 市值约320亿偏大)、中文在线(300364 市值约90亿)</div>
   </div>
@@ -427,45 +246,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>新能源车/锂电池、智驾芯片、汽车零部件</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">比亚迪</span>
-    <span class="stock-code">002594</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：3125亿</span>
-    <span>PE(TTM)：29.7</span>
-    <span>PB：3.5</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">宁德时代</span>
-    <span class="stock-code">300750</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：17178亿</span>
-    <span>PE(TTM)：23.6</span>
-    <span>PB：5.7</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">德赛西威</span>
-    <span class="stock-code">002920</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：529亿</span>
-    <span>PE(TTM)：22.7</span>
-    <span>PB：3.5</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['002594', '300750', '002920']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】锂电设备——先导智能(300450 市值约680亿偏大)、利元亨(688499 市值约85亿——锂电装配)；智驾产业链——经纬恒润(688326 市值约110亿——智驾域控)、均胜电子(600699 市值约280亿偏大)；比亚迪供应链——湘油泵(603319 市值约38亿偏小偏冷门)、华阳集团(002906 市值约160亿——智能座舱）</div>
   </div>
@@ -484,32 +265,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>锂电池、储能、锂电材料</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">宁德时代</span>
-    <span class="stock-code">300750</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：17178亿</span>
-    <span>PE(TTM)：23.6</span>
-    <span>PB：5.7</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">阳光电源</span>
-    <span class="stock-code">300274</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2421亿</span>
-    <span>PE(TTM)：26.5</span>
-    <span>PB：6.7</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['300750', '300274']) + r'''
     <span class="stock-card"><span class="stock-name">亿纬锂能</span><span class="stock-code">300014</span><span class="stock-tag">🔥 小市值→中盘</span><br>市值约1,280亿</span>
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】锂电结构件——科达利(002850 市值约320亿)；锂电铜箔——嘉元科技(688388 市值约110亿)、中一科技(301150 市值约45亿)；锂电铝箔——鼎胜新材(603876 市值约140亿)；储能温控——英维克(002837 市值约165亿)</div>
@@ -530,19 +286,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
     <span class="stock-card"><span class="stock-name">东阳光</span><span class="stock-code">600673</span></span>
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">三环集团</span>
-    <span class="stock-code">300408</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2809亿</span>
-    <span>PE(TTM)：100.1</span>
-    <span>PB：13.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['300408']) + r'''
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★☆☆☆</span></div>
@@ -563,71 +307,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>AI算力/光模块、AI服务器、PCB</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中际旭创</span>
-    <span class="stock-code">300308</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：13853亿</span>
-    <span>PE(TTM)：93.1</span>
-    <span>PB：40.2</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">新易盛</span>
-    <span class="stock-code">300502</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：6886亿</span>
-    <span>PE(TTM)：71.3</span>
-    <span>PB：39.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">天孚通信</span>
-    <span class="stock-code">300394</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：3534亿</span>
-    <span>PE(TTM)：163.1</span>
-    <span>PB：64.8</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">工业富联</span>
-    <span class="stock-code">601138</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：14466亿</span>
-    <span>PE(TTM)：35.6</span>
-    <span>PB：8.2</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">沪电股份</span>
-    <span class="stock-code">002463</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2704亿</span>
-    <span>PE(TTM)：62.9</span>
-    <span>PB：17.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['300308', '300502', '300394', '601138', '002463']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】AI液冷——英维克(002837 市值约165亿)、高澜股份(300499 市值约65亿)；AI电源——欧陆通(300870 市值约80亿——AI服务器电源)、麦格米特(002851 市值约230亿偏大)；高速PCB材料——华正新材(603186 市值约55亿)、南亚新材(688519 市值约70亿)</div>
   </div>
@@ -646,58 +326,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>MLCC/陶瓷电容、电子元器件、被动元件</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">风华高科</span>
-    <span class="stock-code">000636</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：817亿</span>
-    <span>PE(TTM)：265.9</span>
-    <span>PB：6.5</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">三环集团</span>
-    <span class="stock-code">300408</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2809亿</span>
-    <span>PE(TTM)：100.1</span>
-    <span>PB：13.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">国瓷材料</span>
-    <span class="stock-code">300285</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：576亿</span>
-    <span>PE(TTM)：109.0</span>
-    <span>PB：9.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">火炬电子</span>
-    <span class="stock-code">603678</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：322亿</span>
-    <span>PE(TTM)：127.4</span>
-    <span>PB：5.3</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['000636', '300408', '300285', '603678']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】MLCC离型膜/载带——洁美科技(002859 市值约75亿——日韩MLCC巨头的上游材料供应商，MLCC出货量暴增直接带动离型膜需求)；铝电解/薄膜电容（AI电源需求同步受益）——江海股份(002484 市值约155亿)、法拉电子(600563 市值约280亿偏大)；LTCC/滤波器——麦捷科技(300319 市值约68亿)</div>
   </div>
@@ -737,32 +366,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>整体市场（FOMC决议影响全局）、黄金（降息预期）、科技成长（利率敏感）</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">山东黄金</span>
-    <span class="stock-code">600547</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：1021亿</span>
-    <span>PE(TTM)：25.2</span>
-    <span>PB：4.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中际旭创</span>
-    <span class="stock-code">300308</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：13853亿</span>
-    <span>PE(TTM)：93.1</span>
-    <span>PB：40.2</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['600547', '300308']) + r'''
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★☆</span></div>
@@ -780,58 +384,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>存储芯片/HBM、半导体设备</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">兆易创新</span>
-    <span class="stock-code">603986</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：3558亿</span>
-    <span>PE(TTM)：129.9</span>
-    <span>PB：15.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">佰维存储</span>
-    <span class="stock-code">688525</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：1606亿</span>
-    <span>PE(TTM)：40.6</span>
-    <span>PB：18.7</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">长电科技</span>
-    <span class="stock-code">600584</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：1377亿</span>
-    <span>PE(TTM)：83.3</span>
-    <span>PB：4.8</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">北方华创</span>
-    <span class="stock-code">002371</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：4868亿</span>
-    <span>PE(TTM)：87.4</span>
-    <span>PB：12.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['603986', '688525', '600584', '002371']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】NAND/SSD模组——江波龙(301308 市值约420亿偏大)；存储接口——澜起科技(688008 市值约2,800亿偏大)；内存接口配套——聚辰股份(688123 市值约170亿——DDR5 SPD/TS)；NOR Flash——兆易创新已在列（603986 同时布局DRAM+NOR+MCU）</div>
   </div>
@@ -850,45 +403,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>AI算力（整体承压，但超跌反弹机会）</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">中际旭创</span>
-    <span class="stock-code">300308</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：13853亿</span>
-    <span>PE(TTM)：93.1</span>
-    <span>PB：40.2</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">工业富联</span>
-    <span class="stock-code">601138</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：14466亿</span>
-    <span>PE(TTM)：35.6</span>
-    <span>PB：8.2</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">沪电股份</span>
-    <span class="stock-code">002463</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：2704亿</span>
-    <span>PE(TTM)：62.9</span>
-    <span>PB：17.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['300308', '601138', '002463']) + r'''
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★☆</span></div>
@@ -906,58 +421,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">受益板块：</span>人形机器人、减速器、伺服电机、传感器</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-<div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">绿的谐波</span>
-    <span class="stock-code">688017</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：690亿</span>
-    <span>PE(TTM)：504.4</span>
-    <span>PB：19.3</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">汇川技术</span>
-    <span class="stock-code">300124</span>
-    <span class="stock-tag">🏛️ 千亿大盘</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：1693亿</span>
-    <span>PE(TTM)：40.1</span>
-    <span>PB：5.4</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">埃斯顿</span>
-    <span class="stock-code">002747</span>
-    <span class="stock-tag">📈 中盘成长</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：265亿</span>
-    <span>PE(TTM)：252.0</span>
-    <span>PB：10.1</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
-    <div class="stock-card">
-  <div class="stock-header">
-    <span class="stock-name">拓斯达</span>
-    <span class="stock-code">300607</span>
-    <span class="stock-tag">🔥 小市值</span>
-  </div>
-  <div class="stock-details">
-    <span>市值：123亿</span>
-    <span>PE(TTM)：146.8</span>
-    <span>PB：6.0</span>
-    <span>最新涨跌：<span style="color:#2e7d32">+0.00%</span></span>
-  </div>
-</div>
+''' + stocks_html(['688017', '300124', '002747', '300607']) + r'''
     </div>
     <div style="margin-top:8px;font-size:13px;color:#e65100;font-weight:bold">【小市值挖掘】力矩传感器——柯力传感(603662 市值约75亿——六维力矩传感器)、八方股份(603489 市值约85亿)；空心杯电机——鸣志电器(603728 市值约135亿——已在列)；精密轴承——五洲新春(603667 市值约55亿)、力星股份(300421 市值约38亿)；编码器——奥普光电(002338 市值约65亿)；机器人线束——科博达(603786 市值约230亿偏大)</div>
   </div>
@@ -1089,3 +553,11 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
 </div>
 </body>
 </html>
+'''
+
+output_path = os.path.join(BASE, '催化剂分析报告_20260617.html')
+with open(output_path, 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print(f"报告已生成: {output_path}")
+print(f"文件大小: {len(html.encode('utf-8')):,} bytes")
