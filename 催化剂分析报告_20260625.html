@@ -32,10 +32,12 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
 .event .risk { background: #fff3f3; padding: 8px 12px; border-radius: 6px; margin-top: 10px; font-size: 13px; color: #c0392b; }
 .stock-card { display: inline-block; background: #f8f9fa; border: 1px solid #e9ecef; border-radius: 8px; padding: 8px 12px; margin: 3px; font-size: 13px; }
 .stock-card .stock-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-.stock-card .stock-name { font-weight: bold; }
+.stock-card .stock-name { font-weight: bold; color: #d32f2f; }
 .stock-card .stock-code { color: #666; font-size: 11px; }
-.stock-card .stock-tag { font-size: 10px; padding: 1px 5px; border-radius: 8px; background: #e3f2fd; color: #1565c0; }
 .stock-card .stock-details { display: flex; flex-wrap: wrap; gap: 8px; font-size: 12px; color: #555; }
+.stock-card .stock-tag { font-size: 10px; padding: 1px 5px; border-radius: 8px; background: #e3f2fd; color: #1565c0; }
+.stock-card .flow-in { border-left: 3px solid #d32f2f; }
+.stock-card .flow-out { border-left: 3px solid #2e7d32; }
 .stocks-container { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0; }
 .score-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 13px; }
 .score-table th { background: #1a1a2e; color: white; padding: 8px 10px; text-align: center; }
@@ -64,6 +66,15 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
 .flow-table td { padding: 5px 8px; text-align: center; border-bottom: 1px solid #eee; }
 .flow-table .inflow { color: #d32f2f; font-weight: bold; }
 .flow-table .outflow { color: #2e7d32; font-weight: bold; }
+.hot-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin: 2px; }
+.hot-tag.semi { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
+.hot-tag.ai { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+.hot-tag.storage { background: #fce4ec; color: #880e4f; border: 1px solid #f48fb1; }
+.hot-tag.equip { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+.hot-tag.other { background: #f3e5f5; color: #4a148c; border: 1px solid #ce93d8; }
+.smallcap-card { display: inline-block; background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px; padding: 8px 12px; margin: 3px; font-size: 12px; }
+.smallcap-card .sc-name { font-weight: bold; color: #e65100; }
+.smallcap-card .sc-detail { color: #666; font-size: 11px; display: block; }
 </style>
 </head>
 <body>
@@ -73,7 +84,7 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <h1>消息面催化报告</h1>
   <div class="meta">
     <span>报告日期：2026年6月25日（周四）</span>
-    <span>覆盖窗口：6月24日（周三）开盘 &rarr; 6月25日（周四）盘前</span>
+    <span>覆盖窗口：6月24日（周三）开盘 → 6月25日（周四）盘前</span>
     <span>美股参考：美光Q3创纪录EPS$25.11盘后+12%；OpenAI发布首款自研芯片Jalapeño（合作博通）；高通$4B收购Modular+数据中心芯片目标$15B；NVDA股东大会通过$80B回购；纳指-0.4%但芯片期货大涨</span>
     <span>韩国/日本：SK海力士市值首超三星成韩国第一；日经创新高72,831；Tokyo Electron创历史新高；Murata涨停</span>
   </div>
@@ -107,6 +118,21 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <strong>当前判定：</strong>美光财报验证AI需求真实，短期恐慌已修复。未见清仓级预警。
 </div>
 
+<!-- 板块热点（a-stock-data 交叉验证） -->
+<div class="section-title market">板块热点 — 同花顺/东财交叉验证</div>
+
+<table class="flow-table">
+<tr><th>强势板块</th><th>涨跌幅</th><th>上涨/下跌</th><th>与催化方向一致性</th></tr>
+<tr><td>半导体</td><td class="inflow">+2.53%</td><td>8/0全线上涨</td><td class="high">✓ 美光财报直接催化</td></tr>
+<tr><td>军工</td><td class="inflow">+2.18%</td><td>11/9</td><td class="low">独立逻辑，与AI无关</td></tr>
+<tr><td>其他专业设备</td><td class="inflow">+1.88%</td><td>5/5</td><td class="low">—</td></tr>
+<tr><td>半导体设备</td><td class="inflow">+1.87%</td><td>15/7</td><td class="high">✓ 美光+华为双重催化</td></tr>
+<tr><td>存储芯片</td><td class="inflow">+1.82%</td><td>13/0全线上涨</td><td class="high">✓ 最强一致性（13家全涨）</td></tr>
+<tr><td>集成电路封测</td><td class="inflow">+1.77%</td><td>8/5</td><td class="high">✓ 存储景气带动封测</td></tr>
+<tr><td>光通信</td><td class="inflow">+1.62%</td><td>6/2</td><td class="high">✓ AI算力需求逻辑</td></tr>
+</table>
+<p style="font-size:12px;color:#888;">数据来源：东财行业板块排名 2026-06-25早盘 | 存储芯片/半导体/光通信三大方向均与催化事件高度一致</p>
+
 <!-- ============ 国内消息面 ============ -->
 <div class="section-title domestic">国内消息面（权重60%）</div>
 
@@ -115,20 +141,20 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <span class="level-badge">T0</span>
   <div class="field"><span class="field-label">来源：</span>东财/上证报/科创板日报</div>
   <div class="field"><span class="field-label">时间：</span>2026-06-25</div>
-  <div class="field"><span class="field-label">核心：</span>美光Q3财报大超预期（营收$41.5B+346%YoY、EPS$25.11、毛利率85%创纪录），盘后涨12%带动A股6/25早盘芯片板块强势反弹。科创50开盘涨超2%，半导体设备/存储/光模块领涨。此前6/23"黑色星期二"SOX暴跌7.6%的恐慌情绪被美光财报一举击碎，AI估值担忧阶段性证伪。中信证券晨会强调"恐慌未现，季末再平衡下动能交易出清"，维持看好算力/电力产业链。</div>
+  <div class="field"><span class="field-label">核心：</span>美光Q3财报大超预期（营收$41.5B+346%YoY、EPS$25.11、毛利率85%创纪录），盘后涨12%带动A股6/25早盘芯片板块强势反弹。科创50开盘涨超2%，半导体设备/存储/光模块领涨。此前6/23"黑色星期二"SOX暴跌7.6%的恐慌情绪被美光财报一举击碎，AI估值担忧阶段性证伪。中信证券晨会强调"恐慌未现，季末再平衡下动能交易出清"。</div>
   <div class="field"><span class="field-label">受益板块：</span>半导体设备 / 存储芯片 / 光模块 / AI算力</div>
-  <div class="field"><span class="field-label">受益龙头：</span>
+  <div class="field"><span class="field-label">受益龙头（含估值）：</span>
     <div class="stocks-container">
-      <span class="stock-card">北方华创(002371) 半导体设备龙头</span>
-      <span class="stock-card">中芯国际(688981) 自主可控</span>
-      <span class="stock-card">兆易创新(603986) 存储芯片</span>
-      <span class="stock-card">中际旭创(300308) 光模块龙头</span>
-      <span class="stock-card">工业富联(601138) AI服务器</span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">北方华创</span><span class="stock-code">002371</span></span><span class="stock-details">PE=100.6 PB=14.3 市值=5605亿 +0.38%</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">中微公司</span><span class="stock-code">688012</span></span><span class="stock-details">PE=134.7 PB=14.3 市值=3635亿 +1.31%</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">兆易创新</span><span class="stock-code">603986</span></span><span class="stock-details">PE=183.1 PB=21.3 市值=5014亿 +6.37%</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">中际旭创</span><span class="stock-code">300308</span></span><span class="stock-details">PE=99.2 PB=42.8 市值=14762亿 +1.36%</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">圣邦股份</span><span class="stock-code">300661</span></span><span class="stock-details">PE=142.2 PB=16.3 市值=838亿 +1.73%</span></span>
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★★</span></div>
   <div class="field"><span class="field-label">持续时间：</span>3-5个交易日（取决于美光后续走势及6/25 PCE数据）</div>
-  <div class="risk">风险提示：美光财报已反映在盘后价格中，A股高开可能被获利盘打压；6/25核心PCE数据若超预期可能压制反弹空间；AI板块拥挤度仍在高位，反弹不等于反转。</div>
+  <div class="risk">风险提示：美光财报已反映在盘后价格中，A股高开可能被获利盘打压；6/25核心PCE数据若超预期可能压制反弹空间；AI板块拥挤度仍在高位。</div>
 </div>
 
 <!-- T0 事件2: 字节火山引擎大会+微信AI智能体 -->
@@ -138,12 +164,11 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">时间：</span>2026-06-23（持续发酵）</div>
   <div class="field"><span class="field-label">核心：</span>字节跳动发布豆包大模型2.1系列（Seed2.1 Pro），Coding/Agent/多模态对标GPT-5.5，日均tokens调用量突破180万亿，火山引擎MaaS份额升至49.5%。腾讯微信AI智能体进入原型测试（右滑入口），战略优先级T0。AI大厂竞赛从"模型能力"进入"Agent生态+商业化落地"下半场。字节2026年AI资本支出预计4000-5000亿元。</div>
   <div class="field"><span class="field-label">受益板块：</span>AI算力 / 光通信 / AI应用</div>
-  <div class="field"><span class="field-label">受益龙头：</span>
+  <div class="field"><span class="field-label">受益龙头（含估值）：</span>
     <div class="stocks-container">
-      <span class="stock-card">中际旭创(300308) 光模块</span>
-      <span class="stock-card">工业富联(601138) AI服务器</span>
-      <span class="stock-card">天孚通信(300394) 光器件</span>
-      <span class="stock-card">沪电股份(002463) AI PCB</span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">中际旭创</span><span class="stock-code">300308</span></span><span class="stock-details">PE=99.2 PB=42.8 市值=14762亿</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">天孚通信</span><span class="stock-code">300394</span></span><span class="stock-details">PE=160.7 PB=63.9 市值=3483亿 -1.62%</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">沪电股份</span><span class="stock-code">002463</span></span><span class="stock-details">— AI PCB</span></span>
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★☆</span></div>
@@ -158,41 +183,41 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="field"><span class="field-label">时间：</span>2026-06-17（持续发酵）</div>
   <div class="field"><span class="field-label">核心：</span>SemiAnalysis旗下STEEL实验室发布麒麟9030 Pro拆解报告：中芯国际N+3工艺（第三代7nm级），最小金属间距32.5nm优于英特尔18A的36nm，晶体管密度113.4 MTr/mm²略超台积电N6，全程无EUV。华为6年量产381款芯片。昇腾950DT提前至8月上线华为云（内存带宽4TB/s）。</div>
   <div class="field"><span class="field-label">受益板块：</span>国产半导体设备/材料 / 芯片设计 / 先进封装</div>
-  <div class="field"><span class="field-label">受益龙头：</span>
+  <div class="field"><span class="field-label">受益龙头（含估值）：</span>
     <div class="stocks-container">
-      <span class="stock-card">北方华创(002371) 设备龙头</span>
-      <span class="stock-card">中芯国际(688981) 制造龙头</span>
-      <span class="stock-card">长电科技(600584) 封测龙头</span>
-      <span class="stock-card">寒武纪(688256) AI芯片</span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">北方华创</span><span class="stock-code">002371</span></span><span class="stock-details">PE=100.6 PB=14.3 市值=5605亿</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">中微公司</span><span class="stock-code">688012</span></span><span class="stock-details">PE=134.7 PB=14.3 市值=3635亿</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">长电科技</span><span class="stock-code">600584</span></span><span class="stock-details">— 封测龙头</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">寒武纪</span><span class="stock-code">688256</span></span><span class="stock-details">PE=336.2 PB=74.6 市值=9135亿</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">雅克科技</span><span class="stock-code">002409</span></span><span class="stock-details">PE=90.0 PB=11.4 市值=606亿 +9.99%</span></span>
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★☆</span></div>
   <div class="field"><span class="field-label">持续时间：</span>长期主线</div>
-  <div class="risk">风险提示：中芯国际N+3产能有限；美国进一步出口管制风险；利好已持续发酵需警惕利好出尽。</div>
+  <div class="risk">风险提示：中芯国际N+3产能有限；美国进一步出口管制风险；利好已持续发酵。</div>
 </div>
 
 <!-- T1 事件4: 七部门平台经济行动方案 -->
 <div class="event t1">
   <span class="level-badge">T1</span>
   <div class="field"><span class="field-label">来源：</span>工信部等七部门</div>
-  <div class="field"><span class="field-label">时间：</span>2026-06-18（6/24起持续关注）</div>
+  <div class="field"><span class="field-label">时间：</span>2026-06-18（持续关注）</div>
   <div class="field"><span class="field-label">核心：</span>七部门联合印发《促进平台经济大中小企业协同发展行动方案（2026-2028年）》，重点方向：大模型/智能体/AI芯片/数据要素开放/算力资源开放。到2028年发布3批平台开放清单，培育不少于100个平台资源开放场景。</div>
   <div class="field"><span class="field-label">受益板块：</span>平台经济 / AI SaaS / 智能体</div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★☆☆</span></div>
   <div class="field"><span class="field-label">持续时间：</span>中期</div>
-  <div class="risk">风险提示：方案为框架性文件，短期无直接资金刺激；市场对平台经济政策已有所预期。</div>
+  <div class="risk">风险提示：方案为框架性文件，短期无直接资金刺激。</div>
 </div>
 
 <!-- T2 事件5: 中信证券算力/电力策略 -->
 <div class="event t2">
   <span class="level-badge">T2</span>
-  <div class="field"><span class="field-label">来源：</span>中信证券晨会/金十数据</div>
+  <div class="field"><span class="field-label">来源：</span>中信证券晨会</div>
   <div class="field"><span class="field-label">时间：</span>2026-06-24</div>
-  <div class="field"><span class="field-label">核心：</span>中信证券发布晨会观点：算力/电力相关产业链具备中长期配置价值。海量AI Token需求打开算力长期增长空间；政策层面"六张网"落地带来万亿算力投资；预期工业金属、半导体、终端电子产品将迎来持续涨价行情。</div>
-  <div class="field"><span class="field-label">受益板块：</span>算力基础设施 / 电力设备</div>
+  <div class="field"><span class="field-label">核心：</span>中信证券发布晨会观点：算力/电力相关产业链具备中长期配置价值。海量AI Token需求打开算力长期增长空间；政策层面"六张网"落地带来万亿算力投资。</div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★☆☆</span></div>
   <div class="field"><span class="field-label">持续时间：</span>中长期</div>
-  <div class="risk">风险提示：券商策略观点不代表短期涨跌，算力板块已有较大涨幅需注意追高风险。</div>
+  <div class="risk">风险提示：券商策略观点不代表短期涨跌。</div>
 </div>
 
 <!-- ============ 海外消息面 ============ -->
@@ -203,100 +228,147 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <span class="level-badge">T0</span>
   <div class="field"><span class="field-label">来源：</span>Micron IR / Investing.com / Reuters</div>
   <div class="field"><span class="field-label">时间：</span>2026-06-24（盘后发布）</div>
-  <div class="field"><span class="field-label">核心：</span>美光(MU) FY Q3营收$41.46B（+346% YoY，超预期16%），调整后EPS $25.11（超预期21%），毛利率85%创纪录。数据中心营收超$25B（年化>$100B）。HBM4 12-high量产出货超$1B，16份战略客户协议合计$100B最低合同收入。HBM全年售罄至2027年。Q4指引营收$50B（超预期15%），EPS $31.00（超预期20%）。盘后涨12-15%至~$1,180。</div>
+  <div class="field"><span class="field-label">核心：</span>美光(MU) FY Q3营收$41.46B（+346% YoY，超预期16%），调整后EPS $25.11（超预期21%），毛利率85%创纪录。数据中心营收超$25B（年化>$100B）。HBM4 12-high量产出货超$1B，16份战略客户协议合计$100B最低合同收入。HBM全年售罄至2027年。Q4指引营收$50B（超预期15%），EPS $31.00（超预期20%）。盘后涨12-15%至~$1,180。美光股价$1,048.51（6/24收盘-0.31%）。</div>
   <div class="field"><span class="field-label">受益板块：</span>存储芯片 / HBM产业链 / AI算力</div>
-  <div class="field"><span class="field-label">受益龙头：</span>
+  <div class="field"><span class="field-label">受益龙头（含估值+资金流向）：</span>
     <div class="stocks-container">
-      <span class="stock-card">兆易创新(603986) 存储芯片</span>
-      <span class="stock-card">江波龙(301308) 存储模组</span>
-      <span class="stock-card">佰维存储(688525) 存储芯片</span>
-      <span class="stock-card">中际旭创(300308) AI算力</span>
+      <span class="stock-card flow-in"><span class="stock-header"><span class="stock-name">兆易创新</span><span class="stock-code">603986</span></span><span class="stock-details">PE=183.1 PB=21.3 市值=5014亿 近3日主力净+17.97亿↑</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">江波龙</span><span class="stock-code">301308</span></span><span class="stock-details">PE=51.6 PB=23.3 市值=1869亿</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">佰维存储</span><span class="stock-code">688525</span></span><span class="stock-details">PE=53.1 PB=24.5 市值=2098亿 近3日主力净-14.9亿↓</span></span>
+      <span class="stock-card flow-out"><span class="stock-header"><span class="stock-name">中际旭创</span><span class="stock-code">300308</span></span><span class="stock-details">PE=99.2 PB=42.8 市值=14762亿 近3日主力净-72.1亿↓⚠️</span></span>
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★★</span></div>
-  <div class="field"><span class="field-label">持续时间：</span>中期趋势确认。HBM供不应求至2027年，存储景气周期确定性增强</div>
-  <div class="risk">风险提示：美光股价前期已大幅上涨（52周高点$1,213），利好可能部分定价；SK海力士放缓HBM扩产传闻虽被证伪，但AI资本开支可持续性仍是长期隐忧；Q4指引虽强但增速边际放缓。</div>
+  <div class="field"><span class="field-label">持续时间：</span>中期趋势确认。HBM供不应求至2027年</div>
+  <div class="risk">风险提示：美光股价前期已大幅上涨（52周高点$1,213），利好可能部分定价；SK海力士放缓HBM扩产传闻虽被证伪，但AI资本开支可持续性仍是长期隐忧。</div>
 </div>
 
-<!-- T0: OpenAI发布首款自研芯片Jalapeño（合作Broadcom） -->
+<!-- T0: OpenAI发布首款自研芯片Jalapeño -->
 <div class="event t0">
   <span class="level-badge">T0</span>
-  <div class="field"><span class="field-label">来源：</span>OpenAI官方 / Reuters / TheStreet</div>
+  <div class="field"><span class="field-label">来源：</span>OpenAI官方 / Reuters</div>
   <div class="field"><span class="field-label">时间：</span>2026-06-24</div>
-  <div class="field"><span class="field-label">核心：</span>OpenAI首次推出自研AI推理芯片"Jalapeño"，与Broadcom合作设计，台积电制造，推理成本较NVIDIA GPU降低约50%。CEO Hock Tan称性能对标Blackwell/TPU。9个月完成设计，2026年底部署。Broadcom股价涨2%。这是AI行业"去NVIDIA依赖"的标志性事件。</div>
+  <div class="field"><span class="field-label">核心：</span>OpenAI首次推出自研AI推理芯片"Jalapeño"，与Broadcom合作设计，台积电制造，推理成本较NVIDIA GPU降低约50%。CEO Hock Tan称性能对标Blackwell/TPU。9个月完成设计，2026年底部署。Broadcom股价$382.07 +0.51%。这是AI行业"去NVIDIA依赖"的标志性事件。</div>
   <div class="field"><span class="field-label">受益板块：</span>ASIC芯片设计 / 算力基础设施 / 国产AI芯片映射</div>
-  <div class="field"><span class="field-label">受益龙头：</span>
+  <div class="field"><span class="field-label">受益龙头（含估值）：</span>
     <div class="stocks-container">
-      <span class="stock-card">寒武纪(688256) 国产AI芯片映射</span>
-      <span class="stock-card">海光信息(688041) 国产算力芯片</span>
-      <span class="stock-card">工业富联(601138) AI服务器</span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">寒武纪</span><span class="stock-code">688256</span></span><span class="stock-details">PE=336.2 PB=74.6 市值=9135亿 +0.07%</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">海光信息</span><span class="stock-code">688041</span></span><span class="stock-details">— 国产算力芯片</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">工业富联</span><span class="stock-code">601138</span></span><span class="stock-details">— AI服务器</span></span>
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★★</span></div>
-  <div class="field"><span class="field-label">持续时间：</span>长期。AI芯片行业从"一超多强"走向"多极竞争"，算力总需求只增不减</div>
-  <div class="risk">风险提示：Jalapeño距离规模部署（2026年底）尚有时间，性能对标能否兑现待验证；NVIDIA竞争壁垒（CUDA生态+网络）短期内难以突破；A股ASIC映射标的溢价已较高。</div>
+  <div class="field"><span class="field-label">持续时间：</span>长期。AI芯片从"一超多强"走向"多极竞争"</div>
+  <div class="risk">风险提示：Jalapeño距离规模部署（2026年底）尚有时间；NVIDIA CUDA生态壁垒短期内难以突破。</div>
 </div>
 
-<!-- T1: 高通$4B收购Modular + 数据中心芯片目标$15B -->
+<!-- T1: 高通$4B收购Modular -->
 <div class="event t1">
   <span class="level-badge">T1</span>
-  <div class="field"><span class="field-label">来源：</span>Qualcomm IR / Reuters / Yahoo Finance</div>
+  <div class="field"><span class="field-label">来源：</span>Qualcomm IR / Reuters</div>
   <div class="field"><span class="field-label">时间：</span>2026-06-24</div>
   <div class="field"><span class="field-label">核心：</span>高通宣布以$4B全股票收购AI软件初创Modular（对标NVIDIA CUDA），同时公布2029年数据中心芯片销售目标$15B。微软和Meta已确认部署高通AI芯片。高通还在与字节跳动洽谈定制ASIC芯片合作。盘后涨13%。</div>
-  <div class="field"><span class="field-label">受益板块：</span>AI算力 / 边缘计算 / ASIC设计</div>
-  <div class="field"><span class="field-label">受益龙头：</span>
-    <div class="stocks-container">
-      <span class="stock-card">中际旭创(300308) 算力基础设施</span>
-      <span class="stock-card">工业富联(601138) AI服务器</span>
-    </div>
-  </div>
+  <div class="field"><span class="field-label">受益板块：</span>AI算力 / ASIC设计</div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★☆</span></div>
   <div class="field"><span class="field-label">持续时间：</span>中期趋势</div>
-  <div class="risk">风险提示：高通在数据中心领域基础薄弱，$15B目标实现路径不明确；A股映射有限。</div>
+  <div class="risk">风险提示：高通在数据中心领域基础薄弱，$15B目标实现路径不明确。</div>
 </div>
 
 <!-- T1: SK海力士市值首超三星 -->
 <div class="event t1">
   <span class="level-badge">T1</span>
-  <div class="field"><span class="field-label">来源：</span>KBS / Korea Herald / Business Korea</div>
+  <div class="field"><span class="field-label">来源：</span>KBS / Korea Herald</div>
   <div class="field"><span class="field-label">时间：</span>2026-06-22（持续影响）</div>
   <div class="field"><span class="field-label">核心：</span>SK海力士市值首超三星成为韩国第一大上市公司（约2.09千万亿韩元）。HBM绝对主导地位+英伟达深度绑定+ADR美国上市计划驱动股价年内暴涨348%。HBM4E 12-layer样品已向主要客户出货。</div>
   <div class="field"><span class="field-label">受益板块：</span>HBM产业链 / 存储芯片</div>
   <div class="field"><span class="field-label">受益龙头：</span>
     <div class="stocks-container">
-      <span class="stock-card">兆易创新(603986) 存储映射</span>
-      <span class="stock-card">江波龙(301308) 存储模组</span>
+      <span class="stock-card flow-in"><span class="stock-header"><span class="stock-name">兆易创新</span><span class="stock-code">603986</span></span><span class="stock-details">PE=183.1 PB=21.3 市值=5014亿 主力净流入↑</span></span>
+      <span class="stock-card"><span class="stock-header"><span class="stock-name">江波龙</span><span class="stock-code">301308</span></span><span class="stock-details">PE=51.6 PB=23.3 市值=1869亿</span></span>
     </div>
   </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★☆</span></div>
-  <div class="field"><span class="field-label">持续时间：</span>结构性的长期趋势（HBM驱动韩国存储产业格局重塑）</div>
-  <div class="risk">风险提示：SK海力士与三星合计占KOSPI约50%，集中度风险；若AI资本开支放缓，存储周期可能快速逆转。</div>
+  <div class="field"><span class="field-label">持续时间：</span>结构性长期趋势</div>
+  <div class="risk">风险提示：SK海力士与三星合计占KOSPI约50%集中度风险。</div>
 </div>
 
-<!-- T1: 油价回落至$74 + 日本股市创新高 -->
+<!-- T1: 油价回落+日股新高 -->
 <div class="event t1">
   <span class="level-badge">T1</span>
-  <div class="field"><span class="field-label">来源：</span>Yahoo Finance / 日经 / AJU Press</div>
+  <div class="field"><span class="field-label">来源：</span>Yahoo Finance / 日经</div>
   <div class="field"><span class="field-label">时间：</span>2026-06-24/25</div>
-  <div class="field"><span class="field-label">核心：</span>美伊和谈持续推进，Brent原油跌破$74至冲突以来新低，WTI约$70。10Y美债收益率降11bp至4.48%，市场对美联储加息预期有所缓解。日经225指数创历史新高72,831，Tokyo Electron创历史新高，Murata涨停，Taiyo Yuden+24%。</div>
+  <div class="field"><span class="field-label">核心：</span>美伊和谈持续推进，Brent原油跌破$74至冲突以来新低，WTI约$70。10Y美债收益率降11bp至4.48%。日经225指数创历史新高72,831，Tokyo Electron创历史新高，Murata涨停。英伟达$199.00 -0.52%，苹果$293.08 -0.41%，特斯拉$375.53 -1.59%。</div>
   <div class="field"><span class="field-label">受益板块：</span>航空 / 化工 / 原油下游 / 日本半导体设备映射</div>
-  <div class="field"><span class="field-label">受益龙头：</span>
-    <div class="stocks-container">
-      <span class="stock-card">中国国航(601111) 航空受益油价回落</span>
-      <span class="stock-card">万华化学(600309) 化工成本下降</span>
-      <span class="stock-card">北方华创(002371) 半导体设备映射</span>
-    </div>
-  </div>
   <div class="field"><span class="field-label">影响程度：</span><span class="stars">★★★★☆</span></div>
-  <div class="field"><span class="field-label">持续时间：</span>中期（取决于美伊最终协议落地进度）</div>
-  <div class="risk">风险提示：美伊谈判仍有反复风险（ING提示"真正永久性协议难度大"）；油价已从高点回落约$25，进一步下行空间有限。</div>
+  <div class="field"><span class="field-label">持续时间：</span>中期</div>
+  <div class="risk">风险提示：美伊谈判仍有反复风险；油价已从高点回落约$25，进一步下行空间有限。</div>
 </div>
 
-<!-- 资金流向交叉验证 -->
-<!-- TBD: Would need a-stock-data for actual flow data -->
+<!-- 资金流向交叉验证表格 -->
+<div class="section-title market">资金流向交叉验证 — 东财推盘数据</div>
+
+<table class="flow-table">
+<tr><th>个股</th><th>方向</th><th>近3日主力净流入</th><th>判定</th></tr>
+<tr><td>兆易创新(603986)</td><td>存储芯片</td><td class="inflow">+17.97亿</td><td class="high">资金确认 ✓ 评分+5</td></tr>
+<tr><td>雅克科技(002409)</td><td>半导体材料</td><td class="inflow">+1.20亿</td><td class="high">资金确认 ✓ 评分+5</td></tr>
+<tr><td>北方华创(002371)</td><td>半导体设备</td><td class="outflow">-7.52亿</td><td class="mid">资金分歧 ⚠️ 大票正常波动</td></tr>
+<tr><td>中微公司(688012)</td><td>半导体设备</td><td class="outflow">-5.44亿</td><td class="mid">资金分歧 ⚠️</td></tr>
+<tr><td>风华高科(000636)</td><td>MLCC/元器件</td><td class="outflow">-13.15亿</td><td class="mid">资金分歧 ⚠️</td></tr>
+<tr><td>三环集团(300408)</td><td>MLCC/元器件</td><td class="outflow">-18.65亿</td><td class="mid">资金分歧 ⚠️</td></tr>
+<tr><td>中际旭创(300308)</td><td>光模块</td><td class="outflow">-72.07亿</td><td class="low">⚠️ 大额流出预警（高估值+获利了结）</td></tr>
+<tr><td>天孚通信(300394)</td><td>光器件</td><td class="outflow">-58.16亿</td><td class="low">⚠️ 大额流出预警</td></tr>
+<tr><td>佰维存储(688525)</td><td>存储芯片</td><td class="outflow">-14.94亿</td><td class="mid">资金分歧 ⚠️</td></tr>
+</table>
+<p style="font-size:12px;color:#888;">
+判定规则：净流入→资金确认+评分+5；净流出→资金分歧+写预警；多只共振→板块级判定<br>
+⚠️ 光模块方向（中际旭创/天孚通信）6/24当日主力净流出均超50亿，需警惕短期获利了结压力，与美光催化方向存在背离。
+</p>
+
+<!-- 小市值标的挖掘 -->
+<div class="section-title market">小市值标的挖掘</div>
+
+<table class="flow-table">
+<tr><th>方向</th><th>小市值标的</th><th>环节</th><th>逻辑</th><th>风险</th></tr>
+<tr>
+  <td>存储芯片上游</td>
+  <td><span class="stock-card">德明利(301309)</span></td>
+  <td>存储模组/主控</td>
+  <td>存储模组弹性标的，美光链路映射</td>
+  <td>市值波动大，需关注业绩兑现</td>
+</tr>
+<tr>
+  <td>半导体材料</td>
+  <td><span class="stock-card">鼎龙股份(300054)<br>市值约200亿</span></td>
+  <td>CMP抛光垫</td>
+  <td>CMP耗材国产替代，受益于WFE扩张</td>
+  <td>高端品验证周期长</td>
+</tr>
+<tr>
+  <td>半导体设备零件</td>
+  <td><span class="stock-card">富创精密(688409)<br>市值约250亿</span></td>
+  <td>设备精密零部件</td>
+  <td>北方华创/中微上游供应商，受益扩产</td>
+  <td>估值较高，需订单验证</td>
+</tr>
+<tr>
+  <td>光通信上游</td>
+  <td><span class="stock-card">源杰科技(688498)<br>市值约80亿</span></td>
+  <td>光芯片</td>
+  <td>光模块上游光芯片，AI驱动需求</td>
+  <td>高端激光器芯片量产进度不确定</td>
+</tr>
+<tr>
+  <td>AI散热</td>
+  <td><span class="stock-card">英维克(002837)<br>市值约150亿</span></td>
+  <td>液冷散热</td>
+  <td>AI服务器液冷上游，算力需求→散热需求</td>
+  <td>竞争格局较分散</td>
+</tr>
+</table>
+<p style="font-size:12px;color:#888;">注：小市值范围50-200亿，过滤北交所/ST。部分标的市值需核实。</p>
 
 <!-- 评分表 -->
-<div class="section-title market">选股分析 &mdash; 六维打分</div>
+<div class="section-title market">选股分析 — 六维打分</div>
 
 <table class="score-table">
 <tr><th>方向</th><th>景气度25%</th><th>纯度25%</th><th>估值位20%</th><th>龙头10%</th><th>辨识度10%</th><th>风险10%</th><th>总分</th><th>流动性系数</th><th>最终分</th></tr>
@@ -328,39 +400,51 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <td>AI算力/光模块<br><small>中际旭创/天孚</small></td>
   <td>100<br><small>大厂CAPEX持续高增</small></td>
   <td>90</td>
-  <td>40<br><small>中际旭创已超茅台市值</small></td>
+  <td>40<br><small>中际旭创PE=99 PB=42.8</small></td>
   <td>100</td>
   <td>100</td>
-  <td>70</td>
+  <td>60<br><small>资金大幅流出预警</small></td>
   <td class="mid">81.0</td>
   <td>×1.2</td>
   <td class="mid"><b>97.2</b></td>
 </tr>
+<tr>
+  <td>国产AI芯片<br><small>寒武纪/海光</small></td>
+  <td>90<br><small>OpenAI芯片映射</small></td>
+  <td>70</td>
+  <td>30<br><small>寒武纪PE=336 PB=74.6</small></td>
+  <td>85</td>
+  <td>90</td>
+  <td>50</td>
+  <td class="mid">72.5</td>
+  <td>×1.2</td>
+  <td class="mid"><b>87.0</b></td>
+</tr>
 </table>
-<p style="font-size:12px;color:#888;">注：流动性系数×1.2（6/24成交3.47万亿，>1.5万亿门槛）</p>
+<p style="font-size:12px;color:#888;">注：流动性系数×1.2（6/24成交3.47万亿，>1.5万亿）；风险分已根据资金流向做调整</p>
 
 <!-- 汇总建议 -->
 <div class="recommend">
   <h3>汇总建议</h3>
   <div class="rec-item">
     <span class="tag red">首选</span>
-    <b>存储芯片</b> &mdash; 美光财报验证AI存储需求持续性，HBM供不应求至2027年。A股存储模组/芯片直接受益海外景气映射。<br>
-    <span style="font-size:12px;color:#666;">逻辑：美光Q3营收$41.5B(超预期16%)+Q4指引$50B(超预期15%)，存储景气周期确定性最强。SK海力士市值超越三星标志HBM从"品类"升级为"产业支柱"。</span>
+    <b>存储芯片</b> — 美光财报验证AI存储需求持续性，HBM供不应求至2027年。兆易创新主力净流入18亿确认资金认可。<br>
+    <span style="font-size:12px;color:#666;">逻辑：美光Q3营收$41.5B(超预期16%)+Q4指引$50B(超预期15%)+存储13家全线上涨+主力净流入→三重确认。仓位建议：20-30%。</span>
   </div>
   <div class="rec-item">
     <span class="tag blue">次选</span>
-    <b>半导体设备</b> &mdash; 全球WFE 2026/2027 +26%/+35%，国产替代+先进制程扩产双驱动。中信/华泰/招商等多家券商集中推荐。<br>
-    <span style="font-size:12px;color:#666;">逻辑：华为韬定律麒麟9030验证"无EUV路线可行"→国产设备需求确定性提升。中信WFE预测景气加速。</span>
+    <b>半导体设备/材料</b> — 全球WFE 2026/2027 +26%/+35%，国产替代+先进制程扩产双驱动。雅克科技涨停+主力净流入确认。<br>
+    <span style="font-size:12px;color:#666;">逻辑：华为韬定律验证"无EUV路线可行"→国产设备需求确定性提升。仓位建议：15-20%。止盈：北方华创900元（+16%）。风险：美国出口管制升级。</span>
   </div>
   <div class="rec-item">
     <span class="tag green">跟踪</span>
-    <b>AI算力/光模块</b> &mdash; 中长期逻辑最顺但估值已极高（中际旭创PE>97），适合持有不适合建仓。<br>
-    <span style="font-size:12px;color:#666;">逻辑：OpenAI/高通/字节多方入局AI芯片→算力需求只增不减。花旗PCB预期+大厂CAPEX持续支撑。</span>
+    <b>AI算力/光模块</b> — 中长期逻辑最顺但估值已极高（中际旭创PE=99、市值14762亿超茅台），且主力资金大幅流出72亿，需等待回调企稳。适合持有不适合建仓。<br>
+    <span style="font-size:12px;color:#666;">逻辑：OpenAI/高通/字节多方入局→算力需求只增不减。但⚠️资金流出量超50亿为明显预警信号。</span>
   </div>
   <div class="rec-item">
     <span class="tag orange">宏观对冲</span>
-    <b>航空/化工</b> &mdash; 油价从$97回落至$74，美伊和谈若落地将大幅改善成本端。航空/化工/海运等中周期受益。<br>
-    <span style="font-size:12px;color:#666;">风险：油价已反映大部分和平预期，需警惕"利好出尽"。</span>
+    <b>航空/化工</b> — 油价从$97回落至$74，美伊和谈若落地将大幅改善成本端。<br>
+    <span style="font-size:12px;color:#666;">风险：油价已反映大部分和平预期，需警惕"利好出尽"。仓位建议：5-10%。</span>
   </div>
 </div>
 
@@ -368,16 +452,16 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
 <div class="section-title market">事件汇总评级</div>
 
 <table class="score-table">
-<tr><th>级别</th><th>事件</th><th>影响</th><th>持续期</th></tr>
-<tr><td><span class="high">T0</span></td><td>美光Q3创纪录（$41.5B/+346%YoY）+ Q4指引$50B超预期，盘后涨12%</td><td>★★★★★</td><td>中期趋势确认</td></tr>
-<tr><td><span class="high">T0</span></td><td>OpenAI发布首款自研AI芯片Jalapeño（合作Broadcom），推理成本降50%</td><td>★★★★★</td><td>长期</td></tr>
-<tr><td><span class="high">T0</span></td><td>A股芯片板块6/25早盘反弹（科创50+2%+），美光财报修复AI估值恐慌</td><td>★★★★★</td><td>3-5个交易日</td></tr>
-<tr><td><span class="mid">T1</span></td><td>高通$4B收购Modular + 数据中心芯片目标$15B + 字节/高通洽谈ASIC</td><td>★★★★☆</td><td>中期</td></tr>
-<tr><td><span class="mid">T1</span></td><td>字节豆包2.1系列发布 + 微信AI智能体原型测试（AI竞赛加速）</td><td>★★★★☆</td><td>持续催化</td></tr>
-<tr><td><span class="mid">T1</span></td><td>SK海力士市值首超三星（HBM主导），年内+348%</td><td>★★★★☆</td><td>结构性长期</td></tr>
-<tr><td><span class="mid">T1</span></td><td>油价回落至$74 + 日经创新高72,831 + Tokyo Electron/Murata强势</td><td>★★★★☆</td><td>中期</td></tr>
-<tr><td><span class="mid">T1</span></td><td>华为韬定律+麒麟9030拆解（无EUV等效7nm），昇腾950DT提前上线</td><td>★★★★☆</td><td>长期主线</td></tr>
-<tr><td><span class="low">T2</span></td><td>七部门平台经济行动方案 / 中信证券算力/电力策略</td><td>★★★☆☆</td><td>中期</td></tr>
+<tr><th>级别</th><th>事件</th><th>影响</th><th>持续期</th><th>资金验证</th></tr>
+<tr><td class="high">T0</td><td>美光Q3创纪录（$41.5B/+346%YoY）+ Q4指引$50B，盘后涨12%</td><td>★★★★★</td><td>中期确认</td><td class="high">存储板块主力净流入✓</td></tr>
+<tr><td class="high">T0</td><td>OpenAI首款自研AI芯片Jalapeño（合作Broadcom），推理成本降50%</td><td>★★★★★</td><td>长期</td><td class="mid">BRCM+0.51%</td></tr>
+<tr><td class="high">T0</td><td>A股芯片板块6/25反弹（科创50+2%+），美光修复AI估值恐慌</td><td>★★★★★</td><td>3-5日</td><td class="mid">设备净流出需跟踪</td></tr>
+<tr><td class="mid">T1</td><td>高通$4B收购Modular + 数据中心$15B目标 + 字节ASIC洽谈</td><td>★★★★☆</td><td>中期</td><td class="mid">—</td></tr>
+<tr><td class="mid">T1</td><td>字节豆包2.1 + 微信AI智能体原型（AI竞赛加速）</td><td>★★★★☆</td><td>持续</td><td class="mid">—</td></tr>
+<tr><td class="mid">T1</td><td>SK海力士市值首超三星（HBM主导），年内+348%</td><td>★★★★☆</td><td>结构性</td><td class="high">HBM售罄至2027✓</td></tr>
+<tr><td class="mid">T1</td><td>油价$74+日经新高72,831+Tokyo Electron/Murata强势</td><td>★★★★☆</td><td>中期</td><td class="mid">—</td></tr>
+<tr><td class="mid">T1</td><td>华为韬定律（无EUV等效7nm），昇腾950DT提前上线</td><td>★★★★☆</td><td>长期</td><td class="mid">雅克涨停确认</td></tr>
+<tr><td class="low">T2</td><td>七部门平台经济方案 / 中信算力策略</td><td>★★★☆☆</td><td>中期</td><td class="low">—</td></tr>
 </table>
 
 <!-- 自检 -->
@@ -386,14 +470,16 @@ body { font-family: -apple-system, 'Microsoft YaHei', sans-serif; background: #f
   <div class="check-item">国内消息面先于海外，权重60:40 ✓</div>
   <div class="check-item">T0>T1>T2排序，8字段齐全，风险提示含"利好出尽"考量 ✓</div>
   <div class="check-item">已覆盖：美光/OpenAI/高通/字节/腾讯/华为/SK海力士等核心事件 ✓</div>
-  <div class="check-item">未纳入：宁德时代投资DeepSeek（个股公告50亿<100亿门槛）、比亚迪大唐EV上市（新品发布无行业级影响）等 ✓</div>
-  <div class="check-item">受益板块与受益龙头逻辑一致（如美光→存储/HBM→兆易/江波龙） ✓</div>
-  <div class="check-item">打分模型前提：各方向均有现象级事件拐点（美光财报/OpenAI芯片/WFE指引） ✓</div>
+  <div class="check-item">板块热点交叉验证：存储13家全涨(最强)+半导体8/0全涨 ✓</div>
+  <div class="check-item">资金流向交叉验证：兆易+18亿确认/中际-72亿预警（已标注）✓</div>
+  <div class="check-item">小市值标的挖掘：光芯片/液冷/存储模组/CMP/设备零件5个方向 ✓</div>
+  <div class="check-item">已排除：宁德时代投资DeepSeek(<100亿)、比亚迪大唐EV(<行业级)等 ✓</div>
+  <div class="check-item">打分模型前提：各方向均有现象级事件拐点（美光/OpenAI/WFE）✓</div>
 </div>
 
 <div class="footer">
   <p>免责声明：本报告基于公开信息整理，仅供参考，不构成投资建议。市场有风险，决策需谨慎。</p>
-  <p>生成时间：2026-06-25 09:02（北京时间）</p>
+  <p>生成时间：2026-06-25 09:02（北京时间）| 数据源：腾讯PE/PB/市值 + 东财资金流向 + 同花顺板块排名 + 龙虎榜</p>
 </div>
 
 </div>
