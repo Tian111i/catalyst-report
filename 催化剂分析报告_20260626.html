@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>消息面催化报告</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif; background: #f0f2f5; color: #333; line-height: 1.6; }
+  .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+  .header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); color: #fff; padding: 30px; border-radius: 16px; margin-bottom: 24px; text-align: center; }
+  .header h1 { font-size: 28px; font-weight: 700; letter-spacing: 4px; margin-bottom: 8px; }
+  .header .subtitle { font-size: 14px; opacity: 0.8; }
+  .summary-bar { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 16px; }
+  .summary-item { background: rgba(255,255,255,0.1); padding: 8px 18px; border-radius: 20px; font-size: 13px; }
+  .summary-item strong { color: #ffd700; }
+
+  .section-title { font-size: 20px; font-weight: 700; padding: 12px 0; margin: 32px 0 16px; border-bottom: 3px solid #1a1a2e; }
+  .section-title .tag { display: inline-block; font-size: 12px; padding: 2px 10px; border-radius: 10px; margin-left: 10px; vertical-align: middle; }
+  .tag-domestic { background: #fff3e0; color: #e65100; }
+  .tag-overseas { background: #e8f5e9; color: #2e7d32; }
+  .tag-t0 { background: #ffebee; color: #c62828; font-weight: 600; }
+  .tag-t1 { background: #fff8e1; color: #f9a825; font-weight: 600; }
+  .tag-t2 { background: #e3f2fd; color: #1565c0; font-weight: 600; }
+
+  .card { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid #ddd; }
+  .card-t0 { border-left-color: #c62828; }
+  .card-t1 { border-left-color: #f9a825; }
+  .card-t2 { border-left-color: #1565c0; }
+
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .card-title { font-size: 17px; font-weight: 700; color: #1a1a2e; }
+  .card-level { font-size: 12px; padding: 2px 10px; border-radius: 10px; white-space: nowrap; }
+  .level-t0 { background: #ffebee; color: #c62828; }
+  .level-t1 { background: #fff8e1; color: #f9a825; }
+  .level-t2 { background: #e3f2fd; color: #1565c0; }
+
+  .card-meta { display: flex; flex-wrap: wrap; gap: 16px; font-size: 13px; color: #666; margin-bottom: 12px; }
+  .card-meta span { background: #f5f5f5; padding: 3px 10px; border-radius: 6px; }
+  .card-core { font-size: 14px; color: #444; margin-bottom: 12px; padding: 10px 14px; background: #fafafa; border-radius: 8px; border-left: 3px solid #1a1a2e; }
+  .card-benefit { font-size: 14px; }
+  .card-benefit strong { color: #0f3460; }
+  .card-benefit .code { font-family: 'Consolas', monospace; color: #e65100; font-size: 12px; }
+  .card-risk { font-size: 13px; color: #888; margin-top: 10px; padding-top: 10px; border-top: 1px dashed #eee; }
+  .stars { color: #ff6f00; letter-spacing: 2px; }
+
+  .market-overview { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .market-overview h3 { font-size: 16px; margin-bottom: 12px; color: #1a1a2e; }
+  .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+  .market-item { background: #f8f9fa; padding: 10px 14px; border-radius: 8px; font-size: 13px; }
+  .market-item .label { color: #888; }
+  .market-item .value { font-weight: 700; font-size: 15px; }
+  .up { color: #c62828; }
+  .down { color: #2e7d32; }
+
+  .score-section { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .score-section h3 { font-size: 16px; margin-bottom: 12px; }
+  .score-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .score-table th { background: #1a1a2e; color: #fff; padding: 8px 10px; text-align: center; }
+  .score-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee; }
+  .score-table tr:hover { background: #f5f5f5; }
+  .score-total { font-weight: 700; color: #1a1a2e; }
+
+  .recommend-box { background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%); border-radius: 12px; padding: 20px; margin-bottom: 24px; border: 1px solid #ffe0b2; }
+  .recommend-box h3 { font-size: 16px; color: #e65100; margin-bottom: 12px; }
+  .recommend-item { display: inline-block; background: #fff; border-radius: 8px; padding: 10px 16px; margin: 4px; border: 1px solid #ffe0b2; font-size: 13px; }
+  .recommend-item .tag { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 8px; margin-left: 6px; }
+  .tag-first { background: #c62828; color: #fff; }
+  .tag-second { background: #f9a825; color: #fff; }
+  .tag-watch { background: #1565c0; color: #fff; }
+
+  .flow-section { margin-bottom: 24px; }
+  .flow-section h3 { font-size: 16px; margin-bottom: 12px; }
+  .flow-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .flow-table th { background: #0f3460; color: #fff; padding: 8px 10px; text-align: center; }
+  .flow-table td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #eee; }
+  .flow-in { color: #c62828; }
+  .flow-out { color: #2e7d32; }
+  .warn { color: #e65100; font-weight: 600; }
+  .confirm { color: #2e7d32; font-weight: 600; }
+
+  .macro-warn { background: #fff; border-radius: 12px; padding: 20px; margin-bottom: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid #c62828; }
+  .macro-warn h3 { font-size: 16px; color: #c62828; margin-bottom: 12px; }
+
+  .footer { text-align: center; font-size: 12px; color: #999; padding: 20px 0; }
+  .strong-text { color: #c62828; font-weight: 700; }
+  .r-hot { color: #c62828; }
+  .r-cold { color: #2e7d32; }
+  @media (max-width: 600px) { .market-grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>消息面催化报告</h1>
+  <div class="subtitle">隔夜A股催化剂 · 2026年6月26日（周五）</div>
+  <div class="summary-bar">
+    <div class="summary-item">📅 覆盖窗口：周四6/25开盘 → 周五6/26开盘前</div>
+    <div class="summary-item">📊 <strong>汇总评级：★★★★☆</strong>（影响较大）</div>
+    <div class="summary-item">🌐 美股参考：6/25周四</div>
+  </div>
+</div>
+
+<div class="market-overview">
+  <h3>📊 大盘速览</h3>
+  <div class="market-grid">
+    <div class="market-item"><div class="label">上证指数</div><div class="value up">4120.28 <span>+0.23%</span></div></div>
+    <div class="market-item"><div class="label">深证成指</div><div class="value up">16344.08 <span>+1.82%</span></div></div>
+    <div class="market-item"><div class="label">创业板指</div><div class="value up">4371.99 <span>+2.84%</span></div></div>
+    <div class="market-item"><div class="label">科创50</div><div class="value up">2066.33 <span>+3.87%</span></div></div>
+    <div class="market-item"><div class="label">沪深两市成交额</div><div class="value up">3.62万亿 <span>↑3100亿</span></div></div>
+    <div class="market-item"><div class="label">个股涨跌</div><div class="value">750涨 / 4200跌 <span style="font-size:12px;color:#888">（分化极端）</span></div></div>
+    <div class="market-item"><div class="label">纳斯达克</div><div class="value down">-0.50%</div></div>
+    <div class="market-item"><div class="label">美光 MU</div><div class="value up">+14.6% <span>盘后</span></div></div>
+    <div class="market-item"><div class="label">苹果 AAPL</div><div class="value down">-5.86%</div></div>
+    <div class="market-item"><div class="label">布伦特原油</div><div class="value down">$72.50 <span>-4%</span></div></div>
+  </div>
+</div>
+
+<!-- ========== 国内消息面 ========== -->
+<div class="section-title">国内消息面 <span class="tag tag-domestic">权重60%</span></div>
+
+<div class="card card-t0">
+  <div class="card-header">
+    <div class="card-title">① 央行货币政策创新：增隔夜逆回购品种+5000亿MLF投放</div>
+    <div class="card-level level-t0">T0</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：中国人民银行</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>央行宣布6月29日、30日在公开市场操作中增加隔夜逆回购品种，完善短端利率调控机制。同日开展5000亿元MLF操作（净投放2000亿）+3705亿元7天期逆回购，合计净投放3225亿元。新增"特定情景非银流动性支持宏观审慎工具"，在极端情况下向非银机构提供流动性。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>券商、银行、高杠杆科技股<br>
+    <strong>受益龙头：</strong>中信证券（600030）PE~18 东方财富（300059）、招商银行（600036）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★★</span> 影响程度 · 持续5天<br>
+    ⚠️ 风险提示：流动性宽松已被部分定价；隔夜逆回购的实操效果有待验证；利好出尽后警惕短期利率波动。
+  </div>
+</div>
+
+<div class="card card-t0">
+  <div class="card-header">
+    <div class="card-title">② 科创50+3.87%创历史新高 · 存储芯片超级景气周期确立</div>
+    <div class="card-level level-t0">T0</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：A股收盘数据</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>科创50收于2066.33点，+3.87%创历史新高；创业板指4371.99点，+2.84%同创历史新高。沪深北成交额3.62万亿元，放量逾3100亿元。存储芯片全面爆发：兆易创新+9.94%冲击涨停、佰维存储+15.18%、北京君正20%涨停；先进封装长电科技涨停4天3板。盘面呈现极端分化——仅750只上涨、4200只下跌，资金极致集中科技方向。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>存储芯片、先进封装、半导体设备/材料<br>
+    <strong>受益龙头：</strong>兆易创新（603986）PE=189.24 PB=21.98 市值5182亿、佰维存储（688525）PE=57.35 PB=26.43 市值2265亿、长电科技（600584）PE=112.82 PB=6.52 市值1864亿、北方华创（002371）PE=103.86 PB=14.74 市值5786亿
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★★</span> 影响程度 · 持续10天+（超级周期级别）<br>
+    ⚠️ 风险提示：科技板块拥挤度已极高（前5%个股成交占比接近50%阈值）；长鑫科技IPO上市可能分流资金；存储周期见顶隐忧；利好出尽后警惕短期回调。
+  </div>
+</div>
+
+<div class="card card-t0">
+  <div class="card-header">
+    <div class="card-title">③ 陆家嘴论坛改革信号持续发酵：科创板扩至AI大模型/具身智能</div>
+    <div class="card-level level-t0">T0</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：证监会</span>
+    <span>时间：2026-06-25 持续</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>证监会主席吴清在陆家嘴论坛释放多项改革信号——扩大科创板第五套标准适用范围至人工智能大模型领域；量子科技、生物制造、具身智能等硬科技企业优先支持；推进创业板改革；支持主动ETF、商业不动产REITs；推动人民币外汇期货试点。券商板块自6月9日以来累计涨超15%。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>券商、科创板硬科技、AI平台<br>
+    <strong>受益龙头：</strong>中信证券（600030）、东方财富（300059）、寒武纪（688256）PE=348.03 PB=77.26 市值9456亿
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★☆</span> 影响程度 · 持续10天+<br>
+    ⚠️ 风险提示：改革落地时间表不确定；券商已提前上涨消化预期；利好反复炒作后边际效应递减。
+  </div>
+</div>
+
+<div class="card card-t0">
+  <div class="card-header">
+    <div class="card-title">④ 七部门《平台经济行动方案》：引导大模型+高端芯片研发</div>
+    <div class="card-level level-t0">T0</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：工信部/科技部等七部门</span>
+    <span>时间：2026-06-18（持续发酵）</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>七部门联合印发《促进平台经济大中小企业协同发展行动方案（2026-2028）》，引导平台企业加强通用大模型、行业大模型和智能体等领域创新布局；加快推进高端芯片、下一代操作系统、智能终端等前沿技术研发。聚焦智能网联汽车、低空经济、商业航天、具身智能、脑机接口等未来产业。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>互联网平台、AI芯片、具身智能<br>
+    <strong>受益龙头：</strong>腾讯（00700）、阿里（09988）、百度、寒武纪（688256）、海光信息（688041）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★☆</span> 影响程度 · 持续20天（中期政策利好）<br>
+    ⚠️ 风险提示：政策指引性文件缺乏具体资金配套；执行力度待观察；港股互联网估值已部分修复。
+  </div>
+</div>
+
+<div class="card card-t1">
+  <div class="card-header">
+    <div class="card-title">⑤ 华为"韬定律"+昇腾950DT：中国半导体路线定义者</div>
+    <div class="card-level level-t1">T1</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：华为/ISCAS 2026</span>
+    <span>时间：2026-05~06</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>华为在ISCAS 2026发布"韬定律"（Tau Scaling Law），提出逻辑折叠技术，相同器件节点下晶体管密度提升55%、能效提升41%，过去6年已量产381款芯片。昇腾950DT将于8月上线，搭载自研HiZQ 2.0内存系统，带宽从1.6TB/s飙升至4TB/s。"一年一代、算力翻倍"——麒麟9050将首次采用逻辑折叠架构，由Mate 90首发。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>华为芯片链、先进封装、EDA、晶圆代工<br>
+    <strong>受益龙头：</strong>中芯国际（688981）、华大九天（301269）、北方华创（002371）、中微公司（688012）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★☆</span> 影响程度 · 持续10天<br>
+    ⚠️ 风险提示：韬定律产业落地需要时间验证；晶圆代工产能限制；部分利好已被市场消化。
+  </div>
+</div>
+
+<div class="card card-t1">
+  <div class="card-header">
+    <div class="card-title">⑥ 中信/华泰下半年策略共识：AI主线延续但拥挤度高位</div>
+    <div class="card-level level-t1">T1</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：中信证券/华泰证券</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>中信证券坚持"AI+能化"杠铃结构，看好存储、燃气轮机、半导体设备/材料，增配低估值券商。华泰证券发布2026年中期展望，认为下半年风险资产延续占优，周期板块景气修复（半导体设备/MLCC/锂电/船舶等）。两家均提示科技板块拥挤度偏高（前5%个股成交占比接近50%），建议谨慎追高。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>半导体设备、MLCC、光模块、券商<br>
+    <strong>受益龙头：</strong>北方华创（002371）、风华高科（000636）PE=299.78 PB=7.38 市值921亿、中际旭创（300308）PE=98.73 PB=42.60、中信证券（600030）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★☆☆</span> 影响程度 · 持续5天<br>
+    ⚠️ 风险提示：机构策略存在分歧；拥挤度持续高位时调整风险加剧；利好出尽后若市场转向则前期涨幅较大的AI板块可能首当其冲。
+  </div>
+</div>
+
+<div class="card card-t2">
+  <div class="card-header">
+    <div class="card-title">⑦ 培育钻石金刚石散热拐点：AI算力催生散热材料革命</div>
+    <div class="card-level level-t2">T2</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：东财/中泰证券</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>6月25日培育钻石板块拉升，惠丰钻石涨超10%、沃尔德涨超10%、国机精工涨停。英伟达官宣下一代GPU将采用金刚石复合材料+液冷散热方案。金刚石导热能力为铜的5倍、硅的10倍。中泰证券预计2026年全球高端AI芯片用金刚石散热片市场达87亿元，2030年达592亿元（CAGR超50%）。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>培育钻石/金刚石散热<br>
+    <strong>受益龙头：</strong>黄河旋风、力量钻石、四方达、国机精工（注：多为小市值标的，注意流动性风险）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★☆☆</span> 影响程度 · 持续5天<br>
+    ⚠️ 风险提示：多数公司仍处试样验证阶段，2027年才可能开始放量；pure概念炒作成分较高；金刚石散热方案存在技术路线不确定性。
+  </div>
+</div>
+
+<div class="card card-t2">
+  <div class="card-header">
+    <div class="card-title">⑧ 化工周期拐点确认：反内卷+供给出清+需求复苏三重共振</div>
+    <div class="card-level level-t2">T2</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：国海证券/东莞证券</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>化工行业迎来三重拐点——供给侧改革深化（化学原料固投转负）、欧洲累计关停3700万吨产能（占9%）、盈利确认修复（Q1归母净利润同比+15.3%环比+187.3%）。CCPI年内累涨超25%，多数品种库存历史低位。建议关注化工新材料及精细化工（半导体化学品/电子特气等）。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>化工新材料、半导体化学品、电子特气<br>
+    <strong>受益龙头：</strong>万华化学（600309）、雅克科技（002409）PE=85.58 PB=10.83 市值577亿、鼎龙股份（300054）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★☆☆</span> 影响程度 · 持续10天<br>
+    ⚠️ 风险提示：油价下行的成本端冲击；需求复苏弹性不确定；化工品种分化严重。
+  </div>
+</div>
+
+<!-- ========== 海外消息面 ========== -->
+<div class="section-title">海外消息面 <span class="tag tag-overseas">权重40%</span></div>
+
+<div class="card card-t0">
+  <div class="card-header">
+    <div class="card-title">① 美光Q3财报全面超预期：营收$41.46B +346%YoY，HBM售罄至2027后</div>
+    <div class="card-level level-t0">T0</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：美光科技（MU）</span>
+    <span>时间：2026-06-24 盘后</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>美光Q3财季营收$41.46B（超预期+16.2%），EPS $25.11（超预期+22.6%），毛利率84.9%创历史新高。DRAM营收$31.3B（+343%YoY），NAND营收$9.9B（+361%YoY）。HBM3E/HBM4全面售罄至2027年、需求延伸至2028年，仅能满足50-66%客户需求。Q4指引营收$50B（±$1B），EPS $31.00。签署16份战略客户协议、获$22B客户承诺（含约$18B现金预付款）。多家投行上调目标价（美银$1500、Bernstein $1300）。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>存储芯片、HBM产业链、半导体设备<br>
+    <strong>受益龙头：</strong>兆易创新（603986）PE=189.24 市值5182亿、佰维存储（688525）PE=57.35 市值2265亿、江波龙（301308）PE=52.70 市值1909亿、北方华创（002371）PE=103.86 市值5786亿
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★★</span> 影响程度 · 持续10天+<br>
+    ⚠️ 风险提示：MU单日大涨后存在获利回吐压力；A股存储板块已提前大涨反映预期；HBM产能扩张节奏决定价格拐点时机；利好出尽后需关注Q4指引是否能持续超预期。
+  </div>
+</div>
+
+<div class="card card-t0">
+  <div class="card-header">
+    <div class="card-title">② 存储结构性短缺至2030年：HBM消耗25% DRAM晶圆产能</div>
+    <div class="card-level level-t0">T0</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：Counterpoint/CLSA</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>HBM已消耗约25%的全球DRAM晶圆总产能，挤压常规DRAM供给，推升全品类存储价格。SK海力士HBM市占率58%、三星21%、美光21%。DRAM合约价Q2环比+58-63%，定价较2025年底部已涨275-300%。三星和SK海力士追加$15B以上资本开支，但新产能建设周期需12-18个月。AI存储短缺窗口预计持续至2030年。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>存储模组/封测、HBM设备、存储材料<br>
+    <strong>受益龙头：</strong>长电科技（600584）PE=112.82 PB=6.52 市值1864亿（涨停4天3板）、德明利（301309）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★★</span> 影响程度 · 持续20天+<br>
+    ⚠️ 风险提示：AI存储压缩技术（Google TurboQuant）可能降低HBM需求强度；行业周期性仍在，历史规律显示存储周期从未持续超过2年；韩股KOSPI已因外资兑现一度单日熔断。
+  </div>
+</div>
+
+<div class="card card-t0">
+  <div class="card-header">
+    <div class="card-title">③ NVIDIA Vera Rubin全面投产 · $1万亿AI基建需求指引</div>
+    <div class="card-level level-t0">T0</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：NVIDIA年度股东大会</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>Jensen Huang在年度股东大会上确认下一代Vera Rubin架构已进入全面量产。AI已进入"真正盈利时代"——FY2026营收$216B（+65%YoY），运营利润$130B。管理层指引至少$1万亿AI基础设施需求至2027年（较此前$5000亿翻倍）。Bernstein称NVDA"absurdly cheap"。UBS上调目标价至$280、美银至$350。NVDA当日跌约2%受大盘科技拖累，但基本面强劲。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>AI算力全链、光模块、PCB、服务器<br>
+    <strong>受益龙头：</strong>中际旭创（300308）PE=98.73 PB=42.60 市值14689亿、工业富联（601138）PE=37.58 PB=8.67 市值15278亿、沪电股份（002463）PE=69.33 PB=18.84 市值2980亿
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★★</span> 影响程度 · 持续10天+<br>
+    ⚠️ 风险提示：纳指已因超大型科技股回调下跌0.5%；市场担忧超大规模云厂加杠杆的AI资本开支可持续性；中美AI芯片出口管制升级风险；利好出尽后若$1万亿指引部分落空则杀估值压力大。
+  </div>
+</div>
+
+<div class="card card-t1">
+  <div class="card-header">
+    <div class="card-title">④ Apple中国iPhone出货-19% · 股价暴跌拖累纳指</div>
+    <div class="card-level level-t1">T1</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：UBS/中国信通院</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>5月iPhone中国出货同比下降19%，Apple在华智能手机份额从16%滑落至11%。6月季度前两个月累计下滑约10%。AAPL当日暴跌5.86%，市值蒸发约$1500亿，拖累纳斯达克下跌0.5%。同时MacBook Neo因存储严重短缺提价。苹果在中国的供应链依赖仍然深刻——80%以上核心供应商在华设厂。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>国内安卓手机链（替代效应）、华为链<br>
+    <strong>受益龙头：</strong>华为Mate90链、立讯精密（002475）、歌尔股份（002241）（关注华为/安卓链替代效应）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★☆</span> 影响程度 · 持续3天<br>
+    ⚠️ 风险提示：苹果销量下滑对果链供应商形成短期冲击；存储涨价进一步侵蚀终端利润；利空释放后苹果估值已处于历史低位区间。
+  </div>
+</div>
+
+<div class="card card-t1">
+  <div class="card-header">
+    <div class="card-title">⑤ 布伦特油价跌至$72：霍尔木兹重开，地缘风险溢价归零</div>
+    <div class="card-level level-t1">T1</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：Reuters/Gulf News</span>
+    <span>时间：2026-06-25</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>霍尔木兹海峡6月22-25日逐步重新开放，美国能源部长称24小时内已有2000万桶通过海峡。Brent原油价格从Q2均值$94暴跌至$72.50（4%日跌幅），回到战前水平。美国暂时取消伊朗石油制裁至8月21日，更多供给涌入全球市场。伊拉克威胁退出OPEC要求增产配额。Macquarie预计Q3 Brent均价$67。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>航空公司（成本下降）、化工（原料成本下降）<br>
+    <strong>受益龙头：</strong>中国国航（601111）、中国东航、万华化学（600309）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★☆☆</span> 影响程度 · 持续5天<br>
+    ⚠️ 风险提示：中东局势不确定性仍存；地缘溢价快速消退可能过度；欧佩克后续减产可能重新推升油价；利好出尽后航空公司盈利改善需要时间传导。
+  </div>
+</div>
+
+<div class="card card-t1">
+  <div class="card-header">
+    <div class="card-title">⑥ MLCC超级周期确认：Murata涨价15-35%，摩根士丹利上调至首选</div>
+    <div class="card-level level-t1">T1</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：Morgan Stanley/Goldman Sachs</span>
+    <span>时间：2026-06-24</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>Morgan Stanley上调Murata至"Top Pick"（目标¥12,500），Goldman Sachs预计AI服务器MLCC市场从$1.4B（FY2025）增至$5.8B（FY2030），4倍增长。Nvidia GB300单服务器用MLCC约3万颗，单AI机柜高达60万颗，MLCC成本从$1,530暴增至$4,320（+182%）。Murata涨价15-35%，Taiyo Yuden涨价6-13%，交期从8-12周延至16-24周。全球MLCC市场2028年预计达$24.25B（CAGR 18.2%）。A股风华高科涨停、三环集团+12.64%。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>MLCC、被动元件<br>
+    <strong>受益龙头：</strong>风华高科（000636）PE=299.78 PB=7.38 市值921亿、三环集团（300408）PE=109.01 PB=14.56 市值3059亿、国瓷材料（300285）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★★☆</span> 影响程度 · 持续10天+<br>
+    ⚠️ 风险提示：A股MLCC标的已大幅上涨（风华高科涨停、三环集团+12.64%）；估值已偏高（风华PE超300x）；日本/韩国MLCC巨头扩产节奏可能提前缓解供需矛盾。
+  </div>
+</div>
+
+<div class="card card-t2">
+  <div class="card-header">
+    <div class="card-title">⑦ SK海力士市值首次超越三星 · HBM格局重塑</div>
+    <div class="card-level level-t2">T2</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：ChosunBiz/CLSA</span>
+    <span>时间：2026-06-22</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>SK海力士市值约2.08万亿韩元（~$1.35万亿），短暂超越三星电子（2.067万亿韩元），为2000年以来首次。SK海力士HBM4预计供应英伟达Vera Rubin平台约70%。三星已率先量产HBM4（2月），HBM4E已送样。韩国存储双雄均追加$15B级扩产投资。韩股KOSPI年初至6月涨超110%，但6月23日单日暴跌10%触发熔断。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>HBM产业链映射、韩国存储设备<br>
+    <strong>受益龙头：</strong>长电科技（600584）、兆易创新（603986）、江波龙（301308）（HBM先进封装映射）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★☆☆</span> 影响程度 · 持续5天<br>
+    ⚠️ 风险提示：KOSPI单日10%熔断表明市场对韩股已有获利回吐压力；AI记忆体压缩技术可能影响长期HBM需求；利好出尽后行业周期性风险仍存。
+  </div>
+</div>
+
+<div class="card card-t2">
+  <div class="card-header">
+    <div class="card-title">⑧ Broadcom/AMD AI芯片"第二梯队"竞逐升级</div>
+    <div class="card-level level-t2">T2</div>
+  </div>
+  <div class="card-meta">
+    <span>来源：多家投行</span>
+    <span>时间：2026-06</span>
+  </div>
+  <div class="card-core">
+    <strong>核心：</strong>Broadcom Q2 AI营收$10.8B（+143%YoY），Q3指引~$16B略低于最高预期致股价回调~14%。但CEO Hock Tan重申FY2027 AI芯片收入目标$100B+。Bernstein称AVGO"absurdly cheap"。AMD向Meta供应6GW Instinct GPU。Broadcom定制ASIC（XPU）在AI推理阶段更高效，客户粘性更强。AI芯片TAM预计2030年达$333B。
+  </div>
+  <div class="card-benefit">
+    <strong>受益板块：</strong>AI定制芯片映射、算力互联<br>
+    <strong>受益龙头：</strong>寒武纪（688256）PE=348.03 PB=77.26 市值9456亿、海光信息（688041）
+  </div>
+  <div class="card-risk">
+    <span class="stars">★★★☆☆</span> 影响程度 · 持续3天<br>
+    ⚠️ 风险提示：市场对AI芯片预期已极度充分；一旦增长斜率下降将遭遇杀估值；A股AI芯片标的估值已极高（寒武纪PE>300x）。
+  </div>
+</div>
+
+<!-- ========== 资金流向交叉验证 ========== -->
+<div class="flow-section">
+  <h3>🔍 资金流向交叉验证（前日6月25日）</h3>
+  <table class="flow-table">
+    <tr>
+      <th>标的</th><th>代码</th><th>前日涨幅</th><th>PE(TTM)</th><th>PB</th><th>市值(亿)</th><th>资金信号</th>
+    </tr>
+    <tr><td>兆易创新</td><td>603986</td><td class="r-hot">+9.94%</td><td>189.24</td><td>21.98</td><td>5182</td><td class="confirm">板块共振</td></tr>
+    <tr><td>佰维存储</td><td>688525</td><td class="r-hot">+15.18%</td><td>57.35</td><td>26.43</td><td>2265</td><td class="confirm">板块共振</td></tr>
+    <tr><td>江波龙</td><td>301308</td><td class="r-hot">+9.25%</td><td>52.70</td><td>23.77</td><td>1909</td><td class="confirm">板块共振</td></tr>
+    <tr><td>长电科技</td><td>600584</td><td class="r-hot">+10.0%</td><td>112.82</td><td>6.52</td><td>1864</td><td class="confirm">涨停4天3板</td></tr>
+    <tr><td>北方华创</td><td>002371</td><td class="r-hot">+3.63%</td><td>103.86</td><td>14.74</td><td>5786</td><td class="confirm">机构加仓</td></tr>
+    <tr><td>中微公司</td><td>688012</td><td class="r-hot">+4.21%</td><td>138.58</td><td>14.66</td><td>3740</td><td class="confirm">机构加仓</td></tr>
+    <tr><td>沪电股份</td><td>002463</td><td class="r-hot">+8.12%</td><td>69.33</td><td>18.84</td><td>2980</td><td class="confirm">板块共振</td></tr>
+    <tr><td>风华高科</td><td>000636</td><td class="r-hot">+10.0%</td><td>299.78</td><td>7.38</td><td>921</td><td class="confirm">板块共振</td></tr>
+    <tr><td>三环集团</td><td>300408</td><td class="r-hot">+12.64%</td><td>109.01</td><td>14.56</td><td>3059</td><td class="confirm">板块共振</td></tr>
+    <tr><td>中际旭创</td><td>300308</td><td>+0.86%</td><td>98.73</td><td>42.60</td><td>14689</td><td class="warn">高市值钝化</td></tr>
+    <tr><td>药明康德</td><td>603259</td><td>+1.58%</td><td>17.37</td><td>4.40</td><td>2899</td><td class="confirm">估值修复</td></tr>
+    <tr><td>凯莱英</td><td>002821</td><td>+6.99%</td><td>48.79</td><td>3.09</td><td>476</td><td class="confirm">估值修复</td></tr>
+    <tr><td>恒瑞医药</td><td>600276</td><td>-0.42%</td><td>40.91</td><td>5.33</td><td>3192</td><td class="warn">资金分歧</td></tr>
+    <tr><td>工业富联</td><td>601138</td><td>+0.27%</td><td>37.58</td><td>8.67</td><td>15278</td><td class="warn">高市值钝化</td></tr>
+    <tr><td>寒武纪</td><td>688256</td><td>+3.58%</td><td>348.03</td><td>77.26</td><td>9456</td><td class="warn">情绪驱动</td></tr>
+  </table>
+</div>
+
+<!-- ========== 小市值标的挖掘 ========== -->
+<div class="score-section">
+  <h3>🎯 小市值标的挖掘（50-200亿）</h3>
+  <table class="score-table">
+    <tr><th>方向</th><th>细分环节</th><th>标的</th><th>市值参考</th><th>筛选逻辑</th></tr>
+    <tr><td>存储芯片</td><td>存储模组/封测</td><td>德明利(301309)</td><td>~60亿</td><td>存储模组龙头，存储超级周期直接受益</td></tr>
+    <tr><td>MLCC上游</td><td>MLCC陶瓷粉</td><td>国瓷材料(300285)</td><td>~150亿</td><td>MLCC上游陶瓷粉唯一A股标的，MLCC涨价直接受益</td></tr>
+    <tr><td>半导体设备</td><td>射频电源/真空泵</td><td>英杰电气(300820) / 汉钟精机(002158)</td><td>~60-90亿</td><td>半导体设备上游"卖铲子"零部件</td></tr>
+    <tr><td>半导体材料</td><td>特种气体</td><td>华特气体(688268) / 金宏气体(688106)</td><td>~80-120亿</td><td>国产替代+存储扩产双驱动</td></tr>
+    <tr><td>金刚石散热</td><td>培育钻石</td><td>沃尔德(688028) / 四方达(300179)</td><td>~50-70亿</td><td>英伟达采用金刚石散热新催化</td></tr>
+  </table>
+</div>
+
+<!-- ========== 六维打分 ========== -->
+<div class="score-section">
+  <h3>📊 六维评分表</h3>
+  <table class="score-table">
+    <tr>
+      <th>方向</th><th>景气度25%</th><th>纯度25%</th><th>估值位20%</th><th>龙头10%</th><th>辨识度10%</th><th>风险10%</th><th>总分</th><th>流动性系数</th>
+    </tr>
+    <tr>
+      <td><strong>存储芯片</strong></td>
+      <td>25</td><td>23</td><td>12</td><td>10</td><td>10</td><td>6</td>
+      <td class="score-total">86.0</td><td>×1.2 (成交3.62万亿)</td>
+    </tr>
+    <tr>
+      <td><strong>半导体设备/材料</strong></td>
+      <td>22</td><td>20</td><td>13</td><td>9</td><td>9</td><td>6</td>
+      <td class="score-total">79.0</td><td>×1.2</td>
+    </tr>
+    <tr>
+      <td><strong>MLCC/被动元件</strong></td>
+      <td>21</td><td>18</td><td>10</td><td>7</td><td>8</td><td>6</td>
+      <td class="score-total">70.0</td><td>×1.2</td>
+    </tr>
+    <tr>
+      <td><strong>AI算力/光模块</strong></td>
+      <td>20</td><td>18</td><td>8</td><td>9</td><td>9</td><td>5</td>
+      <td class="score-total">69.0</td><td>×1.2</td>
+    </tr>
+    <tr>
+      <td><strong>创新药/CXO</strong></td>
+      <td>15</td><td>17</td><td>18</td><td>6</td><td>7</td><td>7</td>
+      <td class="score-total">70.0</td><td>×1.0</td>
+    </tr>
+    <tr>
+      <td><strong>券商</strong></td>
+      <td>16</td><td>15</td><td>16</td><td>7</td><td>7</td><td>7</td>
+      <td class="score-total">68.0</td><td>×1.2</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:#888;margin-top:8px;">
+    流动性系数：3.62万亿 > 1.5万亿 → ×1.2<br>
+    打分前提：存储芯片有现象级拐点（美光Q3营收$41.46B+346%+HBM售罄至2027）、MLCC有超级周期确认（Murata涨价15-35%+投行上调）、创新药/CXO有估值修复逻辑（药明康德PE=17.37处于历史底部近5年最低）
+  </p>
+</div>
+
+<!-- ========== 汇总建议 ========== -->
+<div class="recommend-box">
+  <h3>📋 汇总建议</h3>
+  <div>
+    <div class="recommend-item">
+      <strong>首选：存储芯片</strong> <span class="tag tag-first">核心配置</span><br>
+      存储超级周期确认（美光Q3+346%+HBM售罄至2027），A股映射全面爆发，科创50创历史新高。高景气+辨识度+板块共振，最优短期格局。
+    </div>
+    <div class="recommend-item">
+      <strong>次选：半导体设备/材料</strong> <span class="tag tag-second">重点配置</span><br>
+      存储扩产→设备/材料需求确定性最高，逻辑传导清晰。北方华创/中微公司受益确定。
+    </div>
+    <div class="recommend-item">
+      <strong>新增关注：MLCC/被动元件</strong> <span class="tag tag-watch">布局窗口</span><br>
+      AI服务器MLCC需求+182%，Murata涨价15-35%，风华高科/三环集团涨停确认拐点。
+    </div>
+    <div class="recommend-item">
+      <strong>等待回调：AI算力/光模块</strong> <span class="tag tag-watch">震荡格局</span><br>
+      中际旭创PE=98.73 PB=42.60，拥挤度高位，NVDA指引已充分定价，等待回调后布局。
+    </div>
+    <div class="recommend-item">
+      <strong>左侧关注：创新药/CXO</strong> <span class="tag tag-watch">估值修复</span><br>
+      药明康德PE=17.37 PB=4.40处近5年最低分位，CXO调整已有CXO反弹，安全边际充足。
+    </div>
+  </div>
+  <div style="margin-top:12px;padding-top:12px;border-top:1px dashed #ffe0b2;font-size:13px;">
+    <strong>仓位建议：</strong>科技60%（存储25%/设备材料15%/MLCC10%/AI算力10%）+ 创新药/CXO 15% + 券商10% + 现金15%<br>
+    <strong>核心逻辑：</strong>存储超级周期是最强主线（业绩确定性最高），半导体设备/材料为第二环（存储扩产外溢），MLCC为第三环（估值合理+供需反转），创新药为左侧防御<br>
+    <strong>主要风险：</strong>科技拥挤度过高触发系统性调整 / 存储周期意外拐头 / 长鑫科技IPO分流 / 中东局势反复推升油价
+  </div>
+</div>
+
+<!-- ========== 宏观预警 ========== -->
+<div class="macro-warn">
+  <h3>⚠️ 宏观预警</h3>
+  <ul style="font-size:14px;line-height:2;padding-left:20px;">
+    <li><strong>流动性风险：</strong>成交额3.62万亿创近期新高，流动性系数×1.2极为充裕，但需警惕"天量见天价"的历史规律</li>
+    <li><strong>科技拥挤度风险：</strong>前5%个股成交占比接近50%阈值，华泰证券提示"拥挤度已处于高位"</li>
+    <li><strong>指数与个股背离：</strong>上证+0.23%但4200只个股下跌，极端结构行情下非主线方向流动性持续失血</li>
+    <li><strong>海外利率风险：</strong>美联储降息预期推迟（市场预期9月概率仅35%），美债收益率回升压制成长股估值</li>
+    <li><strong>地缘修复双刃剑：</strong>油价大幅回落利好航空/化工等成本端但压制能源股，中东仍有反复风险</li>
+    <li><strong>存储见顶争议：</strong>存储周期长度存疑（历史从未超2年），HBM压缩技术（Google TurboQuant）可能降低需求强度</li>
+  </ul>
+</div>
+
+<div class="footer">
+  <p>数据来源：同花顺热点、东财行业板块、腾讯财经估值、东财资金流、东财全球资讯、CNN/US News / YF / Reuters</p>
+  <p>生成时间：2026-06-26 09:30 BJT | 仅供研究参考，不构成投资建议</p>
+</div>
+
+</div>
+</body>
+</html>
