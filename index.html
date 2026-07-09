@@ -9,25 +9,29 @@
   .container { max-width: 1000px; margin: 0 auto; }
   h1 { color: #ff6b35; border-bottom: 2px solid #30363d; padding-bottom: 10px; }
   h2 { color: #ff6b35; margin-top: 30px; font-size: 1.3em; }
-  h3 { color: #58a6ff; margin: 15px 0 5px; }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+  h3 { color: #58a6ff; margin: 15px 0 5px; font-size: 1.1em; }
   .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
   .card-title { color: #58a6ff; font-weight: 600; font-size: 0.95em; margin-bottom: 8px; }
   .up { color: #f85149; }
   .down { color: #3fb950; }
   .flat { color: #8b949e; }
   .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 4px; }
-  .tag-t0 { background: #ff6b35; color: #fff; }
-  .tag-t1 { background: #58a6ff; color: #fff; }
-  .tag-t2 { background: #30363d; color: #c9d1d9; }
-  .tag-event { background: #d29922; color: #fff; }
+  .tag-impact-high { background: #ff6b35; color: #fff; }
+  .tag-impact-mid { background: #d29922; color: #fff; }
+  .tag-impact-low { background: #30363d; color: #c9d1d9; }
+  .tag-bull { background: #f85149; color: #fff; }
+  .tag-bear { background: #3fb950; color: #fff; }
+  .tag-neutral { background: #8b949e; color: #fff; }
   table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
   th, td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #30363d; }
   th { color: #8b949e; font-weight: 500; }
-  .score-box { display: inline-block; background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 10px 18px; margin: 5px; text-align: center; }
-  .score-num { font-size: 1.6em; font-weight: 700; color: #ff6b35; }
-  .score-label { font-size: 0.75em; color: #8b949e; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
   .warn { background: #3d1f00; border: 1px solid #d29922; }
+  .event-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .stock-tag { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 0.8em; margin: 1px 2px; }
+  .stock-bull { background: #3d1f00; color: #f85149; border: 1px solid #f85149; }
+  .stock-bear { background: #003d1f; color: #3fb950; border: 1px solid #3fb950; }
+  .stock-neutral { background: #1f1f1f; color: #c9d1d9; border: 1px solid #30363d; }
   @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -36,202 +40,251 @@
 
 <h1>催化剂分析报告 <span style="font-size:0.7em;color:#8b949e;">2026-07-09 周四 盘前版</span></h1>
 
-<!-- ====== 核心判断 ====== -->
-<div class="card">
-  <h2>核心逻辑</h2>
-  <p style="font-size:1.1em;margin:5px 0;">
-    中东战火重燃 · 布油暴涨 <span class="up">+5.2%</span> · 美联储纪要偏鹰 · 中概强势反弹<br>
-    昨日A股 <span class="down">-0.49%</span> 收3970 缩量至2.58万亿 · 创业板 <span class="down">-1.70%</span> · 深证 <span class="down">-1.87%</span>
-  </p>
-  <p style="color:#8b949e;font-size:0.9em;">
-    美伊冲突是今日最大变量 · 原油暴涨推动能源板块但压制科技 · 大盘日线MA233(3964)岌岌可危
-  </p>
-</div>
-
+<!-- ====== 昨日行情概况 ====== -->
 <div class="grid-2">
-
 <div class="card">
-  <div class="card-title">📊 昨日大盘回顾</div>
+  <div class="card-title">昨日A股</div>
   <table>
     <tr><td>上证指数</td><td class="down">3970.88</td><td class="down">-0.49%</td></tr>
     <tr><td>深证成指</td><td class="down">14939.73</td><td class="down">-1.87%</td></tr>
     <tr><td>创业板指</td><td class="down">3845.35</td><td class="down">-1.70%</td></tr>
-    <tr><td>两市成交</td><td colspan="2">~2.58万亿 缩量159亿</td></tr>
+    <tr><td>成交额</td><td colspan="2">~2.58万亿（缩量159亿）</td></tr>
     <tr><td>涨跌家数</td><td colspan="2">~1600 / ~3600</td></tr>
   </table>
 </div>
-
 <div class="card">
-  <div class="card-title">🌍 海外隔夜</div>
+  <div class="card-title">隔夜海外</div>
   <table>
-    <tr><td>道指</td><td class="down">-1.09%</td><td>52,925</td></tr>
-    <tr><td>纳指</td><td class="up">+0.20%</td><td>半导体反弹</td></tr>
-    <tr><td>英伟达</td><td class="up">+3%+</td><td>半导体领涨</td></tr>
+    <tr><td>道指</td><td class="down">-1.09%</td><td>能源/工业领跌</td></tr>
+    <tr><td>纳指</td><td class="up">+0.20%</td><td>NVDA+3%半导体反弹</td></tr>
     <tr><td>中概金龙</td><td class="up">+2.05%</td><td>阿里+11%</td></tr>
-    <tr><td>WTI原油</td><td class="up" style="font-weight:700;">+4.37%</td><td>$73.52 美伊冲突</td></tr>
-    <tr><td>布伦特</td><td class="up" style="font-weight:700;">+5.20%</td><td>$78.02 冲突破土</td></tr>
+    <tr><td>布油</td><td class="up" style="font-weight:700;">+5.20%</td><td>$78.02 美伊冲突</td></tr>
     <tr><td>黄金</td><td class="down">-1.70%</td><td>$4,086 避险失灵</td></tr>
-    <tr><td>韩国综指</td><td class="down">-5.35%</td><td>进入技术熊市</td></tr>
   </table>
 </div>
-
 </div>
 
-<!-- ====== 评分 ====== -->
-<div style="text-align:center;margin:15px 0;">
-  <span class="score-box"><div class="score-num">2.5</div><div class="score-label">整体</div></span>
-  <span class="score-box"><div class="score-num">2.0</div><div class="score-label">确定性</div></span>
-  <span class="score-box"><div class="score-num">3.0</div><div class="score-label">弹性</div></span>
-  <span class="score-box"><div class="score-num">2.0</div><div class="score-label">持续性</div></span>
-</div>
+<!-- ====== 各事件分析 ====== -->
+<h2>各事件分析</h2>
 
-<!-- ====== 盘前关键事件 ====== -->
-<h2>盘前关键事件</h2>
-
+<!-- 事件1：美伊冲突 -->
 <div class="card">
-<h3>T0 · 今日核心 <span class="tag tag-t0">实时</span></h3>
-<ul>
-  <li><strong>🔥 美伊冲突骤然升级 — 今日最大变量</strong> — 美军对伊朗发动新一轮打击，特朗普称终止谅解备忘录。伊朗威胁关闭霍尔木兹海峡并回击"两倍规模"。布油+5.2%，若海峡受阻全球油价可能冲$90+。A股油气板块将强势，但科技股面临资金流出压力。外交部回应"重燃战火不符合任何一方利益"。</li>
-  <li><strong>美联储6月纪要公布：偏鹰</strong> — 少数官员支持6月加息，点阵图9人预计年底前至少加息一次。AI投资热潮首次被列为通胀风险因素。9月加息概率升至58%。全球科技估值中期承压。</li>
-  <li><strong>大盘MA233(3964)生死线</strong> — 昨收3970.88距日线MA233(3964.8)仅6个点。低开即破，破则进入更大级别调整。关注盘中能否靠能源股拉动反弹。</li>
-</ul>
+<div class="event-header">
+  <h3 style="margin:0;">🔥 美伊冲突骤然升级</h3>
+  <span class="tag tag-impact-high">高影响</span>
 </div>
-
-<div class="card">
-<h3>T1 · 重要 <span class="tag tag-t1">当日</span></h3>
-<ul>
-  <li><strong>央行二季度例会：适度宽松 + 加大逆周期调节</strong> — 保持流动性充裕，加强对科技创新/扩大内需金融支持。利好金融/券商板块。</li>
-  <li><strong>中报预告密集披露 — 高峰期已至</strong> — 特发信息+881~1167%、高德红外+602~701%、天风证券+429~694%、京东方A+54~69%、中金公司+78~90%。7月15日截止前为预告最高峰。</li>
-  <li><strong>长鑫科技启动科创板IPO</strong> — 申购日7月16日，存储产业链估值锚定。</li>
-  <li><strong>中际旭创连续澄清三则传闻</strong> — 否认物料封锁/否认康宁玻璃桥替代/驳斥"中游组装厂"定位。光模块板块情绪有望修复。</li>
-  <li><strong>韩国综指-5.35%进技术熊市</strong> — 亚太联动风险，关注今日日韩开盘传导。</li>
-</ul>
-</div>
-
-<div class="card">
-<h3>T2 · 观察 <span class="tag tag-t2">跟踪</span></h3>
-<ul>
-  <li><strong>光伏/锂电材料反弹</strong> — 盛新锂能扭亏为盈+京东方预增，超跌新能源板块有望修复。</li>
-  <li><strong>国家科技大会</strong> — 习近平强调"十五五"科技强国关键期。半导体/AI方向政策利好可期。</li>
-  <li><strong>华为Atlas 950超节点7/17真机亮相</strong> — AI算力硬件预热。</li>
-  <li><strong>阿里美股+11%</strong> — 阿里云收入增速~45%超预期，港股今日有望继续带动中概情绪。</li>
-  <li><strong>黄金大跌-1.7%</strong> — 避险逻辑被原油替代，白银-4.3%更惨。</li>
-</ul>
-</div>
-
-<!-- ====== 海外催化 ====== -->
-<h2>海外催化</h2>
-
-<div class="card">
-<ul>
-  <li><strong>美联储纪要偏鹰</strong> — 少数官员支持加息，AI/关税/中东为三大通胀风险。9月加息概率58%。</li>
-  <li><strong>美股分化：道指-1.09% vs 纳指+0.20%</strong> — 能源和工业股领跌，半导体反弹（NVDA+3%）。中概金龙+2.05%。</li>
-  <li><strong>韩国综指-5.35%</strong> — 从高点跌超20%进入技术熊市，亚太风险传导。</li>
-  <li><strong>阿里美股+11%</strong> — 阿里云收入增速~45%超预期，云计算/AI SaaS方向获提振。</li>
-  <li><strong>WTI原油+4.37%至$73.52</strong> — 若霍尔木兹海峡受阻，油价可能冲$90+。全球风险资产重定价。</li>
-</ul>
-</div>
-
-<!-- ====== 持仓分析 ====== -->
-<h2>持仓关联分析</h2>
-
-<div class="card">
+<p>美军对伊朗发动新一轮打击，特朗普宣布终止美伊谅解备忘录。伊朗军方威胁将"两倍规模"回击，并警告关闭霍尔木兹海峡。布伦特原油+5.2%至$78.02，WTI+4.37%至$73.52。</p>
 <table>
-  <tr><th>标的</th><th>昨收</th><th>涨跌</th><th>PE</th><th>成交(亿)</th><th>关联催化</th></tr>
+  <tr><th>方向</th><th>板块</th><th>个股</th><th>逻辑</th></tr>
   <tr>
-    <td>生益科技</td>
-    <td class="down">145.46</td><td class="down">-3.52%</td><td>90.0</td><td>67.4</td>
-    <td>主力净流出2.84亿，散户净流入3.59亿。董事会人事变动（刘立斌辞职/熊勇提名）。中报预告窗口临近，订单饱满但股价继续下探。</td>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>油气开采</td>
+    <td><span class="stock-tag stock-bull">中国石油 601857</span> <span class="stock-tag stock-bull">中国海油 600938</span> <span class="stock-tag stock-bull">山东墨龙 002490</span></td>
+    <td>油价暴涨直接驱动上游利润，山东墨龙昨日已涨停</td>
   </tr>
   <tr>
-    <td>中际旭创</td>
-    <td>—</td><td>—</td><td>—</td><td>—</td>
-    <td>连续澄清三则传闻：否认物料封锁/康宁玻璃桥非替代/驳斥组装厂定位。光模块情绪有望修复。</td>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>油服/化工</td>
+    <td><span class="stock-tag stock-bull">杰瑞股份 002353</span> <span class="stock-tag stock-bull">中海油服 601808</span></td>
+    <td>油价上行带动资本开支增加，油服订单预期改善</td>
   </tr>
   <tr>
-    <td>东山精密</td>
-    <td class="down">—</td><td class="down">回落</td><td>—</td><td>—</td>
-    <td>NV否认服务器架构延迟传闻后回落，7/15前强制中报预告窗口。股吧仍热议小作文。</td>
+    <td><span class="tag tag-bear">利空</span></td>
+    <td>航空</td>
+    <td><span class="stock-tag stock-bear">中国国航 601111</span> <span class="stock-tag stock-bear">南方航空 600029</span></td>
+    <td>燃油成本上升，航空公司成本端压力加大</td>
   </tr>
   <tr>
-    <td>兆易创新</td>
-    <td class="down">—</td><td class="down">持续承压</td><td>—</td><td>—</td>
-    <td>存储板块受大摩看空+美联储鹰派纪要双重压制。关注长鑫IPO情绪提振。</td>
+    <td><span class="tag tag-bear">利空</span></td>
+    <td>科技（整体）</td>
+    <td><span class="stock-tag stock-bear">兆易创新 603986</span> <span class="stock-tag stock-bear">北方华创 002371</span> <span class="stock-tag stock-bear">生益科技 600183</span></td>
+    <td>油价暴涨→资金从科技轮出→压制科技估值。今日油价不回落则科技股将承压。</td>
+  </tr>
+</table>
+<p style="color:#8b949e;font-size:0.85em;">⚠️ 后续关注：霍尔木兹海峡是否实际受阻（影响程度天差地别）</p>
+</div>
+
+<!-- 事件2：美联储纪要 -->
+<div class="card">
+<div class="event-header">
+  <h3 style="margin:0;">美联储6月纪要偏鹰</h3>
+  <span class="tag tag-impact-high">高影响</span>
+</div>
+<p>6月FOMC纪要公布：少数官员支持加息但最终一致同意按兵不动。点阵图18人中9人预计年底前至少加息一次，AI投资热潮首次被列为三大通胀风险之一。9月加息概率升至58%。</p>
+<table>
+  <tr><th>方向</th><th>板块</th><th>个股</th><th>逻辑</th></tr>
+  <tr>
+    <td><span class="tag tag-bear">利空</span></td>
+    <td>全球科技/半导体</td>
+    <td><span class="stock-tag stock-bear">中芯国际 688981</span> <span class="stock-tag stock-bear">北方华创 002371</span> <span class="stock-tag stock-bear">兆易创新 603986</span> <span class="stock-tag stock-bear">中际旭创 300308</span></td>
+    <td>利率预期上行压制科技股DCF估值，全球科技估值重定价</td>
   </tr>
   <tr>
-    <td>沪电股份</td>
-    <td class="down">—</td><td>跟随调整</td><td>—</td><td>—</td>
-    <td>CCL涨价逻辑仍有效，但大盘系统性下行拖累。</td>
+    <td><span class="tag tag-bear">利空</span></td>
+    <td>黄金</td>
+    <td><span class="stock-tag stock-bear">山东黄金 600547</span> <span class="stock-tag stock-bear">赤峰黄金 600988</span></td>
+    <td>纪要公布后伦敦金现-0.76%至$4,074，加息预期压制黄金</td>
   </tr>
 </table>
 </div>
 
-<!-- ====== 小作文监控 ====== -->
-<h2>盘中传闻 / 小作文监控 <span class="tag tag-event">跟踪</span></h2>
+<!-- 事件3：阿里云超预期 -->
+<div class="card">
+<div class="event-header">
+  <h3 style="margin:0;">阿里美股+11% · 阿里云收入增速45%超预期</h3>
+  <span class="tag tag-impact-mid">中高影响</span>
+</div>
+<p>阿里巴巴发布财报，阿里云收入增速约45%大幅超预期，中概金龙指数+2.05%。阿里美股涨超11%。云计算/AI SaaS方向获实质业绩验证。</p>
+<table>
+  <tr><th>方向</th><th>板块</th><th>个股</th><th>逻辑</th></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>云计算/AI算力</td>
+    <td><span class="stock-tag stock-bull">浪潮信息 000977</span> <span class="stock-tag stock-bull">网宿科技 300017</span> <span class="stock-tag stock-bull">深信服 300454</span></td>
+    <td>阿里云超预期验证AI云需求景气，算力基础设施直接受益。浪潮昨日一字涨停（中报+226~288%）。</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>光模块</td>
+    <td><span class="stock-tag stock-bull">中际旭创 300308</span> <span class="stock-tag stock-bull">新易盛 300502</span> <span class="stock-tag stock-bull">天孚通信 300394</span></td>
+    <td>云厂商资本开支扩张直接拉动光模块需求。中际旭创叠加三则辟谣，关注修复。</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>港股/中概</td>
+    <td><span class="stock-tag stock-bull">阿里巴巴 9988.HK</span></td>
+    <td>阿里港股今日有望继续带动中概情绪</td>
+  </tr>
+</table>
+</div>
+
+<!-- 事件4：央行宽松 -->
+<div class="card">
+<div class="event-header">
+  <h3 style="margin:0;">央行二季度例会：适度宽松 + 加大逆周期调节</h3>
+  <span class="tag tag-impact-mid">中影响</span>
+</div>
+<p>央行货币政策委员会2026Q2例会：继续实施适度宽松货币政策，加大逆周期跨周期调节，保持流动性充裕，加强对科技创新和扩大内需的金融支持。</p>
+<table>
+  <tr><th>方向</th><th>板块</th><th>个股</th><th>逻辑</th></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>券商/金融</td>
+    <td><span class="stock-tag stock-bull">中金公司 601995</span> <span class="stock-tag stock-bull">天风证券 601162</span> <span class="stock-tag stock-bull">中信证券 600030</span> <span class="stock-tag stock-bull">东方财富 300059</span></td>
+    <td>流动性宽松+成交量持续万亿以上，券商经纪和自营业务直接受益。中金+78~90%/天风+429~694%中报预增确认景气。</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>科技/科创</td>
+    <td><span class="stock-tag stock-bull">中芯国际 688981</span> <span class="stock-tag stock-bull">海光信息 688041</span> <span class="stock-tag stock-bull">寒武纪 688256</span></td>
+    <td>央行明确加强对科技创新金融支持，利好科创板及半导体龙头</td>
+  </tr>
+</table>
+</div>
+
+<!-- 事件5：中报预告高峰 -->
+<div class="card">
+<div class="event-header">
+  <h3 style="margin:0;">中报业绩预告密集披露</h3>
+  <span class="tag tag-impact-mid">中高影响</span>
+</div>
+<p>7月15日主板强制预告截止前进入高峰，多家公司大幅预喜：特发信息+881~1167%、高德红外+602~701%、天风证券+429~694%、京东方A+54~69%、中金公司+78~90%。</p>
+<table>
+  <tr><th>方向</th><th>个股</th><th>预增幅度</th><th>逻辑</th></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>特发信息 000070</td><td>+881~1167%</td><td>智慧服务板块验收，业绩弹性最大</td></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>高德红外 002414</td><td>+602~701%</td><td>军工型号项目持续交付</td></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>京东方A 000725</td><td>+54~69%</td><td>LCD+柔性AMOLED双增长，面板龙头验证复苏</td></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>中金公司 601995</td><td>+78~90%</td><td>券商龙头，成交活跃受益</td></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>盛新锂能 002240</td><td>扭亏为盈</td><td>锂盐涨价+印尼产能释放，超跌反弹催化剂</td></tr>
+</table>
+<p style="color:#8b949e;font-size:0.85em;">⚠️ 业绩预告是一把双刃剑：若预告低于市场隐含预期，反而可能利好出尽。关注预告后股价反应验证。</p>
+</div>
+
+<!-- 事件6：中际旭创辟谣 -->
+<div class="card">
+<div class="event-header">
+  <h3 style="margin:0;">中际旭创连续澄清三则传闻</h3>
+  <span class="tag tag-impact-mid">中影响</span>
+</div>
+<p>公司在互动易集中回应市场关切：①否认上游物料炫光片被封锁；②康宁玻璃桥技术非光模块替代方案，公司多元技术布局可适配；③驳斥"中游组装厂"定位，强调光模块涵盖硅光/相干/仿真等多项核心技术。</p>
+<table>
+  <tr><th>方向</th><th>板块</th><th>个股</th><th>逻辑</th></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好（修复）</span></td>
+    <td>光模块</td>
+    <td><span class="stock-tag stock-bull">中际旭创 300308</span> <span class="stock-tag stock-bull">新易盛 300502</span> <span class="stock-tag stock-bull">天孚通信 300394</span></td>
+    <td>三则澄清消除近两周压制光模块的三重疑虑。前期股价已从高点回调~20%，消化后存在修复空间。叠加阿里云超预期利好。</td>
+  </tr>
+</table>
+<p style="color:#8b949e;font-size:0.85em;">⚠️ 存储和大盘系统性风险仍存，修复幅度取决于整体市场环境。</p>
+</div>
+
+<!-- 事件7：长鑫IPO -->
+<div class="card">
+<div class="event-header">
+  <h3 style="margin:0;">长鑫科技正式启动科创板IPO</h3>
+  <span class="tag tag-impact-mid">中影响</span>
+</div>
+<p>长鑫科技启动科创板IPO发行程序，申购日为7月16日。长鑫为国内DRAM龙头，IPO将为存储产业链提供估值锚定。</p>
+<table>
+  <tr><th>方向</th><th>板块</th><th>个股</th><th>逻辑</th></tr>
+  <tr>
+    <td><span class="tag tag-bull">利好</span></td>
+    <td>存储产业链</td>
+    <td><span class="stock-tag stock-bull">兆易创新 603986</span> <span class="stock-tag stock-bull">深科技 000021</span> <span class="stock-tag stock-bull">佰维存储 688525</span></td>
+    <td>长鑫上市提升存储板块关注度，封测/模组环节间接受益。短期情绪提振但基本面独立。</td>
+  </tr>
+</table>
+</div>
+
+<!-- 事件8：韩国暴跌 -->
+<div class="card">
+<div class="event-header">
+  <h3 style="margin:0;">韩国综指-5.35% 进入技术熊市</h3>
+  <span class="tag tag-impact-low">中低影响</span>
+</div>
+<p>韩国综合指数单日-5.35%，从高点累计跌超20%进入技术性熊市。韩国主要受存储股（三星/SK海力士）持续下跌拖累。</p>
+<table>
+  <tr><th>方向</th><th>板块</th><th>个股</th><th>逻辑</th></tr>
+  <tr>
+    <td><span class="tag tag-bear">情绪利空</span></td>
+    <td>存储</td>
+    <td><span class="stock-tag stock-bear">兆易创新 603986</span> <span class="stock-tag stock-bear">佰维存储 688525</span></td>
+    <td>韩国存储双雄是A股存储的情绪对标，亚太风险偏好传导</td>
+  </tr>
+</table>
+</div>
+
+<!-- ====== 盘中传闻监控 ====== -->
+<h2>盘中传闻 / 小作文监控</h2>
 
 <div class="card warn">
 <table>
-  <tr><th>标的</th><th>传闻内容</th><th>涨跌</th><th>来源级别</th><th>状态</th></tr>
+  <tr><th>标的</th><th>传闻</th><th>影响</th><th>来源</th><th>状态</th></tr>
   <tr>
-    <td>德龙汇能</td><td>资产注入传闻</td>
-    <td class="down">-8.04%</td>
-    <td><span class="tag" style="background:#f85149;">股吧传闻 → 已辟谣</span></td>
-    <td>公司澄清后暴跌，典型骗炮</td>
+    <td>德龙汇能</td><td>资产注入</td><td class="down">前两日+20%→昨天-8.04%</td><td>股吧</td><td>已辟谣，典型出货</td></tr>
   </tr>
   <tr>
-    <td>共进股份</td><td>数据中心交换机概念</td>
-    <td>连续大涨后回落</td>
-    <td><span class="tag" style="background:#d29922;">蹭概念炒作</span></td>
-    <td>公司公告业务占比极小</td>
+    <td>共进股份 603118</td><td>数据中心交换机</td><td>连续大涨后回落</td><td>蹭概念</td><td>公司澄清占比极小</td></tr>
   </tr>
   <tr>
-    <td>中际旭创</td><td>物料封锁/康宁玻璃桥替代</td>
-    <td>前期已跌-20%</td>
-    <td><span class="tag" style="background:#3fb950;">公司正式辟谣</span></td>
-    <td>三则澄清齐发，关注修复</td>
+    <td>中际旭创 300308</td><td>物料封锁/康宁替代</td><td>前期回调~20%</td><td>公司正式辟谣</td><td>三则齐发，关注修复</td></tr>
   </tr>
   <tr>
-    <td>东山精密</td><td>Coherent产能转移+亚马逊订单</td>
-    <td class="down">回落</td>
-    <td><span class="tag" style="background:#d29922;">股吧传闻 未证实</span></td>
-    <td>NV否认延迟+董秘"保密"口径</td>
+    <td>东山精密 002384</td><td>NV延迟/亚马逊订单</td><td>冲高回落</td><td>股吧+NV否认</td><td>董秘"保密"口径，未证实</td></tr>
   </tr>
 </table>
-<p style="color:#8b949e;font-size:0.85em;margin:5px 0;">
-  ⚠️ 德龙汇能是典型小作文出货案例：传闻推涨→公司澄清→暴跌。中际旭创三则正式辟谣反而值得关注，消化后可能修复。
-</p>
-</div>
-
-<!-- ====== 重点标的 ====== -->
-<h2>重点标的一览</h2>
-
-<div class="card">
-<table>
-  <tr><th>板块</th><th>标的</th><th>逻辑</th></tr>
-  <tr><td>油气/能源</td><td>中国石油/中国海油/山东墨龙</td><td>美伊冲突升级，油价暴涨+5%，能源板块今日最强主线</td></tr>
-  <tr><td>中概/云计算</td><td>阿里巴巴/浪潮信息/网宿科技</td><td>阿里云收入增速45%超预期+浪潮中报+226~288%，AI云方向获双重催化</td></tr>
-  <tr><td>存储</td><td>兆易创新/江波龙/长鑫概念</td><td>长鑫IPO启动+中报预喜，但海外存储承压，多空交织</td></tr>
-  <tr><td>光模块</td><td>中际旭创/新易盛/天孚通信</td><td>中际旭创三则辟谣后关注修复，阿里云超预期利好AIDC上游</td></tr>
-  <tr><td>券商/金融</td><td>中金公司/天风证券/中信证券</td><td>中报预喜+央行宽松表态+流动性充裕，防御+弹性兼备</td></tr>
-  <tr><td>CCL/PCB</td><td>沪电股份/生益科技/深南电路</td><td>CCL涨价逻辑延续但受大盘系统性风险压制，等待企稳</td></tr>
-  <tr><td>光伏/锂电</td><td>盛新锂能/京东方A/阳光电源</td><td>中报预喜+超跌反弹逻辑</td></tr>
-</table>
-</div>
-
-<!-- ====== 本周事件日历 ====== -->
-<h2>本周/下周事件日历</h2>
-
-<div class="card">
-<table>
-  <tr><th>日期</th><th>事件</th><th>重要性</th></tr>
-  <tr><td>7/9 周四</td><td>美伊冲突持续演化 · 美联储纪要消化 · 长鑫IPO启动</td><td>极高</td></tr>
-  <tr><td>7/10 周五</td><td>SK海力士纳斯达克上市 · A股中报预告高峰持续</td><td>高</td></tr>
-  <tr><td>7/14 周二</td><td>美国6月CPI数据公布</td><td>极高</td></tr>
-  <tr><td>7/15 周三</td><td>A股主板中报预告截止日（最后高峰）</td><td>极高</td></tr>
-  <tr><td>7/16 周四</td><td>长鑫科技科创板申购</td><td>高</td></tr>
-  <tr><td>7/17 周五</td><td>世界人工智能大会 · 华为Atlas 950真机亮相</td><td>中</td></tr>
-  <tr><td>7/28-29</td><td>美联储FOMC议息会议</td><td>极高</td></tr>
-</table>
+<p style="color:#8b949e;font-size:0.85em;">⚠️ 德龙汇能被当作典型反面教材：小作文拉高→公司澄清→暴跌出货。</p>
 </div>
 
 <!-- ====== 风险预警 ====== -->
@@ -239,11 +292,10 @@
 
 <div class="card warn">
 <ul>
-  <li><strong>🔥 美伊冲突扩大化风险</strong> — 伊朗威胁关闭霍尔木兹海峡、实施"两倍规模"回击。若冲突持续升级，油价可能冲$90+，科技股将面临资金轮出+成本上升双重压力。今日油气板块独涨的"虹吸效应"是最直接的风险。</li>
-  <li><strong>大盘日线MA233(3964)破位风险</strong> — 昨收3970离趋势线仅6个点。若今日低开直接破位，下一观察层缺失（双日/周线数据不足），进入技术性更大级别调整。</li>
-  <li><strong>美联储纪要偏鹰中期压制</strong> — 9月加息概率58%，AI投资被列为通胀风险。全球科技估值重定价尚未完成。</li>
-  <li><strong>韩国暴跌传导</strong> — 韩国综指-5.35%进技术熊市，亚太情绪可能滞后传导至A股。</li>
-  <li><strong>量化交易规模超3.2万亿</strong> — 占成交量35-42%，加剧个股波动和指数失真。极端行情下量化可能放大抛压。</li>
+  <li><strong>🔥 美伊冲突——最大不确定性</strong> — 伊朗威胁关闭霍尔木兹海峡，油价若冲$90+将对全球风险资产产生系统性冲击。A股油气板块独涨的"抽血效应"是最直接风险。</li>
+  <li><strong>大盘MA233(3964)破位</strong> — 昨收3970距日线MA233(3964.8)仅6点。低开即破，破位后参考支撑3925-3928。</li>
+  <li><strong>美联储纪要中期压制</strong> — 9月加息概率58%，全球科技DCF估值重定价尚未完成。</li>
+  <li><strong>量化交易占成交35-42%</strong> — 极端行情下量化放大多空波动，个股振幅加大。</li>
 </ul>
 </div>
 
@@ -251,21 +303,38 @@
 <h2>缠论结构参考</h2>
 
 <div class="card">
-<p><strong>上证指数（昨日收盘3970.88）：</strong></p>
-<ul>
-  <li>大级别背景：<span class="down">转弱</span> — 日线跌破MA20(4065)和MA55(4095)</li>
-  <li>当前状态：<strong>偏防守 · 结构转弱观察</strong> — 30F/60F/120F中轨全部失守</li>
-  <li>MACD：日线MACD零轴下方，柱体负向扩张；60F/120F均零轴下方</li>
-  <li><strong>日线MA233(3964.8)为最后趋势支撑</strong> — 昨收3970.88仅差6点，今日低开即破</li>
-  <li>上方压力：5F中轨~3987 → 15F中轨4011 → 120F中轨4065</li>
-  <li>下方：若3964破位，参考支撑3925-3928区域（此前结构测算）</li>
-  <li>今日关注：能源股能否托住指数 + 中概/云计算能否带动情绪修复</li>
-</ul>
-<p style="color:#8b949e;font-size:0.85em;">基于chanlun-trend-mechanism analysis · 数据截至7/8收盘</p>
+  <p><strong>上证指数（昨收3970.88）：</strong>
+  <span class="tag tag-bear">偏防守</span>
+  <span class="tag tag-bear">结构转弱观察</span></p>
+  <table>
+    <tr><td>日线趋势</td><td>跌破MA20(4065)/MA55(4095)，转弱</td></tr>
+    <tr><td>各级别中轨</td><td>5F~120F全部失守，上方压力密集</td></tr>
+    <tr><td>MACD</td><td>日线/60F/120F均零轴下方，柱体负向扩张</td></tr>
+    <tr><td style="border-top:2px solid #d29922;"><strong>最后防线</strong></td><td style="border-top:2px solid #d29922;"><strong>日线MA233(3964.8)</strong></td></tr>
+    <tr><td>上方压力</td><td>5F中轨~3987 → 15F中轨4011 → 120F中轨4065</td></tr>
+    <tr><td>下方支撑</td><td>若破3964 → 3925-3928</td></tr>
+  </table>
+  <p style="color:#8b949e;font-size:0.85em;">基于chanlun-trend-mechanism · 数据截至7/8收盘</p>
+</div>
+
+<!-- ====== 事件日历 ====== -->
+<h2>近期事件日历</h2>
+
+<div class="card">
+<table>
+  <tr><th>日期</th><th>事件</th><th>重要性</th></tr>
+  <tr><td>7/9 周四</td><td>美伊冲突持续 · 中报预告高峰</td><td>极高</td></tr>
+  <tr><td>7/10 周五</td><td>SK海力士纳斯达克上市</td><td>高</td></tr>
+  <tr><td>7/14 周二</td><td>美国6月CPI</td><td>极高</td></tr>
+  <tr><td>7/15 周三</td><td>主板中报预告截止日</td><td>极高</td></tr>
+  <tr><td>7/16 周四</td><td>长鑫科技科创板申购</td><td>高</td></tr>
+  <tr><td>7/17 周五</td><td>世界AI大会 · 华为Atlas 950真机</td><td>中</td></tr>
+  <tr><td>7/28-29</td><td>美联储FOMC议息</td><td>极高</td></tr>
+</table>
 </div>
 
 <div style="text-align:center;color:#8b949e;font-size:0.85em;margin-top:30px;border-top:1px solid #30363d;padding-top:15px;">
-  催化剂分析报告 · 2026-07-09 盘前版 · 数据截至7/8收盘及隔夜盘<br>
+  催化剂分析报告 · 2026-07-09 盘前版<br>
   报告仅供参考，不构成投资建议
 </div>
 
