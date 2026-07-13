@@ -1,0 +1,248 @@
+# -*- coding: utf-8 -*-
+import sys, os, shutil, urllib.request
+sys.stdout.reconfigure(encoding='utf-8')
+
+o = "E:/投研尝试"
+f = os.path.join(o, "催化剂分析报告_20260713.html")
+i = os.path.join(o, "index.html")
+h = []
+def W(s): h.append(s)
+
+codes_data = [
+    ("生益科技","600183"),("深科技","000021"),("中材科技","002080"),("光迅科技","002281"),
+    ("北方华创","002371"),("中微公司","688012"),("中芯国际","688981"),("澜起科技","688008"),
+    ("安集科技","688019"),("华润微","688396"),("圣邦股份","300661"),("雅克科技","002409"),
+    ("兆易创新","603986"),("东方财富","300059"),("招商银行","600036"),
+    ("长电科技","600584"),("京东方A","000725"),
+    ("中际旭创","300308"),("新易盛","300502"),("工业富联","601138"),
+    ("江波龙","301308"),("佰维存储","688525"),("紫金矿业","601899"),("中金黄金","600489"),
+]
+prefixed = []
+for n,c in codes_data:
+    if c.startswith(("6","9")): prefixed.append(f"sh{c}")
+    else: prefixed.append(f"sz{c}")
+resp = urllib.request.urlopen(urllib.request.Request("https://qt.gtimg.cn/q=" + ",".join(prefixed), headers={"User-Agent":"Mozilla/5.0"}), timeout=10).read().decode("gbk")
+qq = {}
+for line in resp.strip().split(";"):
+    if not line.strip() or "=" not in line or '"' not in line: continue
+    vals = line.split('"')[1].split("~")
+    if len(vals) < 53: continue
+    code = vals[2]
+    qq[code] = {"n":vals[1],"p":vals[3],"pe":vals[39],"pb":vals[46],"mcap":vals[44],"chg":vals[32]}
+
+W('<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">')
+W('<title>消息面催化报告 2026-07-13</title><style>')
+W('*{margin:0;padding:0;box-sizing:border-box}')
+W('body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:#f0f2f5;color:#333;line-height:1.6}')
+W('.container{max-width:1000px;margin:0 auto;padding:20px}')
+W('.header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);color:#fff;padding:30px;border-radius:16px;margin-bottom:24px;text-align:center}')
+W('.header h1{font-size:28px;font-weight:700;letter-spacing:4px;margin-bottom:8px}')
+W('.summary-bar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:16px}')
+W('.summary-item{background:rgba(255,255,255,0.1);padding:8px 18px;border-radius:20px;font-size:13px}')
+W('.summary-item strong{color:#ffd700}')
+W('.section-title{font-size:20px;font-weight:700;padding:12px 0;margin:32px 0 16px;border-bottom:3px solid #1a1a2e}')
+W('.tag{display:inline-block;font-size:12px;padding:2px 10px;border-radius:10px;margin-left:10px}')
+W('.tag-d{background:#fff3e0;color:#e65100}.tag-o{background:#e8f5e9;color:#2e7d32}')
+W('.card{background:#fff;border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.06);border-left:4px solid #ddd}')
+W('.c0{border-left-color:#c62828}.c1{border-left-color:#f9a825}.c2{border-left-color:#1565c0}')
+W('.ch{display:flex;justify-content:space-between;margin-bottom:10px}')
+W('.ct{font-size:17px;font-weight:700;color:#1a1a2e}')
+W('.cl{font-size:12px;padding:2px 10px;border-radius:10px;white-space:nowrap}')
+W('.l0{background:#ffebee;color:#c62828}.l1{background:#fff8e1;color:#f9a825}.l2{background:#e3f2fd;color:#1565c0}')
+W('.cm{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:#666;margin-bottom:12px}')
+W('.cm span{background:#f5f5f5;padding:3px 10px;border-radius:6px}')
+W('.cc{font-size:14px;color:#444;margin-bottom:12px;padding:10px 14px;background:#fafafa;border-radius:8px;border-left:3px solid #1a1a2e}')
+W('.cb{font-size:14px}.cb strong{color:#0f3460}')
+W('.cr{font-size:13px;color:#888;margin-top:10px;padding-top:10px;border-top:1px dashed #eee}')
+W('.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}')
+W('.mi{background:#f8f9fa;padding:10px 14px;border-radius:8px;font-size:13px}')
+W('.mi .l{color:#888}.mi .v{font-weight:700;font-size:15px}')
+W('.up{color:#c62828}.down{color:#2e7d32}')
+W('.ss{background:#fff;border-radius:12px;padding:20px;margin-bottom:24px;box-shadow:0 2px 8px rgba(0,0,0,0.06)}')
+W('table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px}')
+W('table th{background:#1a1a2e;color:#fff;padding:8px 10px;text-align:center}')
+W('table td{padding:8px 10px;text-align:center;border-bottom:1px solid #eee}')
+W('.rb{background:linear-gradient(135deg,#fff8e1,#fff3e0);border-radius:12px;padding:20px;margin-bottom:24px;border:1px solid #ffe0b2}')
+W('.rb h3{font-size:16px;color:#e65100;margin-bottom:12px}')
+W('.mw{border-left:4px solid #c62828}.mw li{margin:6px 0}')
+W('.footer{text-align:center;font-size:12px;color:#999;padding:20px 0}')
+W('@media(max-width:600px){.mg{grid-template-columns:repeat(2,1fr)}}')
+W('</style></head><body><div class="container">')
+
+W('<div class="header"><h1>消息面催化报告</h1><div class="subtitle">A股催化剂 · 2026年7月13日（周一）</div>')
+W('<div class="summary-bar"><div class="summary-item">覆盖窗口：7/10盘后 → 7/13早盘</div>')
+W('<div class="summary-item"><strong>汇总评级：★★★☆☆</strong>（风高浪急/结构轮动）</div>')
+W('<div class="summary-item">美股参考：7/10三大指数收涨（纳指+0.29%）</div></div>')
+W('<div style="background:rgba(255,255,255,0.08);padding:8px 15px;border-radius:8px;margin-top:12px;font-size:13px;text-align:left">')
+W('<strong>核心逻辑：</strong>本周进入多个关键节点共振——①长鑫科技周四申购（295亿科创板史上第二大IPO，今日初步询价）；②国常会周末定调适度超前布局算力/数字基础设施；③半年报预告周三截止（香农芯创+2118%/浪潮信息+226%等密度极高）；④7/14美国CPI+美联储听证、7/15上半年GDP；⑤中东局势升级（伊朗封锁霍尔木兹海峡+美军空袭）。上周科创50逆势周涨4.52%，存储链"业绩越好越跌"的高低切换信号需警惕。<strong>核心变量：</strong>①长鑫映射兑现窗口（申购前强势/申购后承压的规律）；②特斯拉Optimus Gen3定型（9月周产1000台）；③SK海力士美股首日+12.76%存储景气确认。</div>')
+W('<div class="mg">')
+W('<div class="mi"><div class="l">上证指数</div><div class="v down">上周-1.17%</div></div>')
+W('<div class="mi"><div class="l">科创50</div><div class="v up">上周+4.52% 逆势</div></div>')
+W('<div class="mi"><div class="l">创业板指</div><div class="v down">上周-4.41%</div></div>')
+W('<div class="mi"><div class="l">两市成交</div><div class="v up">3.41万亿(放量)</div></div>')
+W('<div class="mi"><div class="l">道琼斯</div><div class="v up">52637 +0.29%</div></div>')
+W('<div class="mi"><div class="l">费城半导体</div><div class="v up">12967 +0.06%</div></div>')
+W('<div class="mi"><div class="l">SK海力士美股</div><div class="v up">首日+12.76%</div></div>')
+W('<div class="mi"><div class="l">黄金</div><div class="v up">4100+美元/oz</div></div>')
+W('<div class="mi"><div class="l">美元指数</div><div class="v up">关注7/14 CPI</div></div>')
+W('</div></div>')
+
+# === 国内催化 ===
+W('<div class="section-title">国内消息面 <span class="tag tag-d">权重60%</span></div>')
+
+W('<div class="card c0"><div class="ch"><div class="ct">① 长鑫科技周四申购：295亿科创板史上第二大IPO，今日初步询价</div><div class="cl l0">T0</div></div>')
+W('<div class="cm"><span>来源：上交所</span><span>时间：2026-07-13</span></div>')
+W('<div class="cc">长鑫科技（688825）今日启动初步询价，周四（7/16）全网申购。发行66.88亿股（10%），募资295亿元（仅次中芯国际532亿）。战略配售50%锁定12个月，高管承诺十年不减持。2026H1预告营收1100-1200亿（+677%），净利500-570亿（+2544%），日均赚3.6亿。顶格申购需1672万市值，中签率预计较高。华泰证券复盘20单百亿IPO：申购前映射强→申购周至上市板块承压。存储链短期面临"兑现压力"。</div>')
+W('<div class="cb"><strong>影响板块：</strong>存储芯片（江波龙/兆易创新/佰维存储）、封测（深科技/长电科技）、半导体设备（北方华创/中微公司）</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★★ — 本周最大焦点。映射行情已充分Price-in，今日起进入"兑现窗口"，上市日前后是存储链压力观察期</div></div>')
+
+W('<div class="card c0"><div class="ch"><div class="ct">② 国常会：适度超前布局数字基础设施，加快推进算力网建设</div><div class="cl l0">T0</div></div>')
+W('<div class="cm"><span>来源：国常会</span><span>时间：2026-07-10（周日新闻联播）</span></div>')
+W('<div class="cc">国务院常务会议研究部署数字中国建设，提出"适度超前布局数字基础设施，加快推进新一代通信网、算力网建设"。同时研究新兴支柱产业培育，全链条推动规模化发展，加强基础研究和关键软硬件攻关。预测2029年国内算力卡采购额达1.44万亿元，AI产业链中期空间进一步打开。</div>')
+W('<div class="cb"><strong>影响板块：</strong>算力/AI硬件（浪潮信息/紫光股份/中科曙光/拓维信息）、CPO/光模块、液冷散热</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★★ — 顶层定调+明确时间表，算力基建从产业趋势上升为国家战略。但短期已被部分定价</div></div>')
+
+W('<div class="card c0"><div class="ch"><div class="ct">③ 中国长征十号乙海上网系可控回收：全球首次！商业航天里程碑</div><div class="cl l0">T0</div></div>')
+W('<div class="cm"><span>来源：中国航天科技集团</span><span>时间：2026-07-11</span></div>')
+W('<div class="cc">长征十号乙运载火箭完成全球首次火箭一子级海上网系可控回收。中信证券：这是中国商业航天产业化发展的关键里程碑，技术路径对标SpaceX猎鹰9号回收。千帆星座已增至218颗，卫星互联网进入加速部署阶段。</div>')
+W('<div class="cb"><strong>影响板块：</strong>商业航天（中国卫星/航天电子/海兰信）、火箭回收/海上回收概念</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★☆ — 全球首次意义重大，但商业航天板块体量有限，资金容纳度不如半导体/AI</div></div>')
+
+W('<div class="card c1"><div class="ch"><div class="ct">④ 氦气临时禁止出口：半导体关键材料自主可控</div><div class="cl l1">T1</div></div>')
+W('<div class="cm"><span>来源：商务部/海关总署</span><span>时间：2026-07-10</span></div>')
+W('<div class="cc">商务部、海关总署公告：对氦气（海关编号2804290010）实施临时禁止出口管理，自7月10日起执行。氦气是半导体制造（光刻/蚀刻/冷却）关键材料，中国氦气对外依存度超95%。此举将加速国内氦气国产替代进程，利好电子特气生产企业。</div>')
+W('<div class="cb"><strong>影响板块：</strong>电子特气（华特气体/金宏气体/凯美特气）、半导体材料国产替代</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★☆☆ — 短期催化明确但板块容量小，持续性取决于国内氦气产能释放节奏</div></div>')
+
+W('<div class="card c1"><div class="ch"><div class="ct">⑤ 半年报预告密集披露：香农芯创+2118%/浪潮信息+226%/中矿资源+1078%</div><div class="cl l1">T1</div></div>')
+W('<div class="cm"><span>来源：公司公告</span><span>时间：2026-07-11/13</span></div>')
+W('<div class="cc">7月15日主板强制披露截止在即，周末多股发布超预期预告：香农芯创预增2118%-2434%（存储分销），翔鹭钨业+2348%~3436%（钨价大涨），浪潮信息+226%~288%（AI服务器放量），中矿资源+1078%~1302%（锂矿反弹+铯铷），风华高科Q2环比+104%~138%（MLCC涨价周期）。但存储板块出现"业绩越好越跌"的高低切换信号，资金集中获利了结。</div>')
+W('<div class="cb"><strong>影响板块：</strong>业绩超预期的存储分销（香农芯创）、AI服务器（浪潮信息）、MLCC（风华高科）、有色（中矿资源/翔鹭钨业）</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★☆ — 预告密集期是双刃剑：超预期=催化，落地=兑现。7/15截止日后业绩线将退潮</div></div>')
+
+W('<div class="card c1"><div class="ch"><div class="ct">⑥ 中东局势升级：伊朗宣布霍尔木兹海峡暂时关闭，美军发动新一轮打击</div><div class="cl l1">T1</div></div>')
+W('<div class="cm"><span>来源：新华社/路透</span><span>时间：2026-07-12/13</span></div>')
+W('<div class="cc">霍尔木兹海峡局势持续升级。美军对伊朗发动新一轮军事打击，伊朗宣布海峡南部航道"暂时关闭"。国际油价维持75-85美元/桶中高位震荡。全球约30%海运石油经霍尔木兹海峡，关闭将严重冲击能源供应链。中国原油进口依赖度~72%，关注石油战略储备及替代能源。</div>')
+W('<div class="cb"><strong>影响板块：</strong>油气（中国石油/中国海油/中油资本）、油运（中远海能/招商轮船）、军工、黄金避险</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★☆ — 地缘风险溢价上升，但油价已在当前区间震荡数周，若无实质封锁则影响递减</div></div>')
+
+W('<div class="card c2"><div class="ch"><div class="ct">⑦ 中国人寿出资50亿元成立半导体产业基金</div><div class="cl l2">T2</div></div>')
+W('<div class="cm"><span>来源：公司公告</span><span>时间：2026-07-12</span></div>')
+W('<div class="cc">中国人寿公告出资49.99亿元成立半导体产业基金，长线险资入局半导体赛道。叠加两大央企重组（中国石化完成对中国航油重组），央国企战略产业整合加速。</div>')
+W('<div class="cb"><strong>影响板块：</strong>半导体产业链（险资长线入市信号），央国企改革</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★☆☆☆ — 信号意义大于短期催化，长线资金入场需要时间验证</div></div>')
+
+# === 海外催化 ===
+W('<div class="section-title">海外消息面 <span class="tag tag-o">权重40%</span></div>')
+
+W('<div class="card c0"><div class="ch"><div class="ct">① SK海力士美股首日暴涨12.76%+英伟达反弹4%：存储景气确认</div><div class="cl l0">T0</div></div>')
+W('<div class="cm"><span>来源：纽交所</span><span>时间：2026-07-10</span></div>')
+W('<div class="cc">SK海力士美股上市首日收涨12.76%（募资265亿美元，美国史上最大外国企业IPO），强劲首秀验证全球存储超级周期。英伟达反弹4.03%收210.96美元，AI龙头企稳。但美光跌1.24%、博通跌0.28%、迈威尔科技跌3%+，费半仅微涨0.06%。存储链内部出现分化——HBM vs 传统DRAM的估值再定价。</div>')
+W('<div class="cb"><strong>影响板块：</strong>存储产业链（海力士映射利好），AI芯片（英伟达映射利好），但美光下跌需警惕</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★★ — SK海力士IPO是美国史上最大外国企业IPO，12.76%首秀=存储高景气最直接信号</div></div>')
+
+W('<div class="card c0"><div class="ch"><div class="ct">② 特斯拉Optimus Gen3定型：9月周产1000台，供应链采购指引下发</div><div class="cl l0">T0</div></div>')
+W('<div class="cm"><span>来源：特斯拉/供应链消息</span><span>时间：2026-07-12/13</span></div>')
+W('<div class="cc">特斯拉Optimus Gen3人形机器人正式定型，优化灵巧手、全身38个自由度。9月目标周产1000台，年底2000-2500台/周。供应链采购指引已下发至核心零部件厂商。这是人形机器人行业最明确的量产时间表——从概念验证进入规模量产阶段。上周五特斯拉涨约0.3%，市场等待7/23完整财报。</div>')
+W('<div class="cb"><strong>影响板块：</strong>人形机器人（绿的谐波/双环传动/拓普集团/三花智控/埃斯顿），国产精密制造替代</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★★ — 最明确的量产时间表，比"宇树IPO获批"更具产业实质。9月周产1000台是真正意义上的规模量产起点</div></div>')
+
+W('<div class="card c1"><div class="ch"><div class="ct">③ 本周宏观超级周：7/14美国CPI + 美联储听证 + 7/15中国上半年GDP</div><div class="cl l1">T1</div></div>')
+W('<div class="cm"><span>来源：美国劳工部/中国国家统计局</span><span>时间：2026-07-14/15</span></div>')
+W('<div class="cc">本周是宏观数据超级周：周二（7/14）美国6月CPI数据发布+美联储主席国会听证，周三（7/15）中国上半年GDP/6月社融等经济数据。非农爆冷（+5.7万）后市场对CPI高度敏感——若CPI回落=降息预期升温=利好科技估值；若CPI意外走高=加息预期回摆=全球风险资产承压。市场预期6月CPI同比+3.1%（前值+3.3%）。</div>')
+W('<div class="cb"><strong>影响板块：</strong>全市场（CPI/GDP决定短期方向），科技/AI估值对利率敏感度最高</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★★☆ — 非农爆冷后CPI是关键验证点，直接决定9月加息概率路径</div></div>')
+
+W('<div class="card c1"><div class="ch"><div class="ct">④ 美股三大指数上周五收涨，科技七巨头分化</div><div class="cl l1">T1</div></div>')
+W('<div class="cm"><span>来源：纽交所/纳斯达克</span><span>时间：2026-07-10</span></div>')
+W('<div class="cc">美股三大指数小幅收涨：道指+0.29%报52637，标普+0.42%报7575，纳指+0.29%报26282。费半微涨0.06%。七巨头：Meta+6%（AI模型Muse Spark 1.1对标低价策略），英伟达+4.03%，AMD+2.04%；苹果/谷歌小幅收跌。周线看：纳指周涨+1.74%（连二涨），费半周涨+2.7%（前两周-12.3%后修复）。但科技七巨头整体资金仍呈净流出态势，轮动至金融/医疗/工业方向。</div>')
+W('<div class="cb"><strong>影响板块：</strong>A股科技情绪短期提振（英伟达/Meta反弹），但海外资金轮动趋势未变</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★★☆☆ — 反弹力度有限，费半几乎平收，科技龙头内部严重分化</div></div>')
+
+W('<div class="card c2"><div class="ch"><div class="ct">⑤ 7/15-20：上海世界人工智能大会（WAC）+成都西部全球半导体博览会</div><div class="cl l2">T2</div></div>')
+W('<div class="cm"><span>来源：行业会议</span><span>时间：2026-07-15至20</span></div>')
+W('<div class="cc">本周两个重磅行业会议：7/15-17成都西部全球半导体博览会（封测/存储配套），7/17-20上海世界人工智能大会（AI算力/液冷/光模块/机器人）。两大会议有望为本周科技行情提供增量催化，尤其WAC是2026年AI产业最新成果集中展示窗口。</div>')
+W('<div class="cb"><strong>影响板块：</strong>AI产业链、半导体封测（产品展示/订单预期）、液冷散热</div>')
+W('<div class="cr"><strong>强度判断：</strong>★★☆☆☆ — 会议催化通常偏主题性，关注是否有超预期产品发布或政策信号</div></div>')
+
+# === 持仓 ===
+W('<div class="section-title">用户持仓监控</div>')
+W('<div class="ss"><table><tr><th>标的</th><th>代码</th><th>收盘价</th><th>市值</th><th>PE</th><th>关联催化</th></tr>')
+for n,c in [("生益科技","600183"),("深科技","000021"),("中材科技","002080"),("光迅科技","002281")]:
+    q = qq.get(c,{})
+    p = q.get("p","—")
+    mc = q.get("mcap","—")
+    pe = q.get("pe","—")
+    if c=="600183": ev="国常会算力利好+MLCC涨价周期延续（风华高科Q2环比+104%印证），PCB板块受益"
+    elif c=="000021": ev="长鑫周四申购，封测直接受益；存储业绩暴增（香农芯创+2118%）验证超级周期"
+    elif c=="002080": ev="电子布跟随PCB/机器人，但非直接驱动；本周关注7/15-17半导体展会有无催化"
+    elif c=="002281": ev="光模块承压逻辑减弱；国常会算力利好+英伟达反弹4%+WAC大会（7/17）提振情绪"
+    W(f'<tr><td>{n}</td><td>{c}</td><td>{p}</td><td>{mc}</td><td>{pe}</td><td style="font-size:12px">{ev}</td></tr>')
+W('</table>')
+W('<div style="margin-top:8px;font-size:13px;padding:10px 14px;background:#f8f9fa;border-radius:8px">')
+W('<strong>持仓结构判断：</strong>生益科技（MLCC涨价+算力通信PCB需求，基本面最扎实）继续最稳。深科技迎长鑫申购+存储业绩双重催化，但需警惕映射兑现后短期回调。中材科技跟随PCB/机器人情绪但非直接受益，弹性偏弱。光迅科技短期受益英伟达反弹+WAC大会催化，但光模块整体仍在消化Meta算力过剩叙事。</div></div>')
+
+# === 标的监控 ===
+W('<div class="section-title">重点标的监控</div>')
+W('<div class="ss"><table><tr><th>标的</th><th>代码</th><th>收盘价</th><th>PE(TTM)</th><th>PB</th><th>市值(亿)</th></tr>')
+for n,c in codes_data:
+    q = qq.get(c,{})
+    p = q.get("p","—")
+    pe = q.get("pe","—")
+    pb = q.get("pb","—")
+    mc = q.get("mcap","—")
+    W(f'<tr><td>{n}</td><td>{c}</td><td>{p}</td><td>{pe}</td><td>{pb}</td><td>{mc}</td></tr>')
+W('</table>')
+W('<div style="font-size:12px;color:#999;text-align:right">数据来源：腾讯财经 | 日期：2026-07-13 | 道指52637 历史高位</div></div>')
+
+# === 六维打分 ===
+W('<div class="section-title">六维打分体系</div>')
+W('<div class="ss">')
+W('<table><tr><th>维度</th><th>权重</th><th>评分/10</th><th>加权</th><th>说明</th></tr>')
+W('<tr><td>景气度</td><td>25%</td><td>7</td><td>1.75</td><td>SK海力士+12.76%+存储业绩暴增+特斯拉Optimus Gen3定型，产业趋势明确向上</td></tr>')
+W('<tr><td>资金纯度</td><td>25%</td><td>4</td><td>1.00</td><td>高低切换信号明显——存储"业绩越好越跌"+科创50涨4.52%但深成指跌3.53%，存量博弈极致</td></tr>')
+W('<tr><td>估值位置</td><td>20%</td><td>5</td><td>1.00</td><td>半导体经过前两周急跌后部分进入合理区间，但纳指PE 40仍偏高</td></tr>')
+W('<tr><td>龙头强度</td><td>10%</td><td>6</td><td>0.60</td><td>长鑫IPO+机器人量产+商业航天里程碑，方向多但缺乏单一主线领军</td></tr>')
+W('<tr><td>辨识度</td><td>10%</td><td>6</td><td>0.60</td><td>本周方向分散（算力/存储/商业航天/中医药/黄金），非单一主线行情</td></tr>')
+W('<tr><td>风险控制</td><td>10%</td><td>3</td><td>0.30</td><td>宏观超级周（CPI/GDP）+中东升级+长鑫兑现窗口+科技高低切，四重不确定性叠加</td></tr>')
+W('<tr style="background:#fff8e1;font-weight:700"><td>总分</td><td>100%</td><td></td><td><strong>3.25</strong></td><td style="color:#f9a825">风高浪急，方向多但每个方向都有对冲因素，性价比一般</td></tr>')
+W('</table>')
+W('<div style="margin-top:12px;padding:12px 16px;background:#f8f9fa;border-radius:8px;font-size:13px">')
+W('<strong>流动性系数：</strong>成交3.41万亿 > 1.5万亿 → <span style="color:#c62828;font-weight:700">x1.2</span>（但存量博弈特征明显，资金只在科技内部轮动不扩散）')
+W('</div></div>')
+
+# === 汇总 ===
+W('<div class="section-title">汇总建议</div>')
+W('<div class="rb">')
+W('<h3>周一策略框架（3.25分 — 风高浪急/聚焦长鑫映射）</h3>')
+W('<div style="font-size:14px;line-height:1.8">')
+W('<p><strong>市场状态：</strong>本周进入多重关键节点共振——长鑫周四申购（映射兑现窗口）、国常会算力定调、CPI/GDP超级周三、中东局势升级、特斯拉机器人量产时间表落地。市场呈现典型"风高浪急"特征：方向多但每个方向都有明确对冲。总分3.25，比上周一的3.95进一步回落，反映短期不确定性显著上升。</p>')
+W('<p><strong>核心判断：</strong></p>')
+W('<ul class="mw" style="padding-left:20px;margin-bottom:12px">')
+W('<li><strong>长鑫IPO是本周最大变量：</strong>华泰复盘20单百亿IPO规律——申购前映射强→申购周至上市承压。映射行情已充分定价（存储股已涨数周），今日初步询价后进入兑现窗口。方向上看，上市前兑现压力＞申购前催化，但长期存储景气仍在。</li>')
+W('<li><strong>特斯拉Optimus Gen3定型是本周最被低估的催化：</strong>9月周产1000台是全球人形机器人首次明确规模量产时间表，比宇树IPO更有产业实质。机器人有望接力半导体成为科技新主线。</li>')
+W('<li><strong>宏观超级周三（7/14-15）定方向：</strong>CPI/GDP数据将决定短期风险偏好。非农爆冷后市场对CPI极度敏感——若CPI回落则情绪修复；若CPI反弹则科技估值承压。建议数据落地前保持中性仓位。</li>')
+W('<li><strong>科技内部高低切换进行中：</strong>科创50涨4.52%的同时深成指跌3.53%，资金从高位存储/光模块流向机器人和商业航天。"业绩越好越跌"的信号值得警惕——利好出尽的逻辑可能在半年报截止前后充分演绎。</li>')
+W('<li><strong>中东局势是尾部风险：</strong>霍尔木兹海峡若实质关闭，油价冲击将放大全球通胀担忧，可能抵消非农爆冷带来的降息预期。但当前关税/制裁仍是博弈工具，实质封锁概率不高。</li>')
+W('</ul>')
+W('<p><strong>本周关键节点：</strong></p>')
+W('<ul style="padding-left:20px">')
+W('<li>7/13（周一）：长鑫科技初步询价</li>')
+W('<li>7/14（周二）：美国6月CPI + 美联储主席国会听证</li>')
+W('<li>7/15（周三）：中国上半年GDP发布 + 半年报预告强制披露截止</li>')
+W('<li>7/16（周四）：长鑫科技新股申购（最大焦点）</li>')
+W('<li>7/17-20（周五至下周一）：上海世界人工智能大会（WAC）</li>')
+W('<li>7/23（下周四）：特斯拉完整财报（储能+Optimus）</li>')
+W('</ul>')
+W('</div></div>')
+
+W(f'<div class="footer">报告生成时间: {__import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M")} · 数据来源：腾讯财经/公开新闻<br>本报告仅供参考，不构成投资建议</div>')
+W('</div></body></html>')
+
+with open(f, "w", encoding="utf-8") as fh:
+    fh.write("\n".join(h))
+print(f"Report written: {f}")
+print(f"Size: {os.path.getsize(f)} bytes")
+
+shutil.copy2(f, i)
+print(f"Index updated: {i}")
