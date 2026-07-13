@@ -1,1 +1,54 @@
+<<<<<<< Updated upstream
 {"tasks": []}
+=======
+{
+  "tasks": [
+    {
+      "id": "1c3d64f6",
+      "cron": "42 8 * * 1-5",
+      "prompt": "生成消息面催化报告。执行步骤：1. 搜索今日A股市场最新催化事件（重大政策/产业新闻/海外动态/财报等）；2. 更新 gen_report_v3.py 中的 EVENTS 列表（日期改为今天，事件更新为当前最新）；3. 运行 python gen_report_v3.py；4. 确认 GitHub Pages 已更新。",
+      "createdAt": 1783737452487,
+      "recurring": true,
+      "createdBySessionId": "3b321509-bc75-4e0f-9069-2ab51606fe03",
+      "createdByPid": 357644,
+      "lastFiredAt": 1783905127939
+    },
+    {
+      "id": "8f6d4dd4",
+      "cron": "52 8 * * 1-5",
+      "prompt": "你是消息面催化报告的补检系统。读取 E:\\投研尝试\\催化剂分析报告_{today_YYYYMMDD}.html 检查报告日期是否为今天。若不存在或日期不对，运行完整报告生成流程补生成。检查完成后输出确认信息。",
+      "createdAt": 1783737452741,
+      "recurring": true,
+      "createdBySessionId": "3b321509-bc75-4e0f-9069-2ab51606fe03",
+      "createdByPid": 357644
+    },
+    {
+      "id": "96738e59",
+      "cron": "57 8 * * 1-5",
+      "prompt": "检查ProShares 2倍做多中际旭创ETF（ProShares Ultra Zhongji Innolight）是否有最新进展。搜索中际旭创两倍做多ETF的SEC审核状态、上市进度、变更或任何相关新闻。如果有新进展（如SEC批准、修改意见、推迟、撤回、上市日期确定等），详细汇报给用户。如果无新进展（状态仍为8月24日自动生效/待SEC审核），简单说\"无新进展\"即可。",
+      "createdAt": 1783737453768,
+      "recurring": true,
+      "createdBySessionId": "3b321509-bc75-4e0f-9069-2ab51606fe03",
+      "createdByPid": 357644
+    },
+    {
+      "id": "655d0bc4",
+      "cron": "12 15 * * 1-5",
+      "prompt": "短线观察",
+      "createdAt": 1783737454863,
+      "recurring": true,
+      "createdBySessionId": "3b321509-bc75-4e0f-9069-2ab51606fe03",
+      "createdByPid": 357644
+    },
+    {
+      "id": "600830c4",
+      "cron": "7 10 * * 6",
+      "prompt": "你是定时任务续期系统。执行以下操作：1. 运行CronList查看当前所有定时任务（含短线观察 975d2c5b 及其他）。2. 对已过期的任务列表看是否要到7天期限，如果是就重新创建。3. 短线观察任务的cron表达式为\"12 15 * * 1-5\"，确保它始终有效。4. 所有任务均设为durable持久化。",
+      "createdAt": 1783737455904,
+      "recurring": true,
+      "createdBySessionId": "3b321509-bc75-4e0f-9069-2ab51606fe03",
+      "createdByPid": 357644
+    }
+  ]
+}
+>>>>>>> Stashed changes
